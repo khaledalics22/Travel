@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddPostActions extends StatefulWidget {
   final String msg;
-  AddPostActions(this.msg);
+  Function displayPickedImage;
+  AddPostActions(this.msg, this.displayPickedImage);
   @override
   _AddPostActionsState createState() => _AddPostActionsState();
 }
@@ -54,12 +58,30 @@ class _AddPostActionsState extends State<AddPostActions> {
     );
   }
 
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final _pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (_pickedFile != null) {
+        this._image = File(_pickedFile.path);
+        widget.displayPickedImage(this._image);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Expanded(child: button('Add Photo', () {})),
+        Expanded(
+            child: button('Add Photo', () {
+          getImage();
+        })),
         Expanded(
             child: button('Post', () {
           showAlertDiaolog(context);

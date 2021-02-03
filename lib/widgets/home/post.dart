@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/widgets/circularImage.dart';
 import '../home/postactions.dart';
 
 class Post extends StatelessWidget {
@@ -10,27 +11,38 @@ class Post extends StatelessWidget {
     return Container(
       width: size.width > 500 ? 500 : size.width,
       height: size.width > 500 ? 500 : size.width,
-      child: Column(children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: PostTop(),
-          ),
-          flex: 1,
-        ),
-        Expanded(
-          flex: 4,
-          child: Image.network(
-            'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-            fit: BoxFit.fitWidth,
-            width: double.infinity,
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: PostActions(),
-        ),
-      ]),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: PostTop(),
+              ),
+              flex: 1,
+            ),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.loose,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('it was an amazing trip :)'),
+              ),
+            ),
+            Expanded(
+              flex: 4,
+              child: Image.network(
+                'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+                fit: BoxFit.fitWidth,
+                width: double.infinity,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: PostActions(),
+            ),
+          ]),
     );
   }
 }
@@ -40,16 +52,9 @@ class PostTop extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 40,
-          height: 40,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(40),
-            child: Image.network(
-              'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-              fit: BoxFit.fitWidth,
-            ),
-          ),
+        CircularImage(
+          40.0,
+          'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
         ),
         Expanded(
           flex: 7,

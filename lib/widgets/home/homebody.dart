@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:travel/screens/profile.dart';
 import 'package:travel/widgets/home/addpost.dart';
 import 'package:travel/widgets/home/post.dart';
 
@@ -14,10 +15,16 @@ class _BodyState extends State<Body> {
         child: Column(
           children: [
             PhysicalModel(
-                color: Colors.white,
-                elevation: 5,
-                shadowColor: Theme.of(context).primaryColorDark,
-                child: AddPost()),
+              color: Colors.white,
+              elevation: 5,
+              shadowColor: Theme.of(context).primaryColorDark,
+              child: GestureDetector(
+                child: AddPost(),
+                onTap: () {
+                  Navigator.of(context).pushNamed(Profile.route);
+                },
+              ),
+            ),
             ListView.separated(
               itemCount: 5,
               padding: const EdgeInsets.all(8.0),

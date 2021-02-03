@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:travel/screens/Home.dart';
+import 'package:travel/screens/profile.dart';
 
 void main() => runApp(_MyApp());
 
@@ -17,7 +18,11 @@ class _MyApp extends StatelessWidget {
                 color: Colors.pink[600],
               )),
           primaryColorDark: Colors.pink[600]),
-      home: Home(),
+      initialRoute: Home.route,
+      routes: {
+        Home.route: (_) => Home(),
+        Profile.route: (_) => Profile(),
+      },
     );
   }
 }
