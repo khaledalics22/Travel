@@ -14,7 +14,7 @@ class _PostActionsState extends State<PostActions> {
     );
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
-      child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      child: Row(children: [
         Expanded(
           flex: 1,
           child: FlatButton(

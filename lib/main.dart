@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:travel/screens/Home.dart';
+import 'package:travel/screens/createtirp.dart';
+import 'package:travel/screens/friends.dart';
 import 'package:travel/screens/profile.dart';
+import 'package:travel/screens/searchtrip.dart';
 
 void main() => runApp(_MyApp());
 
@@ -22,6 +25,9 @@ class _MyApp extends StatelessWidget {
       routes: {
         Home.route: (_) => Home(),
         Profile.route: (_) => Profile(),
+        SearchTrip.route: (_) => SearchTrip(),
+        CreateTrip.route: (_) => CreateTrip(),
+        Friends.route: (_) => Friends(),
       },
     );
   }

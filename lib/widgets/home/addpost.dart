@@ -58,7 +58,7 @@ class _AddPostState extends State<AddPost> {
     return Container(
       height: size.height > 500
           ? size.height / ((inputTapped || _pickedImage != null) ? 2 : 3)
-          : size.height,
+          : size.height / 2,
       width: double.infinity,
       child: Container(
         padding: EdgeInsets.all(8.0),
@@ -129,14 +129,10 @@ class _AddPostState extends State<AddPost> {
                   color: Theme.of(context).primaryColorLight,
                 ),
               ),
-              Flexible(
-                flex: 1,
-                fit: FlexFit.loose,
-                child: AddPostActions(
-                  _inputText,
-                  displayPickedImage,
-                ),
-              )
+              AddPostActions(
+                _inputText,
+                displayPickedImage,
+              ),
             ]),
       ),
     );

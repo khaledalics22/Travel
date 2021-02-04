@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:travel/screens/profile.dart';
 import 'package:travel/widgets/home/addpost.dart';

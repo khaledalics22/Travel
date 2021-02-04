@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:travel/screens/createtirp.dart';
 
 class AddPostActions extends StatefulWidget {
-  final String msg;
+  final msg;
   Function displayPickedImage;
   AddPostActions(this.msg, this.displayPickedImage);
   @override
@@ -76,12 +77,31 @@ class _AddPostActionsState extends State<AddPostActions> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
             child: button('Add Photo', () {
           getImage();
         })),
+        Container(
+          height: 20,
+          child: VerticalDivider(
+            thickness: 1,
+            color: Theme.of(context).primaryColorDark,
+          ),
+        ),
+        if (Platform.isIOS)
+          Expanded(
+              child: button('Create Trip', () {
+            Navigator.of(context).pushNamed(CreateTrip.route);
+          })),
+        if (Platform.isIOS)
+          Container(
+            height: 20,
+            child: VerticalDivider(
+              thickness: 1,
+              color: Theme.of(context).primaryColorDark,
+            ),
+          ),
         Expanded(
             child: button('Post', () {
           showAlertDiaolog(context);
