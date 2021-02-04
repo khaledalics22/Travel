@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:travel/widgets/home/addpostactions.dart';
 
 class AddPost extends StatefulWidget {
@@ -133,6 +133,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                       color: Theme.of(context).primaryColorLight,
                     ),
                   ),
+                
                   AddPostActions(
                     _inputText,
                     displayPickedImage,

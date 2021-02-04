@@ -13,7 +13,7 @@ class _PostActionsState extends State<PostActions> {
       indent: 10,
     );
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 2.0),
       child: Row(children: [
         Expanded(
           flex: 1,

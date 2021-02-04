@@ -38,6 +38,21 @@ class Post extends StatelessWidget {
                 width: double.infinity,
               ),
             ),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 8.0, top: 8.0),
+              child: Row(children: [
+                Icon(
+                  Icons.thumb_up,
+                  size: 15,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                Text(
+                  '245',
+                  style: TextStyle(fontSize: 12),
+                )
+              ]),
+            ),
             Expanded(
               flex: 1,
               child: PostActions(),
