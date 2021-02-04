@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:travel/screens/editprofile.dart';
 import 'package:travel/widgets/profile/profilebody.dart';
 import '../widgets/profile/profiletop.dart';
+
+enum MenuItems {
+  edit,
+  logout,
+}
 
 class Profile extends StatelessWidget {
   static const route = 'profile';
@@ -11,12 +17,18 @@ class Profile extends StatelessWidget {
         title: Text('Profile'),
         actions: [
           PopupMenuButton(
+            onSelected: (idx) {
+              if (MenuItems.edit == idx)
+                Navigator.of(context).pushNamed(EditProfile.route);
+            },
             itemBuilder: (_) {
               return [
                 PopupMenuItem(
+                  value: MenuItems.edit,
                   child: Container(child: Text('Edit')),
                 ),
                 PopupMenuItem(
+                  value: MenuItems.logout,
                   child: Container(
                       child: Text(
                     'Logout',

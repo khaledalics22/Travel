@@ -101,9 +101,12 @@ class Friends extends StatelessWidget {
                     return ListTile(
                       title: Text(f.name),
                       subtitle: Text(f.bio),
-                      leading: Image.network(
-                        f.profileUrl,
-                        fit: BoxFit.scaleDown,
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.network(
+                          f.profileUrl,
+                          fit: BoxFit.scaleDown,
+                        ),
                       ),
                     );
                   }),
