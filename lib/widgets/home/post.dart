@@ -48,9 +48,16 @@ class Post extends StatelessWidget {
                   color: Theme.of(context).primaryColorDark,
                 ),
                 Text(
-                  '245',
+                  ' 245',
                   style: TextStyle(fontSize: 12),
-                )
+                ),
+                Expanded(
+                  child: SizedBox(),
+                ),
+                Text(
+                  '87 comments',
+                  style: TextStyle(fontSize: 12),
+                ),
               ]),
             ),
             Expanded(

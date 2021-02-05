@@ -15,6 +15,7 @@ class AddPostActions extends StatefulWidget {
 class _AddPostActionsState extends State<AddPostActions> {
   Widget button(String title, Function action) {
     return FlatButton(
+      height: 30,
       textColor: Theme.of(context).primaryColorDark,
       onPressed: action,
       child: Text(
@@ -83,7 +84,7 @@ class _AddPostActionsState extends State<AddPostActions> {
           getImage();
         })),
         Container(
-          height: 20,
+          height: 30,
           child: VerticalDivider(
             thickness: 1,
             color: Theme.of(context).primaryColorDark,
@@ -96,16 +97,20 @@ class _AddPostActionsState extends State<AddPostActions> {
           })),
         if (Platform.isIOS)
           Container(
-            height: 20,
+            height: 30,
             child: VerticalDivider(
               thickness: 1,
               color: Theme.of(context).primaryColorDark,
             ),
           ),
         Expanded(
-            child: button('Post', () {
-          showAlertDiaolog(context);
-        })),
+          child: button(
+            'Post',
+            () {
+              showAlertDiaolog(context);
+            },
+          ),
+        ),
       ],
     );
   }

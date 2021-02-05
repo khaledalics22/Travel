@@ -66,7 +66,7 @@ class _TripBodyState extends State<TripBody> {
             ),
             Expanded(
               child: TextField(
-                keyboardType: Icons.people == icon
+                keyboardType: Icons.people == icon || Icons.attach_money == icon
                     ? TextInputType.number
                     : TextInputType.text,
                 controller: ctr,
@@ -92,7 +92,7 @@ class _TripBodyState extends State<TripBody> {
         ),
       );
   Trip get getTrip {
-    //TODO use providers to get data to createtrip post; 
+    //TODO use providers to get data to createtrip post;
     return Trip(
       title: _nameCtr.text,
       date: _selectedDate.millisecondsSinceEpoch,
@@ -115,7 +115,7 @@ class _TripBodyState extends State<TripBody> {
             feild('From location', _srcCtr, Icons.my_location),
             feild('To location', _destCtr, Icons.location_on_sharp),
             feild('Group size', _groupCountCtr, Icons.people),
-            feild('Minimum Cost', _costCtr, Icons.money),
+            feild('Minimum Cost', _costCtr, Icons.attach_money),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(

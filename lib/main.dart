@@ -3,6 +3,7 @@ import 'package:travel/screens/Home.dart';
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/editprofile.dart';
 import 'package:travel/screens/friends.dart';
+import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/profile.dart';
 import 'package:travel/screens/searchtrip.dart';
 
@@ -29,7 +30,8 @@ class _MyApp extends StatelessWidget {
         SearchTrip.route: (_) => SearchTrip(),
         CreateTrip.route: (_) => CreateTrip(),
         Friends.route: (_) => Friends(),
-        EditProfile.route:(_)=> EditProfile(), 
+        EditProfile.route: (_) => EditProfile(),
+        PostDetails.route: (_) => PostDetails(),
       },
     );
   }

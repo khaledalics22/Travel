@@ -68,77 +68,80 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                 ? size.height / ((inputTapped || _pickedImage != null) ? 2 : 3)
                 : size.height / 2,
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  HomeTop(),
-                  Divider(),
-                  Expanded(
-                    flex: 3,
-                    child: TextField(
-                      textDirection: TextDirection.ltr,
-                      decoration: InputDecoration(
-                          hintText: 'Share your experience here!',
-                          border: InputBorder.none),
-                      minLines: null,
-                      expands: true,
-                      onTap: () {
-                        setState(() {
-                          inputTapped = !inputTapped;
-                          if (!inputTapped) FocusScope.of(context).unfocus();
-                        });
-                      },
-                      maxLines: null,
-                      onChanged: (text) {
-                        setState(() {
-                          _inputText = text;
-                        });
-                      },
-                      style: TextStyle(fontSize: 18),
-                      cursorColor: Colors.orange,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                HomeTop(),
+                Divider(),
+                Expanded(
+                  flex: 3,
+                  child: TextField(
+                    textDirection: TextDirection.ltr,
+                    decoration: InputDecoration(
+                        hintText: 'Share your experience here!',
+                        border: InputBorder.none),
+                    minLines: null,
+                    expands: true,
+                    onTap: () {
+                      setState(() {
+                        inputTapped = !inputTapped;
+                        if (!inputTapped) FocusScope.of(context).unfocus();
+                      });
+                    },
+                    maxLines: null,
+                    onChanged: (text) {
+                      setState(() {
+                        _inputText = text;
+                      });
+                    },
+                    style: TextStyle(fontSize: 18),
+                    cursorColor: Colors.orange,
+                  ),
+                ),
+                if (_pickedImage != null)
+                  Container(
+                    width: double.infinity,
+                    height: 100,
+                    alignment: Alignment.centerLeft,
+                    child: Stack(children: [
+                      Image.file(
+                        _pickedImage,
+                        fit: BoxFit.scaleDown,
+                        height: 100,
+                        width: 100,
+                      ),
+                      Positioned(
+                        right: 1,
+                        top: 1,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              size: 25,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _pickedImage = null;
+                              });
+                            }),
+                      )
+                    ]),
+                  ),
+                Divider(
+                  thickness: 1,
+                  color: Theme.of(context).primaryColorLight,
+                ),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: Container(
+                    height: 30,
+                    child: AddPostActions(
+                      _inputText,
+                      displayPickedImage,
                     ),
                   ),
-                  if (_pickedImage != null)
-                    Container(
-                      width: double.infinity,
-                      height: 100,
-                      alignment: Alignment.centerLeft,
-                      child: Stack(children: [
-                        Image.file(
-                          _pickedImage,
-                          fit: BoxFit.scaleDown,
-                          height: 100,
-                          width: 100,
-                        ),
-                        Positioned(
-                          right: 1,
-                          top: 1,
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.close,
-                                size: 25,
-                                color: Theme.of(context).primaryColorDark,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _pickedImage = null;
-                                });
-                              }),
-                        )
-                      ]),
-                    ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Divider(
-                      thickness: 1,
-                      color: Theme.of(context).primaryColorLight,
-                    ),
-                  ),
-                
-                  AddPostActions(
-                    _inputText,
-                    displayPickedImage,
-                  ),
-                ]),
+                ),
+              ],
+            ),
           ),
         ),
       ),
