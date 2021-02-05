@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:travel/models/post.dart';
 import 'package:travel/widgets/circularImage.dart';
+import 'package:travel/widgets/posts/postbody.dart';
+import '../applybutton.dart';
 import '../home/postactions.dart';
 
-class Post extends StatelessWidget {
-  final post;
-  Post(this.post);
+class PostWidget extends StatelessWidget {
+  final Post post;
+  PostWidget(this.post);
+
+  Widget tripActions(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+                width: double.infinity,
+                child: Text(
+                  'Cost ${post.minCost}\$',
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColorLight, fontSize: 18),
+                )),
+          ),
+        ),
+        Expanded(
+          child: ApplyButton(post.authorId),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -27,17 +53,38 @@ class Post extends StatelessWidget {
               fit: FlexFit.loose,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text('it was an amazing trip :)'),
+                child: Text(post.caption),
               ),
             ),
-            Expanded(
-              flex: 4,
-              child: Image.network(
-                'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-                fit: BoxFit.fitWidth,
-                width: double.infinity,
-              ),
-            ),
+            if (post.hasImg)
+              Expanded(
+                  flex: 4,
+                  child: post.isTrip
+                      ? Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            PostBody(post.imgUrl),
+                            Container(
+                              padding: EdgeInsets.all(8.0),
+                              child: tripActions(context),
+                              color: Colors.pink[50],
+                            ),
+                            Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Container(
+                                  padding: EdgeInsets.all(8.0),
+                                  color: Colors.pink[50],
+                                  child: Text(
+                                    'Size ${post.groupSize}',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ))
+                          ],
+                        )
+                      : PostBody(post.imgUrl)),
             Container(
               width: double.infinity,
               padding: EdgeInsets.only(left: 8.0, top: 8.0),

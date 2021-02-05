@@ -25,9 +25,9 @@ class TripDetials extends StatelessWidget {
       appBar: appbar,
       body: SingleChildScrollView(
           child: Container(
-        height: MediaQuery.of(context).size.height -
-            appbar.preferredSize.height -
-            MediaQuery.of(context).padding.top,
+        // height: MediaQuery.of(context).size.height -
+        //     appbar.preferredSize.height -
+        //     MediaQuery.of(context).padding.top,
         child: TripDetailsBody(trip),
       )),
     );

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:travel/models/post.dart';
+import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/profile.dart';
+import 'package:travel/screens/tripdetails.dart';
 import 'package:travel/widgets/home/addpost.dart';
 import 'package:travel/widgets/home/post.dart';
 
@@ -9,6 +12,45 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  
+  List<Post> postsList = [
+    Post(
+      authorId: 'uid',
+      caption: 'it was amazing',
+      hasImg: true,
+      isTrip: false,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+      likesList: ['d', 'd', 'd', 'd'],
+    ),
+    Post(
+      authorId: 'uid',
+      caption: 'it was amazing',
+      hasImg: true,
+      isTrip: true,
+      minCost: 300,
+      groupSize: 7,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+      likesList: ['d', 'd', 'd', 'd'],
+    ),
+    Post(
+      authorId: 'uid',
+      caption: 'it was amazing',
+      hasImg: true,
+      isTrip: true,
+      groupSize: 12,
+      minCost: 100,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+      likesList: ['d', 'd', 'd', 'd'],
+    ),
+    Post(
+      authorId: 'uid',
+      caption: 'it was amazing',
+      hasImg: true,
+      isTrip: false,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+      likesList: ['d', 'd', 'd', 'd'],
+    ),
+  ];
   Widget getBody(BuildContext context) => SingleChildScrollView(
         child: Column(
           children: [
@@ -24,7 +66,7 @@ class _BodyState extends State<Body> {
               ),
             ),
             ListView.separated(
-              itemCount: 5,
+              itemCount: postsList.length,
               padding: const EdgeInsets.all(8.0),
               separatorBuilder: (BuildContext context, int index) =>
                   const Divider(
@@ -33,7 +75,13 @@ class _BodyState extends State<Body> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (_, idx) {
-                return Post(null);
+                return GestureDetector(
+                    onTap: () {
+                      postsList[idx].isTrip
+                          ? Navigator.of(context).pushNamed(TripDetials.route)
+                          : Navigator.of(context).pushNamed(PostDetails.route);
+                    },
+                    child: PostWidget(postsList[idx]));
               },
             ),
           ],

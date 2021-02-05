@@ -4,6 +4,8 @@ import 'package:travel/models/Trip.dart';
 import 'package:travel/widgets/Trip/tripdetailstop.dart';
 import 'package:travel/widgets/circularImage.dart';
 
+import '../applybutton.dart';
+
 class TripDetailsBody extends StatelessWidget {
   final Trip _trip;
   TripDetailsBody(this._trip);
@@ -11,6 +13,7 @@ class TripDetailsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final f = DateFormat('Md MMM yyyy, ').add_jm();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         TripDetailsTop(_trip.imgUrl),
         Padding(
@@ -61,20 +64,31 @@ class TripDetailsBody extends StatelessWidget {
           ),
         ),
         Divider(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Details',
+            style: TextStyle(fontSize: 22, color: Colors.grey),
+          ),
+        ),
         ClipRRect(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(35),
             child: Container(
-                width: double.infinity,
                 margin: const EdgeInsets.all(8.0),
                 padding: const EdgeInsets.all(8.0),
                 color: Colors.pink[50],
-                child: Text('${_trip.details}'))),
+                child: Text(
+                  '${_trip.details}\n\n',
+                  softWrap: true,
+                ))),
         Container(
             width: double.infinity,
             margin: const EdgeInsets.all(8.0),
             // color: Colors.pink[50],
             child: Text('Max size: ${_trip.groupSize}')),
-        Expanded(
+        ClipRRect(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(20)),
           child: Container(
             padding: const EdgeInsets.all(8.0),
             color: Colors.pink[50],
@@ -99,37 +113,9 @@ class TripDetailsBody extends StatelessWidget {
               ],
             ),
           ),
-        )
+        ),
       ],
     );
   }
 }
 
-class ApplyButton extends StatefulWidget {
-  String orgName;
-  ApplyButton(this.orgName);
-  @override
-  _ApplyButtonState createState() => _ApplyButtonState();
-}
-
-class _ApplyButtonState extends State<ApplyButton> {
-  bool applied = false;
-  @override
-  Widget build(BuildContext context) {
-    return RaisedButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      onPressed: () {
-        Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text('Applied to ${widget.orgName}\'s trip')));
-        setState(() {
-          applied = !applied;
-        });
-      },
-      color: Theme.of(context).primaryColorDark,
-      child: Text(applied ? 'Applied' : 'Apply',
-          style: TextStyle(
-            color: Colors.white,
-          )),
-    );
-  }
-}
