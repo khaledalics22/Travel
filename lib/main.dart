@@ -6,6 +6,7 @@ import 'package:travel/screens/friends.dart';
 import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/profile.dart';
 import 'package:travel/screens/searchtrip.dart';
+import 'package:travel/screens/tripdetails.dart';
 
 void main() => runApp(_MyApp());
 
@@ -32,6 +33,7 @@ class _MyApp extends StatelessWidget {
         Friends.route: (_) => Friends(),
         EditProfile.route: (_) => EditProfile(),
         PostDetails.route: (_) => PostDetails(),
+        TripDetials.route: (_) => TripDetials(),
       },
     );
   }

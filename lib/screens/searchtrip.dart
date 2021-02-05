@@ -17,6 +17,28 @@ class _SearchTripState extends State<SearchTrip> {
       details: 'we are grouping 15 people for a journey to saqara',
       date: DateTime.now().millisecondsSinceEpoch,
       minCost: 124.0,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+    ),
+    Trip(
+      title: 'saqara',
+      details: 'we are grouping 15 people for a journey to saqara',
+      date: DateTime.now().millisecondsSinceEpoch,
+      minCost: 124.0,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+    ),
+    Trip(
+      title: 'saqara',
+      details: 'we are grouping 15 people for a journey to saqara',
+      date: DateTime.now().millisecondsSinceEpoch,
+      minCost: 124.0,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+    ),
+    Trip(
+      title: 'saqara',
+      details: 'we are grouping 15 people for a journey to saqara',
+      date: DateTime.now().millisecondsSinceEpoch,
+      minCost: 124.0,
+      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     )
   ];
   var histTest = [
@@ -49,7 +71,7 @@ class _SearchTripState extends State<SearchTrip> {
     var searchView = Container(
       width: MediaQuery.of(context).size.width * 3 / 4,
       height: appbar.preferredSize.height,
-      child: SearchWidget(null, onSearchTextChanged,'search for a trip'),
+      child: SearchWidget(null, onSearchTextChanged, 'search for a trip'),
     );
     appbar.actions.add(searchView);
     historyList = histTest;
