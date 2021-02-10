@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/searchtrip.dart';
 import 'package:travel/widgets/search/searchbar.dart';
 import '../widgets/home/homebody.dart';
 
 class Home extends StatelessWidget {
-  static const route = '/';
+  static const route = '/home';
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class Home extends StatelessWidget {
             )
           : null,
       appBar: appbar,
-      body: Body(),
+      body:Body(),
     );
   }
 }

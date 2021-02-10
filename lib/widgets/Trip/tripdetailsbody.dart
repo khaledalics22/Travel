@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:travel/models/Trip.dart';
+import 'package:travel/providers/Trip.dart';
+import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/Trip/tripdetailstop.dart';
 import 'package:travel/widgets/circularImage.dart';
 
 import '../applybutton.dart';
 
 class TripDetailsBody extends StatelessWidget {
-  final Trip _trip;
-  TripDetailsBody(this._trip);
+  final Post _post;
+  TripDetailsBody(this._post);
   @override
   Widget build(BuildContext context) {
     final f = DateFormat('Md MMM yyyy, ').add_jm();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TripDetailsTop(_trip.imgUrl),
+        TripDetailsTop(_post.imgUrl),
         Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -24,7 +25,7 @@ class TripDetailsBody extends StatelessWidget {
                   Icon(Icons.location_on),
                   Expanded(
                     child: Text(
-                      _trip.title,
+                      _post.trip.title,
                       style: TextStyle(fontSize: 22),
                     ),
                   ),
@@ -33,7 +34,7 @@ class TripDetailsBody extends StatelessWidget {
                       child: Container(
                           padding: const EdgeInsets.all(3.0),
                           color: Colors.pink[50],
-                          child: Text('accepted ${_trip.group.length}'))),
+                          child: Text('accepted ${_post.trip.group?.length}'))),
                 ])),
         Container(
             width: double.infinity,
@@ -41,14 +42,14 @@ class TripDetailsBody extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             // color: Colors.pink[50],
             child: Text(
-                '${f.format(DateTime.fromMillisecondsSinceEpoch(_trip.date))}')),
+                '${f.format(DateTime.fromMillisecondsSinceEpoch(_post.trip.date))}')),
         Container(
           width: double.infinity,
           height: 40,
           child: Stack(
             alignment: Alignment.centerRight,
-            children: _trip.group.map((uid) {
-              final idx = _trip.group.indexOf(uid);
+            children: _post.trip.group.map((uid) {
+              final idx = _post.trip.group.indexOf(uid);
               return Positioned(
                 right: idx * 20.0,
                 child: CircleAvatar(
@@ -56,7 +57,7 @@ class TripDetailsBody extends StatelessWidget {
                   backgroundColor: Colors.white,
                   child: CircularImage(
                     30.0,
-                    'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+                    _post.imgUrl,
                   ),
                 ),
               );
@@ -78,14 +79,14 @@ class TripDetailsBody extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 color: Colors.pink[50],
                 child: Text(
-                  '${_trip.details}\n\n',
+                  '${_post.trip.details}\n\n',
                   softWrap: true,
                 ))),
         Container(
             width: double.infinity,
             margin: const EdgeInsets.all(8.0),
             // color: Colors.pink[50],
-            child: Text('Max size: ${_trip.groupSize}')),
+            child: Text('Max size: ${_post.trip.groupSize}')),
         ClipRRect(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15), topRight: Radius.circular(20)),
@@ -100,7 +101,7 @@ class TripDetailsBody extends StatelessWidget {
                     child: Container(
                         width: double.infinity,
                         child: Text(
-                          'Cost ${_trip.minCost}\$',
+                          'Cost ${_post.trip.minCost}\$',
                           style: TextStyle(
                               color: Theme.of(context).primaryColorLight,
                               fontSize: 18),
@@ -108,7 +109,7 @@ class TripDetailsBody extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: ApplyButton(_trip.organizer),
+                  child: ApplyButton(_post.trip.organizer),
                 )
               ],
             ),
@@ -118,4 +119,3 @@ class TripDetailsBody extends StatelessWidget {
     );
   }
 }
-

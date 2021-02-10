@@ -1,78 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:travel/models/Comment.dart';
+import 'package:provider/provider.dart';
+import 'package:travel/providers/Comment.dart';
+import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/posts/commentwidget.dart';
 
 class PostDetailsBody extends StatefulWidget {
+  final String postId;
+  PostDetailsBody(this.postId);
   @override
   _PostDetailsBodyState createState() => _PostDetailsBodyState();
 }
 
 class _PostDetailsBodyState extends State<PostDetailsBody> {
-  var comments = [
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 1000000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 10000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 10000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 100000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 1000000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 1000000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 1000000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 1000000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 1000000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-    Comment(
-        likes: 14,
-        body: 'it looks amazing!',
-        authorName: 'khalid Ali',
-        date: DateTime.now().millisecondsSinceEpoch - 1000000,
-        authorImgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png'),
-  ];
-
   var commentCtr = TextEditingController();
 
   File _image;
@@ -81,6 +22,7 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
 
   Future getImage() async {
     final _pickedFile = await picker.getImage(source: ImageSource.gallery);
+
     setState(() {
       if (_pickedFile != null) {
         this._image = File(_pickedFile.path);
@@ -93,6 +35,9 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
   @override
   Widget build(BuildContext context) {
     // const double paddBottom = MediaQuery.of(context).viewInsets.bottom;
+
+    final post = Provider.of<Posts>(context).findById(widget.postId);
+    final comments = post.commetsList;
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -100,7 +45,10 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
           Expanded(
             child: ListView.separated(
               itemBuilder: (_, idx) {
-                return CommentWidget(comments[idx]);
+                return ChangeNotifierProvider.value(
+                  child: CommentWidget(),
+                  value: comments[idx],
+                );
               },
               separatorBuilder: (_, idx) {
                 return Divider();
@@ -144,7 +92,10 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IconButton(
-                    icon: Icon(Icons.photo),
+                    icon: Icon(
+                      Icons.photo,
+                      color: Colors.black54,
+                    ),
                     onPressed: () {
                       getImage();
                     }),
@@ -156,6 +107,9 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
                       color: Colors.pink[50],
                       child: TextField(
                         minLines: 1,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                         maxLines:
                             MediaQuery.of(context).size.height > 500 ? 4 : 1,
                         controller: commentCtr,
@@ -168,13 +122,34 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
                   ),
                 ),
                 IconButton(
-                    icon: Icon(Icons.send),
-                    onPressed: () {
-                      setState(() {
-                        commentCtr.text = '';
-                        _image = null;
-                      });
-                    }),
+                    icon: Icon(
+                      Icons.send,
+                      color: commentCtr.text.isNotEmpty || _image != null
+                          ? Theme.of(context).primaryColorDark
+                          : Colors.black54,
+                    ),
+                    onPressed: commentCtr.text.isNotEmpty || _image != null
+                        ? () {
+                            final comment = Comment(
+                              authorName: 'khalid',
+                              authorImgUrl:
+                                  'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
+                              date: DateTime.now().millisecondsSinceEpoch,
+                              likesList: [],
+                            );
+                            if (commentCtr.text.isNotEmpty) {
+                              comment.body = commentCtr.text;
+                            }
+                            if (_image != null)
+                              comment.imageUrl =
+                                  'https://homepages.cae.wisc.edu/~ece533/images/cat.png'; // _image.toString(); // upload image and chang to url
+                            post.addComment(comment);
+                            setState(() {
+                              commentCtr.text = '';
+                              _image = null;
+                            });
+                          }
+                        : null),
               ],
             ),
           ),

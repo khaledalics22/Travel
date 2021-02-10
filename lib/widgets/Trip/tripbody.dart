@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:travel/models/Trip.dart';
+import 'package:travel/providers/Trip.dart';
 
 class TripBody extends StatefulWidget {
   @override
@@ -98,7 +98,6 @@ class _TripBodyState extends State<TripBody> {
       date: _selectedDate.millisecondsSinceEpoch,
       minCost: double.parse(_costCtr.text),
       groupSize: int.parse(_groupCountCtr.text),
-      img: _image,
     );
   }
 

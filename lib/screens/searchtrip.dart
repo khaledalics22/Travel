@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel/models/Trip.dart';
+import 'package:travel/providers/Trip.dart';
 import 'package:travel/widgets/search/history.dart';
 import 'package:travel/widgets/search/searchbody.dart';
 import '../widgets/search/searchbar.dart';
@@ -17,28 +17,18 @@ class _SearchTripState extends State<SearchTrip> {
       details: 'we are grouping 15 people for a journey to saqara',
       date: DateTime.now().millisecondsSinceEpoch,
       minCost: 124.0,
-      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
     Trip(
       title: 'saqara',
       details: 'we are grouping 15 people for a journey to saqara',
       date: DateTime.now().millisecondsSinceEpoch,
       minCost: 124.0,
-      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
     Trip(
       title: 'saqara',
       details: 'we are grouping 15 people for a journey to saqara',
       date: DateTime.now().millisecondsSinceEpoch,
       minCost: 124.0,
-      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    Trip(
-      title: 'saqara',
-      details: 'we are grouping 15 people for a journey to saqara',
-      date: DateTime.now().millisecondsSinceEpoch,
-      minCost: 124.0,
-      imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     )
   ];
   var histTest = [

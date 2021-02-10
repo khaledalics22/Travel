@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:travel/models/Trip.dart';
+import 'package:provider/provider.dart';
+import 'package:travel/providers/Trip.dart';
+import 'package:travel/providers/post.dart';
+import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/Trip/tripdetailsbody.dart';
 
 class TripDetials extends StatelessWidget {
   static final String route = 'trip-details';
   @override
   Widget build(BuildContext context) {
-    Trip trip = Trip(
-        title: 'saqara',
-        groupSize: 15,
-        minCost: 200,
-        date: DateTime.now().millisecondsSinceEpoch + 100000,
-        details: 'we are heading to saqara ',
-        group: ['one', 'two', 'three'],
-        organizer: 'Mohamed Tarek',
-        imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png');
+    final postId = ModalRoute.of(context).settings.arguments as String;
+    final post = Provider.of<Posts>(context).findById(postId); 
     final appbar = AppBar(
       title: Text(
-        '${trip.organizer}\'s trip',
+        '${post.trip.organizer}\'s trip',
         overflow: TextOverflow.ellipsis,
       ),
     );
@@ -28,7 +24,7 @@ class TripDetials extends StatelessWidget {
         // height: MediaQuery.of(context).size.height -
         //     appbar.preferredSize.height -
         //     MediaQuery.of(context).padding.top,
-        child: TripDetailsBody(trip),
+        child: TripDetailsBody(post),
       )),
     );
   }

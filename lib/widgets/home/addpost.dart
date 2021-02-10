@@ -83,8 +83,8 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                     expands: true,
                     onTap: () {
                       setState(() {
+                        if (inputTapped) FocusScope.of(context).unfocus();
                         inputTapped = !inputTapped;
-                        if (!inputTapped) FocusScope.of(context).unfocus();
                       });
                     },
                     maxLines: null,

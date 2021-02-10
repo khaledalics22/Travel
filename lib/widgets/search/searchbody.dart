@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:travel/models/Trip.dart';
+import 'package:travel/providers/Trip.dart';
 import 'package:travel/screens/tripdetails.dart';
 
 class SearchBody extends StatelessWidget {
@@ -21,7 +21,7 @@ class SearchBody extends StatelessWidget {
               padding: const EdgeInsets.all(5.0),
               child: ListTile(
                 leading: Image.network(
-                  trip.imgUrl,
+                  'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
                   fit: BoxFit.scaleDown,
                 ),
                 title: Text(trip.title),

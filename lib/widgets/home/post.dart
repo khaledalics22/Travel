@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:travel/models/post.dart';
+import 'package:provider/provider.dart';
+import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/circularImage.dart';
 import 'package:travel/widgets/posts/postbody.dart';
 import '../applybutton.dart';
 import '../home/postactions.dart';
 
 class PostWidget extends StatelessWidget {
-  final Post post;
-  PostWidget(this.post);
-
-  Widget tripActions(BuildContext context) {
+  Widget tripActions(BuildContext context, Post post) {
     return Row(
       children: [
         Expanded(
@@ -34,6 +32,7 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final post = Provider.of<Post>(context);
     return Container(
       width: size.width > 500 ? 500 : size.width,
       height: size.width > 500 ? 500 : size.width,
@@ -44,7 +43,7 @@ class PostWidget extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
-                child: PostTop(),
+                child: PostTop(post),
               ),
               flex: 1,
             ),
@@ -66,7 +65,7 @@ class PostWidget extends StatelessWidget {
                             PostBody(post.imgUrl),
                             Container(
                               padding: EdgeInsets.all(8.0),
-                              child: tripActions(context),
+                              child: tripActions(context, post),
                               color: Colors.pink[50],
                             ),
                             Positioned(
@@ -76,7 +75,7 @@ class PostWidget extends StatelessWidget {
                                   padding: EdgeInsets.all(8.0),
                                   color: Colors.pink[50],
                                   child: Text(
-                                    'Size ${post.groupSize}',
+                                    'G. Size ${post.groupSize}',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
@@ -95,21 +94,21 @@ class PostWidget extends StatelessWidget {
                   color: Theme.of(context).primaryColorDark,
                 ),
                 Text(
-                  ' 245',
+                  ' ${post.likesList.length}',
                   style: TextStyle(fontSize: 12),
                 ),
                 Expanded(
                   child: SizedBox(),
                 ),
                 Text(
-                  '87 comments',
+                  '${post.commetsList.length} comments',
                   style: TextStyle(fontSize: 12),
                 ),
               ]),
             ),
             Expanded(
               flex: 1,
-              child: PostActions(),
+              child: PostActions(post.postId),
             ),
           ]),
     );
@@ -117,20 +116,22 @@ class PostWidget extends StatelessWidget {
 }
 
 class PostTop extends StatelessWidget {
+  final Post post;
+  PostTop(this.post);
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircularImage(
           40.0,
-          'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
+          post.imgUrl,
         ),
         Expanded(
           flex: 7,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Owner Name',
+              post.authorId,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
