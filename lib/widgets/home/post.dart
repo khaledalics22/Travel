@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/circularImage.dart';
 import 'package:travel/widgets/posts/postbody.dart';
+import 'package:travel/widgets/posts/video.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 import '../applybutton.dart';
 import '../home/postactions.dart';
 
@@ -55,7 +57,7 @@ class PostWidget extends StatelessWidget {
                 child: Text(post.caption),
               ),
             ),
-            if (post.hasImg)
+            if (post.hasImg || post.hasVid)
               Expanded(
                   flex: 4,
                   child: post.isTrip
@@ -83,7 +85,9 @@ class PostWidget extends StatelessWidget {
                                 ))
                           ],
                         )
-                      : PostBody(post.imgUrl)),
+                      : post.hasVid
+                          ?  VideoWidget(post.videoUrl)
+                          : PostBody(post.imgUrl)),
             Container(
               width: double.infinity,
               padding: EdgeInsets.only(left: 8.0, top: 8.0),

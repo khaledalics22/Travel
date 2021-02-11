@@ -71,7 +71,7 @@ class CommentWidget extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(
                 left: 50,
-                top: 8.0,
+                top: 8.0, 
               ),
               child: Image.network(
                 comment.imageUrl,

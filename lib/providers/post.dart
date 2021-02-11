@@ -5,6 +5,8 @@ import 'package:travel/providers/Trip.dart';
 class Post with ChangeNotifier {
   String authorId;
   bool hasImg;
+  bool hasVid;
+  String videoUrl;
   String caption;
   bool isTrip;
   String imgUrl;
@@ -21,6 +23,8 @@ class Post with ChangeNotifier {
       this.minCost,
       this.postId,
       this.hasImg,
+      this.hasVid,
+      this.videoUrl,
       this.caption,
       this.trip,
       this.imgUrl,

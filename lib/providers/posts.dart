@@ -8,7 +8,10 @@ class Posts with ChangeNotifier {
     Post(
         authorId: 'mazen',
         caption: 'saqara was amazing',
-        hasImg: true,
+        hasImg: false,
+        hasVid: true,
+        videoUrl:
+            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         postId: '1',
         isTrip: false,
         imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
@@ -58,6 +61,7 @@ class Posts with ChangeNotifier {
         authorId: 'ahmed',
         caption: 'plah was amazing',
         hasImg: true,
+        hasVid: false,
         isTrip: true,
         trip: Trip(
           group: ['f', 'f', 'f'],
@@ -95,6 +99,7 @@ class Posts with ChangeNotifier {
         caption: 'it was amazing',
         hasImg: true,
         postId: '3',
+        hasVid: false,
         isTrip: true,
         groupSize: 12,
         trip: Trip(
@@ -187,6 +192,9 @@ class Posts with ChangeNotifier {
         authorId: 'tarek',
         caption: 'it was amazing',
         hasImg: true,
+        hasVid: false,
+        videoUrl:
+            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         postId: '5',
         isTrip: false,
         imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',

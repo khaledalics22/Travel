@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/screens/Home.dart';
 import 'package:travel/screens/signout.dart';
 
 class AuthBody extends StatelessWidget {
@@ -54,7 +55,9 @@ class AuthBody extends StatelessWidget {
                   elevation: 5,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Home.route);
+                  },
                   child: Text(
                     'Login',
                     style: TextStyle(
