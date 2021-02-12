@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:travel/providers/post.dart';
 
 import 'package:travel/widgets/home/addpostactions.dart';
+import 'package:video_player/video_player.dart';
 
 class AddPost extends StatefulWidget {
+  final Function uploadPost;
+  AddPost(this.uploadPost);
   @override
   _AddPostState createState() => _AddPostState();
 }
@@ -41,21 +45,45 @@ class HomeTop extends StatelessWidget {
 }
 
 class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
-  var _inputText = '';
   var inputController = TextEditingController();
   var inputTapped = false;
-  File _pickedImage;
-  void displayPickedImage(File img) {
+  File _pickedFile;
+  bool isImg;
+  VideoPlayerController _controller;
+  void displayPickedImage(File img, bool isImage) {
     setState(() {
-      _pickedImage = img;
+      _pickedFile = img;
+      isImg = isImage;
+      if (!isImage) {
+        _controller = VideoPlayerController.file(_pickedFile);
+        _controller.initialize();
+      }
     });
+  }
+
+  void uploadPost(BuildContext context) {
+    Post post = Post(
+        authorId: 'uid',
+        caption: inputController.text,
+        file: _pickedFile,
+        hasVid: !isImg,
+        hasImg: isImg,
+        imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
+        isTrip: false,
+        likesList: [],
+        commetsList: []);
+    widget.uploadPost(post);
+    setState(() {
+      inputTapped = false;
+      _pickedFile = null;
+    });
+    inputController.clear();
+    FocusScope.of(context).unfocus();
   }
 
   @override
   Widget build(BuildContext context) {
-    inputController.text = _inputText;
     var size = MediaQuery.of(context).size;
-
     return Container(
       width: double.infinity,
       child: Container(
@@ -65,7 +93,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
           vsync: this,
           child: Container(
             height: size.height > 500
-                ? size.height / ((inputTapped || _pickedImage != null) ? 2 : 3)
+                ? size.height / ((inputTapped || _pickedFile != null) ? 2 : 3)
                 : size.height / 2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,27 +116,30 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                       });
                     },
                     maxLines: null,
-                    onChanged: (text) {
-                      setState(() {
-                        _inputText = text;
-                      });
-                    },
+                    controller: inputController,
                     style: TextStyle(fontSize: 18),
                     cursorColor: Colors.orange,
                   ),
                 ),
-                if (_pickedImage != null)
+                if (_pickedFile != null)
                   Container(
                     width: double.infinity,
                     height: 100,
                     alignment: Alignment.centerLeft,
                     child: Stack(children: [
-                      Image.file(
-                        _pickedImage,
-                        fit: BoxFit.scaleDown,
-                        height: 100,
-                        width: 100,
-                      ),
+                      isImg
+                          ? Image.file(
+                              _pickedFile,
+                              fit: BoxFit.scaleDown,
+                              height: 100,
+                              width: 100,
+                            )
+                          : Container(
+                              height: 100,
+                              width: 100,
+                              child: VideoPlayer(
+                                _controller,
+                              )),
                       Positioned(
                         right: 1,
                         top: 1,
@@ -120,7 +151,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                             ),
                             onPressed: () {
                               setState(() {
-                                _pickedImage = null;
+                                _pickedFile = null;
                               });
                             }),
                       )
@@ -135,8 +166,11 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                   child: Container(
                     height: 30,
                     child: AddPostActions(
-                      _inputText,
+                      inputController.text,
                       displayPickedImage,
+                      () {
+                        uploadPost(context);
+                      },
                     ),
                   ),
                 ),

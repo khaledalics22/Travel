@@ -28,6 +28,12 @@ class _BodyState extends State<Body> {
     });
   }
 
+  void uploadPost(Post post) {
+    posts.addPost(post);
+    print('add poooooooooooooost');
+  }
+
+  Posts posts;
   @override
   Widget build(BuildContext context) {
     // if (_loading) {
@@ -39,7 +45,9 @@ class _BodyState extends State<Body> {
     //     child: Center(child: CircularProgressIndicator()),
     //   );
     // } else {
-    final List<Post> postsList = Provider.of<Posts>(context).postsList;
+ 
+    posts  = Provider.of<Posts>(context);
+    final postsList = posts.postsList; 
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -48,7 +56,7 @@ class _BodyState extends State<Body> {
             elevation: 5,
             shadowColor: Theme.of(context).primaryColorDark,
             child: GestureDetector(
-              child: AddPost(),
+              child: AddPost(uploadPost),
               onTap: () {
                 Navigator.of(context).pushNamed(Profile.route);
               },

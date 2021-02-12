@@ -4,7 +4,6 @@ import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/circularImage.dart';
 import 'package:travel/widgets/posts/postbody.dart';
 import 'package:travel/widgets/posts/video.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 import '../applybutton.dart';
 import '../home/postactions.dart';
 
@@ -86,30 +85,34 @@ class PostWidget extends StatelessWidget {
                           ],
                         )
                       : post.hasVid
-                          ?  VideoWidget(post.videoUrl)
+                          ? VideoWidget(post.videoUrl)
                           : PostBody(post.imgUrl)),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(left: 8.0, top: 8.0),
-              child: Row(children: [
-                Icon(
-                  Icons.thumb_up,
-                  size: 15,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-                Text(
-                  ' ${post.likesList.length}',
-                  style: TextStyle(fontSize: 12),
-                ),
-                Expanded(
-                  child: SizedBox(),
-                ),
-                Text(
-                  '${post.commetsList.length} comments',
-                  style: TextStyle(fontSize: 12),
-                ),
-              ]),
-            ),
+            if (post.likesList.isNotEmpty || post.commetsList.isNotEmpty)
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(left: 8.0, top: 8.0),
+                child: Row(children: [
+                  if (post.likesList.isNotEmpty)
+                    Icon(
+                      Icons.thumb_up,
+                      size: 15,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                  if (post.likesList.isNotEmpty)
+                    Text(
+                      ' ${post.likesList.length}',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  Expanded(
+                    child: SizedBox(),
+                  ),
+                  if (post.commetsList.isNotEmpty)
+                    Text(
+                      '${post.commetsList.length} comments',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                ]),
+              ),
             Expanded(
               flex: 1,
               child: PostActions(post.postId),

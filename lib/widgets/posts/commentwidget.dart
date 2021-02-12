@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Comment.dart';
+import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
 
 class CommentWidget extends StatelessWidget {
-  String commentDate(int commDate) {
-    var date = DateTime.fromMillisecondsSinceEpoch(commDate);
-    return DateTime.now().difference(date)?.inDays != 0
-        ? 'd${DateTime.now().difference(date)?.inDays}'
-        : DateTime.now().difference(date)?.inHours != 0
-            ? 'h${DateTime.now().difference(date)?.inHours}'
-            : DateTime.now().difference(date)?.inMinutes != 0
-                ? 'm${DateTime.now().difference(date)?.inMinutes}'
-                : DateTime.now().difference(date)?.inMinutes != 0
-                    ? 's${DateTime.now().difference(date)?.inSeconds}'
-                    : 'now';
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +38,7 @@ class CommentWidget extends StatelessWidget {
               ),
               Container(
                 child: Text(
-                  commentDate(comment.date),
+                  Utils.dateDifference(comment.date),
                 ),
               )
             ],

@@ -56,7 +56,7 @@ class AuthBody extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(Home.route);
+                    Navigator.of(context).popAndPushNamed(Home.route);
                   },
                   child: Text(
                     'Login',

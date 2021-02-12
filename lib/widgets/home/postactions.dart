@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/screens/postdetails.dart';
+import 'package:travel/screens/tripdetails.dart';
 
 class PostActions extends StatefulWidget {
   String postId;
@@ -17,7 +18,7 @@ class _PostActionsState extends State<PostActions> {
       thickness: 1,
       indent: 10,
     );
-    final post = Provider.of<Post>(context); 
+    final post = Provider.of<Post>(context);
     return Padding(
       padding: const EdgeInsets.only(top: 2.0),
       child: Row(children: [
@@ -33,7 +34,7 @@ class _PostActionsState extends State<PostActions> {
                       : Colors.black),
             ),
             onPressed: () {
-              post.toggleLike(); 
+              post.toggleLike();
             },
           ),
         ),
@@ -44,8 +45,9 @@ class _PostActionsState extends State<PostActions> {
             height: double.infinity,
             child: Text('Comment'),
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(PostDetails.route, arguments: widget.postId);
+              Navigator.of(context).pushNamed(
+                  post.isTrip ? TripDetials.route : PostDetails.route,
+                  arguments: widget.postId);
             },
           ),
         ),

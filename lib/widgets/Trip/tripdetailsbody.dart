@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:travel/providers/Trip.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/Trip/tripdetailstop.dart';
 import 'package:travel/widgets/circularImage.dart';

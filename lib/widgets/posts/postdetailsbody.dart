@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Comment.dart';
 import 'package:travel/providers/posts.dart';
+import 'package:travel/utils.dart';
 import 'package:travel/widgets/posts/commentwidget.dart';
 
 class PostDetailsBody extends StatefulWidget {
@@ -17,20 +17,6 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
   var commentCtr = TextEditingController();
 
   File _image;
-
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    final _pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (_pickedFile != null) {
-        this._image = File(_pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +83,13 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
                       color: Colors.black54,
                     ),
                     onPressed: () {
-                      getImage();
+                      Utils.getImage().then(
+                        (value) => setState(
+                          () {
+                            _image = value;
+                          },
+                        ),
+                      );
                     }),
                 Expanded(
                   child: ClipRRect(

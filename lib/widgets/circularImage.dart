@@ -14,6 +14,7 @@ class CircularImage extends StatelessWidget {
         child: Image.network(
           url,
           fit: BoxFit.fitWidth,
+          filterQuality: FilterQuality.low,
         ),
       ),
     );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:travel/providers/Comment.dart';
 import 'package:travel/providers/Trip.dart';
@@ -17,6 +19,7 @@ class Post with ChangeNotifier {
   List<String> likesList;
   List<Comment> commetsList;
   Trip trip;
+  File file; 
 
   Post(
       {this.authorId,
@@ -24,6 +27,7 @@ class Post with ChangeNotifier {
       this.postId,
       this.hasImg,
       this.hasVid,
+      this.file,
       this.videoUrl,
       this.caption,
       this.trip,

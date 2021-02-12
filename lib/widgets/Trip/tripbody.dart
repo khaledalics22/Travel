@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:travel/providers/Trip.dart';
+import 'package:travel/utils.dart';
 
 class TripBody extends StatefulWidget {
   @override
@@ -41,18 +41,11 @@ class _TripBodyState extends State<TripBody> {
   }
 
   File _image;
-  final _picker = ImagePicker();
 
-  Future getImage() async {
-    final _pickedFile = await _picker.getImage(source: ImageSource.gallery);
-    setState(() {
-      if (_pickedFile != null) {
-        this._image = File(_pickedFile.path);
-        _imgCtr.text = _pickedFile.path.toString();
-      } else {
-        print('No image selected.');
-      }
-    });
+  void getImage() {
+    Utils.getImage().then((value) => setState(() {
+          _image = value;
+        }));
   }
 
   Widget feild(String title, TextEditingController ctr, IconData icon) =>
@@ -95,6 +88,7 @@ class _TripBodyState extends State<TripBody> {
     //TODO use providers to get data to createtrip post;
     return Trip(
       title: _nameCtr.text,
+      
       date: _selectedDate.millisecondsSinceEpoch,
       minCost: double.parse(_costCtr.text),
       groupSize: int.parse(_groupCountCtr.text),

@@ -4,7 +4,6 @@ import 'package:travel/widgets/circularImage.dart';
 class ProfileTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
       height: (170.0 + 50.0),
