@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travel/Chats/chatroombody.dart';
 import 'package:travel/providers/chats.dart';
 import 'package:travel/providers/messages.dart';
+import 'package:travel/widgets/circularImage.dart';
 
 class ChatRoomScreen extends StatelessWidget {
   static final String route = '/chat-room-screen';
@@ -10,14 +11,28 @@ class ChatRoomScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final chatId = ModalRoute.of(context).settings.arguments as String;
     final chat = Provider.of<Chats>(context).findById(chatId);
-    return ChangeNotifierProvider<Messages>(
-      create: (_) => Messages(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(chat.chatGroupName('uid')),
+    final msgsProvider = Provider.of<Messages>(context);
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton(
+            onSelected: (value) =>msgsProvider.deleteChatMessages(chatId) ,
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                value: 0,
+                child: Text('delete chat'),
+
+              ),
+            ],
+          )
+        ],
+        leading: Padding(
+          padding: const EdgeInsets.all(7.0),
+          child: CircularImage(40.0, chat.chatGroupImgUrl('uid')),
         ),
-        body: ChatRoomBody(chatId),
+        title: Text(chat.chatGroupName('uid')),
       ),
+      body: ChatRoomBody(chatId),
     );
   }
 }

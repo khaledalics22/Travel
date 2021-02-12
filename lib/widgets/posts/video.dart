@@ -19,13 +19,17 @@ class _VieoWidgetState extends State<VideoWidget> {
   }
 
   void initVid() {
-    _controller = VideoPlayerController.network(widget.url);
-    _controller.initialize().then((value) => setState(() {}),
-        onError: (result) {
-      setState(() {
-        error = true;
-      });
-    });
+    _controller = VideoPlayerController.network(
+      widget.url,
+    );
+    _controller.initialize().then(
+      (value) => setState(() {}),
+      onError: (result) {
+        setState(() {
+          error = true;
+        });
+      },
+    );
   }
 
   @override
@@ -37,7 +41,7 @@ class _VieoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('videoooooooooooooo rul : ${widget.url}');
+    // print('videoooooooooooooo rul : ${widget.url}');
     return VisibilityDetector(
       onVisibilityChanged: (info) {
         if (info.visibleFraction == 0)

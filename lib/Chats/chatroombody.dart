@@ -14,19 +14,25 @@ import '../utils.dart';
 class ChatRoomBody extends StatelessWidget {
   final String chatId;
   ChatRoomBody(this.chatId);
-  var msgsProvider;
-  void aploadMessage(Message msg) {
-    msgsProvider.addMessage(msg, chatId);
+  // var msgsProvider;
+  void uploadMessage(Message msg, Messages msgsProvider, Chats chats) {
+    msgsProvider.addMessage(
+      msg,
+      chatId,
+    );
     chats.updateLastImg(msg, chatId); //TOTO: this need to be done , not working
   }
 
-  var chats;
+  // var chats;
   @override
   Widget build(BuildContext context) {
-    msgsProvider = Provider.of<Messages>(context);
-    List<Message> msgs = msgsProvider.msgsOfChatId(chatId).reversed.toList();
+    final msgsProvider = Provider.of<Messages>(context);
+
+    List<Message> msgs = msgsProvider.msgsOfChatId(chatId)?.reversed?.toList();
     final chat = Provider.of<Chats>(context).findById(chatId);
-    chats = Provider.of<Chats>(context);
+
+    // print('idddddddddddddddd   ${msgs[0].body}');
+    final chats = Provider.of<Chats>(context);
     return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -36,7 +42,7 @@ class ChatRoomBody extends StatelessWidget {
                 reverse: true,
                 itemCount: msgs.length,
                 itemBuilder: (_, idx) {
-                  Container(
+                  return Container(
                     child: Row(
                         mainAxisAlignment:
                             msgs[idx].authId.compareTo('uid') == 0
@@ -115,7 +121,9 @@ class ChatRoomBody extends StatelessWidget {
                   );
                 }),
           ),
-          MessageInput(aploadMessage),
+          MessageInput((msg) {
+            uploadMessage(msg, msgsProvider, chats);
+          }),
         ]);
   }
 }

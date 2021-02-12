@@ -23,6 +23,11 @@ class SearchBody extends StatelessWidget {
                 leading: Image.network(
                   'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
                   fit: BoxFit.scaleDown,
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      loadingProgress == null
+                          ? child
+                          : CircularProgressIndicator(),
+                  filterQuality: FilterQuality.low,
                 ),
                 title: Text(trip.title),
                 subtitle: Text(

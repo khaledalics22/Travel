@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CircularImage extends StatelessWidget {
   final radius;
-  final url; 
+  final url;
   CircularImage(this.radius, this.url);
   @override
   Widget build(BuildContext context) {
@@ -15,6 +15,8 @@ class CircularImage extends StatelessWidget {
           url,
           fit: BoxFit.fitWidth,
           filterQuality: FilterQuality.low,
+          loadingBuilder: (context, child, loadingProgress) =>
+              loadingProgress == null ? child : CircularProgressIndicator(),
         ),
       ),
     );

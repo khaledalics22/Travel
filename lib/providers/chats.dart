@@ -31,7 +31,7 @@ class Chats with ChangeNotifier {
           },
         ]),
     Chat(
-        chatId: '1',
+        chatId: '2',
         lastMsg: Message(
             authId: 'uid12',
             body: 'hey bro!',
@@ -56,7 +56,7 @@ class Chats with ChangeNotifier {
           },
         ]),
     Chat(
-        chatId: '1',
+        chatId: '3',
         lastMsg: Message(
             authId: 'uid',
             body: 'hey bro!',
@@ -82,7 +82,7 @@ class Chats with ChangeNotifier {
           },
         ]),
     Chat(
-        chatId: '1',
+        chatId: '4',
         lastMsg: Message(
             authId: 'uid',
             body: 'hey bro!',

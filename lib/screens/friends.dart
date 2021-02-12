@@ -106,6 +106,11 @@ class Friends extends StatelessWidget {
                         child: Image.network(
                           f.profileUrl,
                           fit: BoxFit.scaleDown,
+                          filterQuality: FilterQuality.low,
+                          loadingBuilder: (context, child, loadingProgress) =>
+                              loadingProgress == null
+                                  ? child
+                                  : CircularProgressIndicator(),
                         ),
                       ),
                     );

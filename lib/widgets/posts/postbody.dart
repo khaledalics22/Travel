@@ -10,6 +10,8 @@ class PostBody extends StatelessWidget {
       fit: BoxFit.fitWidth,
       filterQuality: FilterQuality.low,
       width: double.infinity,
+      loadingBuilder: (context, child, loadingProgress) =>
+          loadingProgress == null ? child : CircularProgressIndicator(),
     );
   }
 }

@@ -26,6 +26,9 @@ class HomeTop extends StatelessWidget {
             child: Image.network(
               'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
               fit: BoxFit.fitWidth,
+              filterQuality: FilterQuality.low,
+              loadingBuilder: (context, child, loadingProgress) =>
+                  loadingProgress == null ? child : CircularProgressIndicator(),
             ),
           ),
         ),

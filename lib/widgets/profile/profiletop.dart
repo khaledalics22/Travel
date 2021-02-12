@@ -14,7 +14,10 @@ class ProfileTop extends StatelessWidget {
             'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
             fit: BoxFit.cover,
             height: 170.0,
+            filterQuality: FilterQuality.low,
             width: double.infinity,
+            loadingBuilder: (context, child, loadingProgress) =>
+                loadingProgress == null ? child : CircularProgressIndicator(),
           ),
           Positioned(
             bottom: 0,

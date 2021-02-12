@@ -14,6 +14,9 @@ class TripDetailsTop extends StatelessWidget {
           child: Image.network(
             _imgUrl,
             fit: BoxFit.fitWidth,
+            filterQuality: FilterQuality.low,
+            loadingBuilder: (context, child, loadingProgress) =>
+                loadingProgress == null ? child : CircularProgressIndicator(),
           ),
         ));
   }

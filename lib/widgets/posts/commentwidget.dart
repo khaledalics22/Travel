@@ -5,8 +5,6 @@ import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
 
 class CommentWidget extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     final comment = Provider.of<Comment>(context);
@@ -61,13 +59,18 @@ class CommentWidget extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(
                 left: 50,
-                top: 8.0, 
+                top: 8.0,
               ),
               child: Image.network(
                 comment.imageUrl,
+                filterQuality: FilterQuality.low,
                 height: MediaQuery.of(context).size.height / 4,
                 width: MediaQuery.of(context).size.height / 4,
                 fit: BoxFit.fitWidth,
+                loadingBuilder: (context, child, loadingProgress) =>
+                    loadingProgress == null
+                        ? child
+                        : CircularProgressIndicator(),
               ),
             ),
           Container(
