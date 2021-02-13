@@ -66,6 +66,7 @@ class Posts with ChangeNotifier {
         trip: Trip(
           group: ['f', 'f', 'f'],
           title: 'auxor',
+          groupSize: 15,
           organizer: 'ahmed',
           details: 'we are grouping 15 people for a journey to saqara',
           date: DateTime.now().millisecondsSinceEpoch,
@@ -106,6 +107,7 @@ class Posts with ChangeNotifier {
         groupSize: 12,
         trip: Trip(
             title: 'sharm',
+            groupSize: 15,
             organizer: 'mohamed',
             details: 'we are grouping 15 people for a journey to saqara',
             date: DateTime.now().millisecondsSinceEpoch,
@@ -282,8 +284,15 @@ class Posts with ChangeNotifier {
         ]),
   ];
   void addPost(Post post) {
-    _postsList.add(post);
+    _postsList.insert(0, post);
     notifyListeners();
+  }
+
+  List<Post> findByTitle(String title) {
+    if (title == null) return [];
+    return _postsList
+        .where((post) => (post.isTrip && post.trip.title.contains(title)))
+        .toList();
   }
 
   List<Comment> findCommentsOfPostId(String id) {

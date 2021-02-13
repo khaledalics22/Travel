@@ -10,6 +10,7 @@ class PostBody extends StatelessWidget {
       fit: BoxFit.fitWidth,
       filterQuality: FilterQuality.low,
       width: double.infinity,
+      height: MediaQuery.of(context).size.height / 3,
       loadingBuilder: (context, child, loadingProgress) =>
           loadingProgress == null ? child : CircularProgressIndicator(),
     );

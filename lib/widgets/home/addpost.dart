@@ -8,7 +8,8 @@ import 'package:video_player/video_player.dart';
 
 class AddPost extends StatefulWidget {
   final Function uploadPost;
-  AddPost(this.uploadPost);
+  final Function isExtended;
+  AddPost(this.uploadPost, this.isExtended);
   @override
   _AddPostState createState() => _AddPostState();
 }
@@ -69,13 +70,14 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
         authorId: 'uid',
         caption: inputController.text,
         file: _pickedFile,
-        hasVid: !isImg,
-        hasImg: isImg,
+        hasVid: (isImg != null) ? !isImg : false,
+        hasImg: (isImg != null) ? isImg : false,
         imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
         isTrip: false,
         likesList: [],
         commetsList: []);
     widget.uploadPost(post);
+
     setState(() {
       inputTapped = false;
       _pickedFile = null;
@@ -114,6 +116,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                     expands: true,
                     onTap: () {
                       setState(() {
+                        widget.isExtended(!inputTapped);
                         if (inputTapped) FocusScope.of(context).unfocus();
                         inputTapped = !inputTapped;
                       });

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel/providers/Trip.dart';
+import 'package:travel/providers/post.dart';
+import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/search/history.dart';
 import 'package:travel/widgets/search/searchbody.dart';
 import '../widgets/search/searchbar.dart';
@@ -37,23 +40,27 @@ class _SearchTripState extends State<SearchTrip> {
     'paris',
   ];
   List<String> historyList;
-  Future<List<Trip>> loadTrips(String title) async {
-    //TODO load trips
-    return test;
-  }
+  // List<Post> loadTrips(String title, BuildContext context) {
+  //   return
+  // }
 
-  List<Trip> trips;
+  // List<Post> trips;
   bool textChanged = false;
-  void onSearchTextChanged(String text) async {
-    textChanged = true;
-    final result = await loadTrips(text);
+  String title;
+  void onSearchTextChanged(String text, BuildContext context) {
+    // print(text);
+    // final result = loadTrips(text, context);
     setState(() {
-      trips = result;
+      textChanged = true;
+      title = text;
+      // trips = result;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Post> trips =
+        Provider.of<Posts>(context, listen: false).findByTitle(title);
     var appbar = AppBar(
       actions: [],
     );
@@ -61,7 +68,8 @@ class _SearchTripState extends State<SearchTrip> {
     var searchView = Container(
       width: MediaQuery.of(context).size.width * 3 / 4,
       height: appbar.preferredSize.height,
-      child: SearchWidget(null, onSearchTextChanged, 'search for a trip'),
+      child: SearchWidget(null, (text) => onSearchTextChanged(text, context),
+          'search for a trip'),
     );
     appbar.actions.add(searchView);
     historyList = histTest;

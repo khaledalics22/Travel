@@ -7,8 +7,20 @@ import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/searchtrip.dart';
 import '../widgets/home/homebody.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   static const route = '/home';
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool extended = false;
+  void isExtended(isExtended) {
+    setState(() {
+      extended = isExtended;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +36,8 @@ class Home extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).pushNamed(ChatsScreen.route, arguments: 'uid');
+              Navigator.of(context)
+                  .pushNamed(ChatsScreen.route, arguments: 'uid');
             }),
       ],
       title: Text(
@@ -43,16 +56,19 @@ class Home extends StatelessWidget {
     // );
     // appbar.actions.add(searchView);
     return Scaffold(
+      // drawer: Drawer(
+      //   elevation: 5,
+      // ),
       floatingActionButton: (Platform.isAndroid)
           ? FloatingActionButton.extended(
               onPressed: () {
-                Navigator.of(context).pushNamed(CreateTrip.route);
+                if (extended) Navigator.of(context).pushNamed(CreateTrip.route);
               },
-              label: Text('New Trip'),
+              label: Text(!extended ? 'New Trip' : 'Post'),
             )
           : null,
       appBar: appbar,
-      body: Body(),
+      body: Body(isExtended),
     );
   }
 }

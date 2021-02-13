@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:travel/providers/Trip.dart';
+import 'package:travel/providers/post.dart';
 import 'package:travel/screens/tripdetails.dart';
 
 class SearchBody extends StatelessWidget {
@@ -11,18 +12,23 @@ class SearchBody extends StatelessWidget {
     return ListView.builder(
       itemCount: list != null ? list.length : 0,
       itemBuilder: (_, idx) {
-        Trip trip = list[idx];
+        Post post = list[idx];
+        var trip = post.trip;
         final f = DateFormat('E-yyyy-MM\n').add_jm();
         return GestureDetector(
-          onTap: () => Navigator.of(context).pushNamed(TripDetials.route),
+          onTap: () => Navigator.of(context)
+              .pushNamed(TripDetials.route, arguments: post.postId),
           child: Card(
             elevation: 2,
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: ListTile(
                 leading: Image.network(
-                  'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-                  fit: BoxFit.scaleDown,
+                  '${post.imgUrl}',
+                  alignment: Alignment.center,
+                  fit: BoxFit.fitHeight,
+                  width: 60,
+                  height: 60,
                   loadingBuilder: (context, child, loadingProgress) =>
                       loadingProgress == null
                           ? child

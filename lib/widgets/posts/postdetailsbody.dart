@@ -28,20 +28,25 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (_, idx) {
-                return ChangeNotifierProvider.value(
-                  child: CommentWidget(),
-                  value: comments[idx],
-                );
-              },
-              separatorBuilder: (_, idx) {
-                return Divider();
-              },
-              itemCount: comments.length,
-            ),
-          ),
+          comments.length == 0
+              ? Expanded(
+                  flex: 1,
+                  child: Center(child: Text('No Comments')),
+                )
+              : Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (_, idx) {
+                      return ChangeNotifierProvider.value(
+                        child: CommentWidget(),
+                        value: comments[idx],
+                      );
+                    },
+                    separatorBuilder: (_, idx) {
+                      return Divider();
+                    },
+                    itemCount: comments.length,
+                  ),
+                ),
           Container(
             color: Colors.grey,
             height: 1,

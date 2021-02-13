@@ -35,58 +35,53 @@ class PostWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final post = Provider.of<Post>(context);
     return Container(
-      width: size.width > 500 ? 500 : size.width,
-      height: size.width > 500 ? 500 : size.width,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+      // width: size.width > 500 ? 500 : size.width,
+      // height: size.width > 500 ? 500 : size.width,
+      // constraints: BoxConstraints(
+      //     maxWidth: size.width > 500 ? 500 : size.width,
+      //     maxHeight: size.width > 500 ? 500 : size.width),
+      child: Wrap(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: PostTop(post),
-              ),
-              flex: 1,
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: PostTop(post),
             ),
-            Flexible(
-              flex: 1,
-              fit: FlexFit.loose,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(post.caption),
-              ),
+            // flex: 1,
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(post.caption),
             ),
             if (post.hasImg || post.hasVid)
-              Expanded(
-                  flex: 4,
-                  child: post.isTrip
-                      ? Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            PostBody(post.imgUrl),
-                            Container(
+              post.isTrip
+                  ? Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        PostBody(post.imgUrl),
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: tripActions(context, post),
+                          color: Colors.pink[50],
+                        ),
+                        Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
                               padding: EdgeInsets.all(8.0),
-                              child: tripActions(context, post),
                               color: Colors.pink[50],
-                            ),
-                            Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Container(
-                                  padding: EdgeInsets.all(8.0),
-                                  color: Colors.pink[50],
-                                  child: Text(
-                                    'G. Size ${post.groupSize}',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                ))
-                          ],
-                        )
-                      : post.hasVid
-                          ? VideoWidget(post.videoUrl)
-                          : PostBody(post.imgUrl)),
+                              child: Text(
+                                'G. Size ${post.groupSize}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                            ))
+                      ],
+                    )
+                  : post.hasVid
+                      ? VideoWidget(post.videoUrl)
+                      : PostBody(post.imgUrl),
             if (post.likesList.isNotEmpty || post.commetsList.isNotEmpty)
               Container(
                 width: double.infinity,
@@ -113,10 +108,7 @@ class PostWidget extends StatelessWidget {
                     ),
                 ]),
               ),
-            Expanded(
-              flex: 1,
-              child: PostActions(post.postId),
-            ),
+            PostActions(post.postId),
           ]),
     );
   }

@@ -73,41 +73,44 @@ class _VieoWidgetState extends State<VideoWidget> {
                       )
                     ]),
               )
-            : Stack(alignment: Alignment.center, children: [
-                _controller.value.initialized
-                    ? AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
-                      )
-                    : SizedBox(
-                        height: 40,
-                        width: 40,
-                        child: CircularProgressIndicator()),
-                if (_controller.value.initialized)
-                  AnimatedOpacity(
-                    opacity: _controller.value.isPlaying ? 0.0 : 1.0,
-                    duration: Duration(milliseconds: 500),
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.black45,
-                      child: IconButton(
-                        onPressed: () => setState(() {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
-                        }),
-                        icon: Icon(
-                          _controller.value.isPlaying
-                              ? Icons.pause_circle_outline
-                              : Icons.play_circle_outline_outlined,
-                          color: Theme.of(context).primaryColorDark,
-                          size: 40,
+            : Container(
+                height: MediaQuery.of(context).size.height / 3,
+                child: Stack(alignment: Alignment.center, children: [
+                  _controller.value.initialized
+                      ? AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        )
+                      : SizedBox(
+                          height: 40,
+                          width: 40,
+                          child: CircularProgressIndicator()),
+                  if (_controller.value.initialized)
+                    AnimatedOpacity(
+                      opacity: _controller.value.isPlaying ? 0.0 : 1.0,
+                      duration: Duration(milliseconds: 500),
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.black45,
+                        child: IconButton(
+                          onPressed: () => setState(() {
+                            _controller.value.isPlaying
+                                ? _controller.pause()
+                                : _controller.play();
+                          }),
+                          icon: Icon(
+                            _controller.value.isPlaying
+                                ? Icons.pause_circle_outline
+                                : Icons.play_circle_outline_outlined,
+                            color: Theme.of(context).primaryColorDark,
+                            size: 40,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-              ]),
+                    )
+                ]),
+              ),
       ),
     );
   }

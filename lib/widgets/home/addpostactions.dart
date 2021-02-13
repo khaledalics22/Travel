@@ -8,7 +8,7 @@ import '../../utils.dart';
 
 class AddPostActions extends StatefulWidget {
   final msg;
-  Function displayPickedImage;
+  final Function displayPickedImage;
   final Function uploadPost;
   AddPostActions(this.msg, this.displayPickedImage, this.uploadPost);
   @override
@@ -96,6 +96,7 @@ class _AddPostActionsState extends State<AddPostActions> {
                   Utils.getImage().then((value) {
                     setState(() {
                       _image = value;
+                      widget.displayPickedImage(_image, true);
                     });
                   });
                 },

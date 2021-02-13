@@ -1,8 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
 
 class Trip with ChangeNotifier {
   int date;
+  String tripId; 
   String details;
   double minCost;
   String title;
@@ -12,6 +12,7 @@ class Trip with ChangeNotifier {
   Trip({
     this.title,
     this.details,
+    this.tripId, 
     this.date,
     this.minCost,
     this.groupSize,

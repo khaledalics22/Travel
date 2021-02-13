@@ -8,6 +8,7 @@ class CreateTrip extends StatelessWidget {
   Widget build(BuildContext context) {
     tripBody = TripBody();
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('New Trip'),
         actions: [

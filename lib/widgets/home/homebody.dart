@@ -9,6 +9,8 @@ import 'package:travel/widgets/home/addpost.dart';
 import 'package:travel/widgets/home/post.dart';
 
 class Body extends StatefulWidget {
+  final Function isExtended;
+  Body(this.isExtended);
   @override
   _BodyState createState() => _BodyState();
 }
@@ -45,9 +47,9 @@ class _BodyState extends State<Body> {
     //     child: Center(child: CircularProgressIndicator()),
     //   );
     // } else {
- 
-    posts  = Provider.of<Posts>(context);
-    final postsList = posts.postsList; 
+
+    posts = Provider.of<Posts>(context);
+    final postsList = posts.postsList;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -56,7 +58,10 @@ class _BodyState extends State<Body> {
             elevation: 5,
             shadowColor: Theme.of(context).primaryColorDark,
             child: GestureDetector(
-              child: AddPost(uploadPost),
+              child: AddPost(uploadPost, (value) {
+                print(value);
+                widget.isExtended(value);
+              }),
               onTap: () {
                 Navigator.of(context).pushNamed(Profile.route);
               },

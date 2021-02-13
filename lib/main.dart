@@ -25,8 +25,8 @@ class _MyApp extends StatelessWidget {
     return ChangeNotifierProvider<Posts>(
       create: (_) => Posts(),
       child: ChangeNotifierProvider(
-            create: (_)=>Messages(),
-              child: ChangeNotifierProvider<Chats>(
+        create: (_) => Messages(),
+        child: ChangeNotifierProvider<Chats>(
           create: (context) => Chats(),
           child: MaterialApp(
             theme: ThemeData(

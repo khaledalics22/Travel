@@ -14,9 +14,12 @@ class PostActions extends StatefulWidget {
 class _PostActionsState extends State<PostActions> {
   @override
   Widget build(BuildContext context) {
-    var div = VerticalDivider(
-      thickness: 1,
-      indent: 10,
+    var div = Container(
+      child: VerticalDivider(
+        thickness: 1,
+        indent: 10,
+      ),
+      height: 40,
     );
     final post = Provider.of<Post>(context);
     return Padding(
@@ -25,7 +28,7 @@ class _PostActionsState extends State<PostActions> {
         Expanded(
           flex: 1,
           child: FlatButton(
-            height: double.infinity,
+            // height: double.infinity,
             child: Text(
               'Like',
               style: TextStyle(
@@ -42,7 +45,7 @@ class _PostActionsState extends State<PostActions> {
         Expanded(
           flex: 1,
           child: FlatButton(
-            height: double.infinity,
+            // height: double.infinity,
             child: Text('Comment'),
             onPressed: () {
               Navigator.of(context).pushNamed(
@@ -55,7 +58,7 @@ class _PostActionsState extends State<PostActions> {
         Expanded(
           flex: 1,
           child: FlatButton(
-            height: double.infinity,
+            // height: double.infinity,
             child: Text('Share'),
             onPressed: () {},
           ),
