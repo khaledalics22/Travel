@@ -4,7 +4,7 @@ class SearchWidget extends StatelessWidget {
   final onTapRoute;
   final onVlaueChanged;
   final hint; 
-  SearchWidget(this.onTapRoute, this.onVlaueChanged, this.hint);
+ const  SearchWidget(this.onTapRoute, this.onVlaueChanged, this.hint);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,12 +17,12 @@ class SearchWidget extends StatelessWidget {
         onChanged: (value) {
           onVlaueChanged(value);
         },
-        style: TextStyle(color: Colors.white),
+        style:const  TextStyle(color: Colors.white),
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hint,
           fillColor: Colors.white,
-          hintStyle: TextStyle(color: Colors.white70),
+          hintStyle: const TextStyle(color: Colors.white70),
           suffixIcon: Icon(
             Icons.search,
             color: Colors.white,

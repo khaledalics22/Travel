@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/Chats/chatsbody.dart';
 import 'package:travel/providers/chats.dart';
-import 'package:travel/widgets/circularImage.dart';
+import 'package:travel/widgets/Chats/chatsbody.dart';
 
 class ChatsScreen extends StatelessWidget {
   static final String route = '/chats-screen';
@@ -13,7 +12,7 @@ class ChatsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
          
-          title: Text('Chats'),
+          title: const Text('Chats'),
         ),
         body: Container(child: ChatsScreenBody()),
       ),

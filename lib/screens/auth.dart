@@ -6,9 +6,6 @@ class Auth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
       body: AuthBody(),
       backgroundColor: Colors.white,
     );

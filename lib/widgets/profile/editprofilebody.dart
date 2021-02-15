@@ -72,7 +72,7 @@ class _EditProfileBodyState extends State<EditProfileBody> {
               );
             },
             separatorBuilder: (_, idx) {
-              return Divider();
+              return const Divider();
             },
             itemCount: _visitedPlaces.length,
           ),

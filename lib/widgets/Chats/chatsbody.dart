@@ -70,10 +70,10 @@ class ChatItem extends StatelessWidget {
             Utils.dateDifference(
               msgs[0].date,
             ),
-            style: TextStyle(color: Colors.black54),
+            style: const TextStyle(color: Colors.black54),
           ),
           Expanded(
-            child: SizedBox(),
+            child: const SizedBox(),
             flex: 1,
           ),
           if ('uid'.compareTo(msgs[0].authId) == 0)

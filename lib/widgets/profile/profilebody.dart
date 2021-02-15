@@ -75,7 +75,7 @@ class _ProfileBodyState extends State<ProfileBody>
           Flexible(
             // height: MediaQuery.of(context).size.height / 2,
             child: AnimatedSize(
-              duration: Duration(milliseconds: 300),
+              duration:const  Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               vsync: this,
               child: Container(
@@ -89,7 +89,7 @@ class _ProfileBodyState extends State<ProfileBody>
                     );
                   },
                   separatorBuilder: (_, idx) {
-                    return Divider();
+                    return const Divider();
                   },
                   itemCount: _visitedPlaces.length,
                 ),

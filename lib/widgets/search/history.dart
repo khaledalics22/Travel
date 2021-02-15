@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class HistoryList extends StatelessWidget {
   final list;
-  HistoryList(this.list);
+  const HistoryList(this.list);
   @override
   Widget build(BuildContext context) {
     return Container(

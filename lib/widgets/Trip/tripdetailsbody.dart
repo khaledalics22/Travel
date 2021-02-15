@@ -21,11 +21,11 @@ class TripDetailsBody extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.location_on),
+                  const Icon(Icons.location_on),
                   Expanded(
                     child: Text(
                       _post.trip.title,
-                      style: TextStyle(fontSize: 22),
+                      style: const TextStyle(fontSize: 22),
                     ),
                   ),
                   ClipRRect(
@@ -68,7 +68,7 @@ class TripDetailsBody extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Details',
-            style: TextStyle(fontSize: 22, color: Colors.grey),
+            style: const TextStyle(fontSize: 22, color: Colors.grey),
           ),
         ),
         ClipRRect(
@@ -88,7 +88,7 @@ class TripDetailsBody extends StatelessWidget {
             child: Text('Max size: ${_post.trip.groupSize}')),
         ClipRRect(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15), topRight: Radius.circular(20)),
+              topLeft: const Radius.circular(15), topRight: const Radius.circular(20)),
           child: Container(
             padding: const EdgeInsets.all(8.0),
             color: Colors.pink[50],

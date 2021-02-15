@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:travel/providers/auth.dart';
+import 'package:travel/screens/Home.dart';
+import 'package:travel/screens/auth.dart';
 import 'package:travel/screens/editprofile.dart';
 import 'package:travel/widgets/profile/profilebody.dart';
 import '../widgets/profile/profiletop.dart';
@@ -14,12 +17,28 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
         actions: [
           PopupMenuButton(
             onSelected: (idx) {
-              if (MenuItems.edit == idx)
-                Navigator.of(context).pushNamed(EditProfile.route);
+              switch (idx) {
+                case MenuItems.edit:
+                  Navigator.of(context).pushNamed(EditProfile.route);
+                  break;
+                case MenuItems.logout:
+                  // Auth.logOut((value) {
+                  //    Navigator.of(context).popUntil((route) {
+                  //         // print('route is ${route.toString()}');
+                  //         if (Home.route.contains(route.settings.name)) {
+                  //           // print('route is ${route.toString()}');
+                  //           Navigator.of(context).popAndPushNamed(Auth.route);
+                  //           return true;
+                  //         }
+                  //         return false;
+                  //       });
+                  // });
+                  break;
+              }
             },
             itemBuilder: (_) {
               return [
@@ -30,7 +49,7 @@ class Profile extends StatelessWidget {
                 PopupMenuItem(
                   value: MenuItems.logout,
                   child: Container(
-                      child: Text(
+                      child:const  Text(
                     'Logout',
                   )),
                 )
@@ -62,7 +81,7 @@ class Profile extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
-          Divider(
+         const  Divider(
             thickness: 1,
             indent: 7,
           ),

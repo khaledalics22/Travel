@@ -4,48 +4,48 @@ import 'package:travel/widgets/search/searchbar.dart';
 
 class Friends extends StatelessWidget {
   static final route = '/friends';
-  var friendstest = [
-    User(
+  final friendstest = [
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
     ),
-    User(
+    CustomUser(
       name: 'Ahmed',
       bio: 'eng',
       profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
@@ -89,7 +89,7 @@ class Friends extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(
+           const  Divider(
               thickness: 1,
             ),
             Flexible(
@@ -97,7 +97,7 @@ class Friends extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: friendstest.length,
                   itemBuilder: (_, idx) {
-                    User f = friendstest[idx];
+                    CustomUser f = friendstest[idx];
                     return ListTile(
                       title: Text(f.name),
                       subtitle: Text(f.bio),
@@ -110,7 +110,7 @@ class Friends extends StatelessWidget {
                           loadingBuilder: (context, child, loadingProgress) =>
                               loadingProgress == null
                                   ? child
-                                  : CircularProgressIndicator(),
+                                  : const CircularProgressIndicator(),
                         ),
                       ),
                     );

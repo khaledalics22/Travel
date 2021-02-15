@@ -12,14 +12,14 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: const Text('Edit Profile'),
         actions: [
           Container(
               padding: const EdgeInsets.only(right: 8.0),
               alignment: Alignment.center,
-              child: Text(
+              child:const  Text(
                 'save',
-                style: TextStyle(fontSize: 18),
+                style:const  TextStyle(fontSize: 18),
               ))
         ],
       ),

@@ -32,7 +32,7 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     final post = Provider.of<Post>(context);
     return Container(
       // width: size.width > 500 ? 500 : size.width,
@@ -96,10 +96,10 @@ class PostWidget extends StatelessWidget {
                   if (post.likesList.isNotEmpty)
                     Text(
                       ' ${post.likesList.length}',
-                      style: TextStyle(fontSize: 12),
+                      style:const  TextStyle(fontSize: 12),
                     ),
                   Expanded(
-                    child: SizedBox(),
+                    child:const  SizedBox(),
                   ),
                   if (post.commetsList.isNotEmpty)
                     Text(

@@ -3,10 +3,10 @@ import 'package:travel/widgets/Trip/tripbody.dart';
 
 class CreateTrip extends StatelessWidget {
   static final route = '/create-trip';
-  TripBody tripBody;
+  // TripBody tripBody;
   @override
   Widget build(BuildContext context) {
-    tripBody = TripBody();
+    final tripBody = TripBody();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -25,6 +25,8 @@ class PostAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
+        Scaffold.of(context).hideCurrentSnackBar();
+
         Scaffold.of(context).showSnackBar(
           SnackBar(
             content: Container(
@@ -38,9 +40,9 @@ class PostAction extends StatelessWidget {
         );
       },
       textColor: Colors.white,
-      child: Text(
+      child: const Text(
         'post',
-        style: TextStyle(fontSize: 16),
+        style:const  TextStyle(fontSize: 16),
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:travel/providers/post.dart';
+import 'package:travel/providers/user.dart';
 
 import 'package:travel/widgets/home/addpostactions.dart';
 import 'package:video_player/video_player.dart';
@@ -9,7 +11,7 @@ import 'package:video_player/video_player.dart';
 class AddPost extends StatefulWidget {
   final Function uploadPost;
   final Function isExtended;
-  AddPost(this.uploadPost, this.isExtended);
+  const AddPost(this.uploadPost, this.isExtended);
   @override
   _AddPostState createState() => _AddPostState();
 }
@@ -17,6 +19,7 @@ class AddPost extends StatefulWidget {
 class HomeTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Row(
       children: [
         Container(
@@ -24,13 +27,17 @@ class HomeTop extends StatelessWidget {
           height: 40,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(40),
-            child: Image.network(
-              'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-              fit: BoxFit.fitWidth,
-              filterQuality: FilterQuality.low,
-              loadingBuilder: (context, child, loadingProgress) =>
-                  loadingProgress == null ? child : CircularProgressIndicator(),
-            ),
+            child: user.profileUrl != null
+                ? Image.network(
+                    user.profileUrl,
+                    fit: BoxFit.fitWidth,
+                    filterQuality: FilterQuality.low,
+                    loadingBuilder: (context, child, loadingProgress) =>
+                        loadingProgress == null
+                            ? child
+                            :const  CircularProgressIndicator(),
+                  )
+                : const Icon(Icons.person),
           ),
         ),
         Expanded(
@@ -92,9 +99,9 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
     return Container(
       width: double.infinity,
       child: Container(
-        padding: EdgeInsets.all(8.0),
+        padding:const  EdgeInsets.all(8.0),
         child: AnimatedSize(
-          duration: Duration(milliseconds: 300),
+          duration:const  Duration(milliseconds: 300),
           vsync: this,
           child: Container(
             height: size.height > 500
@@ -104,7 +111,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HomeTop(),
-                Divider(),
+               const Divider(),
                 Expanded(
                   flex: 3,
                   child: TextField(

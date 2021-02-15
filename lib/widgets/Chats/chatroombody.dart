@@ -9,11 +9,12 @@ import 'package:travel/providers/chats.dart';
 import 'package:travel/providers/messages.dart';
 import 'package:travel/widgets/circularImage.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
+
 
 class ChatRoomBody extends StatelessWidget {
   final String chatId;
-  ChatRoomBody(this.chatId);
+  const ChatRoomBody(this.chatId);
   // var msgsProvider;
   void uploadMessage(Message msg, Messages msgsProvider, Chats chats) {
     msgsProvider.addMessage(
@@ -166,7 +167,7 @@ class ChatRoomBody extends StatelessWidget {
                                                                         'uid')),
                                                               ),
                                                             )
-                                                          : SizedBox(
+                                                          :const  SizedBox(
                                                               width: 8,
                                                               height: 8,
                                                             )
@@ -187,7 +188,7 @@ class ChatRoomBody extends StatelessWidget {
 
 class MessageInput extends StatefulWidget {
   final aploadMessage;
-  MessageInput(this.aploadMessage);
+  const MessageInput(this.aploadMessage);
   @override
   _MessageInputState createState() => _MessageInputState();
 }
@@ -202,7 +203,7 @@ class _MessageInputState extends State<MessageInput> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Divider(
+        const Divider(
           thickness: 1,
         ),
         if (size.height > 500 && _image != null)
@@ -217,7 +218,7 @@ class _MessageInputState extends State<MessageInput> {
               top: 0,
               right: 0,
               child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.close,
                     color: Colors.white,
                   ),
@@ -232,7 +233,7 @@ class _MessageInputState extends State<MessageInput> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.photo,
                   color: Colors.black54,
                 ),
@@ -256,7 +257,7 @@ class _MessageInputState extends State<MessageInput> {
                     },
                     maxLines: size.height > 500 ? 4 : 1,
                     controller: msgCtr,
-                    decoration: InputDecoration(
+                    decoration:const  InputDecoration(
                       border: InputBorder.none,
                       hintText: 'send message',
                     ),

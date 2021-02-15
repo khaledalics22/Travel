@@ -10,7 +10,7 @@ import 'package:travel/widgets/home/post.dart';
 
 class Body extends StatefulWidget {
   final Function isExtended;
-  Body(this.isExtended);
+  const Body(this.isExtended);
   @override
   _BodyState createState() => _BodyState();
 }
@@ -75,7 +75,7 @@ class _BodyState extends State<Body> {
               thickness: 1,
             ),
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (_, idx) {
               return GestureDetector(
                   onTap: () {

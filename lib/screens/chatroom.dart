@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/Chats/chatroombody.dart';
 import 'package:travel/providers/chats.dart';
 import 'package:travel/providers/messages.dart';
+import 'package:travel/widgets/Chats/chatroombody.dart';
 import 'package:travel/widgets/circularImage.dart';
 
 class ChatRoomScreen extends StatelessWidget {
@@ -18,9 +18,9 @@ class ChatRoomScreen extends StatelessWidget {
           PopupMenuButton(
             onSelected: (value) =>msgsProvider.deleteChatMessages(chatId) ,
             itemBuilder: (_) => [
-              PopupMenuItem(
+              const PopupMenuItem(
                 value: 0,
-                child: Text('delete chat'),
+                child:const  Text('delete chat'),
 
               ),
             ],

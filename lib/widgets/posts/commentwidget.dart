@@ -70,7 +70,7 @@ class CommentWidget extends StatelessWidget {
                 loadingBuilder: (context, child, loadingProgress) =>
                     loadingProgress == null
                         ? child
-                        : CircularProgressIndicator(),
+                        :const  CircularProgressIndicator(),
               ),
             ),
           Container(

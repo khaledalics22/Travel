@@ -5,8 +5,8 @@ import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/tripdetails.dart';
 
 class PostActions extends StatefulWidget {
-  String postId;
-  PostActions(this.postId);
+  final String postId;
+  const PostActions(this.postId);
   @override
   _PostActionsState createState() => _PostActionsState();
 }
@@ -15,7 +15,7 @@ class _PostActionsState extends State<PostActions> {
   @override
   Widget build(BuildContext context) {
     var div = Container(
-      child: VerticalDivider(
+      child:const  VerticalDivider(
         thickness: 1,
         indent: 10,
       ),
@@ -46,7 +46,7 @@ class _PostActionsState extends State<PostActions> {
           flex: 1,
           child: FlatButton(
             // height: double.infinity,
-            child: Text('Comment'),
+            child:const  Text('Comment'),
             onPressed: () {
               Navigator.of(context).pushNamed(
                   post.isTrip ? TripDetials.route : PostDetails.route,
@@ -59,7 +59,7 @@ class _PostActionsState extends State<PostActions> {
           flex: 1,
           child: FlatButton(
             // height: double.infinity,
-            child: Text('Share'),
+            child: const Text('Share'),
             onPressed: () {},
           ),
         ),

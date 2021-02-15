@@ -10,7 +10,7 @@ class AddPostActions extends StatefulWidget {
   final msg;
   final Function displayPickedImage;
   final Function uploadPost;
-  AddPostActions(this.msg, this.displayPickedImage, this.uploadPost);
+  const AddPostActions(this.msg, this.displayPickedImage, this.uploadPost);
   @override
   _AddPostActionsState createState() => _AddPostActionsState();
 }
@@ -44,14 +44,13 @@ class _AddPostActionsState extends State<AddPostActions> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(
+            child:  Text(
               'Cancel',
               style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
           FlatButton(
             onPressed: () {
-              //TODO post the content
               widget.uploadPost();
               Navigator.of(context).pop();
             },

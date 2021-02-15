@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ApplyButton extends StatefulWidget {
-  String orgName;
+  final String orgName;
   ApplyButton(this.orgName);
   @override
   _ApplyButtonState createState() => _ApplyButtonState();
@@ -14,6 +14,7 @@ class _ApplyButtonState extends State<ApplyButton> {
     return RaisedButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       onPressed: () {
+        Scaffold.of(context).hideCurrentSnackBar();
         Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(
                 '${!applied ? 'Applied to' : 'Cancel'} ${widget.orgName}\'s trip')));
@@ -23,7 +24,7 @@ class _ApplyButtonState extends State<ApplyButton> {
       },
       color: Theme.of(context).primaryColorDark,
       child: Text(applied ? 'Cancel' : 'Apply',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
           )),
     );

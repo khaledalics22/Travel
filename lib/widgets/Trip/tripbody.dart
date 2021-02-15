@@ -45,6 +45,7 @@ class _TripBodyState extends State<TripBody> {
   void getImage() {
     Utils.getImage().then((value) => setState(() {
           _image = value;
+        
         }));
   }
 
@@ -85,7 +86,6 @@ class _TripBodyState extends State<TripBody> {
         ),
       );
   Trip get getTrip {
-    //TODO use providers to get data to createtrip post;
     return Trip(
       title: _nameCtr.text,
       
@@ -115,7 +115,7 @@ class _TripBodyState extends State<TripBody> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.access_time),
+                    child: const Icon(Icons.access_time),
                   ),
                   Expanded(child: Text(f.format(_selectedDate))),
                   IconButton(

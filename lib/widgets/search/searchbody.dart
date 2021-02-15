@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:travel/providers/Trip.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/screens/tripdetails.dart';
 
 class SearchBody extends StatelessWidget {
   final list;
-  SearchBody(this.list);
+  const SearchBody(this.list);
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
