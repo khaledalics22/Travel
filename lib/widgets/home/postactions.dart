@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/tripdetails.dart';
+import 'package:travel/widgets/posts/postMetaData.dart';
 
 class PostActions extends StatefulWidget {
   @override
@@ -12,44 +14,30 @@ class PostActions extends StatefulWidget {
 class _PostActionsState extends State<PostActions> {
   @override
   Widget build(BuildContext context) {
-    var div = Container(
+    final div = Container(
       child: const VerticalDivider(
         thickness: 1,
         indent: 10,
       ),
       height: 40,
     );
-    final post = Provider.of<Post>(context);
+    final post = Provider.of<Post>(context, listen: false);
+    print('likes list ${post.likesList?.length}');
+    final uid = Provider.of<Auther>(context, listen: false).user.id;
     return Padding(
       padding: const EdgeInsets.only(top: 2.0),
       child: Column(children: [
-        if ((post.likesList != null && post.likesList.isNotEmpty) ||
-            (post.commentsList != null && post.commentsList.isNotEmpty))
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(left: 8.0, top: 8.0),
-            child: Row(children: [
-              if (post.likesList.isNotEmpty)
-                Icon(
-                  Icons.thumb_up,
-                  size: 15,
-                  color: Theme.of(context).primaryColorDark,
-                ),
-              if (post.likesList?.isNotEmpty ?? false)
-                Text(
-                  ' ${post.likesList.length}',
-                  style: const TextStyle(fontSize: 12),
-                ),
-              Expanded(
-                child: const SizedBox(),
-              ),
-              if (post.commentsList?.isNotEmpty ?? false)
-                Text(
-                  '${post.commentsList.length} comments',
-                  style: TextStyle(fontSize: 12),
-                ),
-            ]),
-          ),
+        FutureBuilder(
+            future: post.loadMetaData(uid),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(left: 8.0, top: 8.0),
+                    child: PostMetaData());
+              }
+              return SizedBox();
+            }),
         Row(children: [
           Expanded(
             flex: 1,
@@ -58,12 +46,12 @@ class _PostActionsState extends State<PostActions> {
               child: Text(
                 'Like',
                 style: TextStyle(
-                    color: post.isLiked()
+                    color: post.isLiked(uid)
                         ? Theme.of(context).primaryColorDark
                         : Colors.black),
               ),
-              onPressed: () {
-                post.toggleLike();
+              onPressed: () async {
+                await post.toggleLike(uid);
               },
             ),
           ),

@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:travel/models/user.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
+import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/home/addpostactions.dart';
 import 'package:video_player/video_player.dart';
 
 class AddPost extends StatefulWidget {
-  final Function uploadPost;
   final Function isExtended;
-  const AddPost(this.uploadPost, this.isExtended);
+  const AddPost(this.isExtended);
   @override
   _AddPostState createState() => _AddPostState();
 }
@@ -19,7 +19,7 @@ class AddPost extends StatefulWidget {
 class HomeTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    CustomUser user = Provider.of<Auther>(context, listen: false).user; 
+    CustomUser user = Provider.of<Auther>(context, listen: false).user;
     return Row(
       children: [
         Container(
@@ -72,19 +72,17 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
     });
   }
 
-  void uploadPost(BuildContext context) {
+  void uploadPost() async {
     Post post = Post(
-        authorId: user.id,
-        caption: inputController.text,
-        file: _pickedFile,
-        hasVid: (isImg != null) ? !isImg : false,
-        hasImg: (isImg != null) ? isImg : false,
-        imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-        isTrip: false,
-        likesList: [],
-        commentsList: []);
-    widget.uploadPost(post);
-
+      authorId: user.id,
+      caption: inputController.text,
+      file: _pickedFile,
+      hasVid: (isImg != null) ? !isImg : false,
+      hasImg: (isImg != null) ? isImg : false,
+      isTrip: false,
+    );
+    final uid = Provider.of<Auther>(context, listen: false).user.id;
+    await Provider.of<Posts>(context, listen: false).addPost(post, uid);
     setState(() {
       inputTapped = false;
       _pickedFile = null;
@@ -184,7 +182,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
                       inputController.text,
                       displayPickedImage,
                       () {
-                        uploadPost(context);
+                        uploadPost();
                       },
                     ),
                   ),

@@ -10,11 +10,13 @@ class Posts with ChangeNotifier {
   final postsRef = FirebaseFirestore.instance.collection('posts');
   final postsFiles = FirebaseStorage.instance.ref('posts');
 
-  Future<dynamic> addPost(Post post) async {
+  Future<void> addPost(Post post, uid) async {
     final postDoc = postsRef.doc();
+    post.postId = postDoc.id;
+    print('--------------------- ${postDoc.id}');
     if (post.hasImg || post.hasVid) {
       final ref = postsFiles
-          .child('/${FirebaseAuth.instance.currentUser.uid}')
+          .child('/$uid')
           .child('/${postDoc.id}.' + (post.hasImg ? 'jpg' : 'mp4'));
       final task = ref.putFile(
           post.file,
@@ -23,19 +25,19 @@ class Posts with ChangeNotifier {
       final url = await (await Future.value(task)).ref.getDownloadURL();
       post.hasImg ? post.imgUrl = url : post.videoUrl = url;
     }
-    var result = postDoc.set(post.toJson);
+    await postDoc.set(post.toJson);
+    _postsList.insert(0, post);
     notifyListeners();
-    return result; 
   }
 
-  Future<QuerySnapshot> loadPosts() async {
-    return postsRef.get();
-    // print('loaded');
-    // result.docs.map((e) {
-    //   if (e.exists) {
-    //     print(e);
-    //   }
-    // });
+  Future<void> loadPosts() async {
+    if (_postsList.isNotEmpty) return;
+    final response = await postsRef.get();
+    _postsList.addAll(response.docs.map((e) {
+      return Post()..setPost(e.data());
+    }).toList());
+    // print('*******loaded post provider******${}');
+    notifyListeners();
   }
 
   List<Post> findByTitle(String title) {

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Comment.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/utils.dart';
 import 'package:travel/widgets/posts/commentwidget.dart';
@@ -140,7 +141,10 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
                             if (_image != null)
                               comment.imageUrl =
                                   'https://homepages.cae.wisc.edu/~ece533/images/cat.png'; // _image.toString(); // upload image and chang to url
-                            post.addComment(comment);
+                            final uid = Provider.of<Auther>(context,listen: false).user.id; 
+                            post.addComment(
+                              comment,uid
+                            );
                             setState(() {
                               commentCtr.text = '';
                               _image = null;

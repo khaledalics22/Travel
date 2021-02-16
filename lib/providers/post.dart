@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/providers/Comment.dart';
 import 'package:travel/providers/Trip.dart';
@@ -17,28 +18,28 @@ class Post with ChangeNotifier {
   String postId;
   double minCost;
   String commentsId;
-  List<String> likesList;
-  List<Comment> commentsList;
+  List<String> _likesList;
+  List<Comment> _commentsList;
   Trip trip;
   File file;
 
-  Post(
-      {this.authorId,
-      this.minCost,
-      this.postId,
-      this.hasImg,
-      this.authImgUrl,
-      this.hasVid,
-      this.file,
-      this.videoUrl,
-      this.caption,
-      this.trip,
-      this.imgUrl,
-      this.groupSize,
-      this.commentsId,
-      this.commentsList,
-      this.isTrip,
-      this.likesList});
+  List<String> get likesList => _likesList;
+  List<Comment> get commentsList => _commentsList;
+  Post({
+    this.authorId,
+    this.minCost,
+    this.postId,
+    this.hasImg,
+    this.authImgUrl,
+    this.hasVid,
+    this.file,
+    this.videoUrl,
+    this.caption,
+    this.trip,
+    this.imgUrl,
+    this.groupSize,
+    this.isTrip,
+  });
   Map<String, Object> get toJson {
     return {
       'autherId': this.authorId,
@@ -51,9 +52,7 @@ class Post with ChangeNotifier {
       'trip': this.trip,
       'imgUrl': this.imgUrl,
       'groupSize': this.groupSize,
-      'commentsId': this.commentsId,
       'isTrip': this.isTrip,
-      'likesList': this.likesList,
     };
   }
 
@@ -70,25 +69,49 @@ class Post with ChangeNotifier {
     this.groupSize = data['groupSize'];
     this.commentsId = data['commentsId'];
     this.isTrip = data['isTrip'];
-    this.likesList = data['likesList'].cast<String>().toList();
   }
 
-  void addComment(Comment comment) {
-    commentsList.add(comment);
+  static final postRef = FirebaseFirestore.instance.collection('postsMetaData');
+  void addComment(Comment comment,String uid) async{
+    _commentsList.add(comment);
     notifyListeners();
+    final ref = postRef.doc('/$uid').collection('${this.postId}').doc('comments');
+    await ref.get().then((value) async {
+      if (value.exists ?? false)
+        await ref.update({'commentsList': this._commentsList});
+      else
+        await ref.set({'commentsList': this._commentsList});
+    }).catchError((error) {
+      //throw error
+    });
   }
 
-  void toggleLike() {
-    isLiked() ? removelike() : likesList.add('uid');
+  Future<void> toggleLike(String uid) async {
+    if (_likesList == null) this._likesList = [];
+    isLiked(uid)
+        ? this._likesList.removeWhere((element) => element == uid)
+        : this._likesList.add(uid);
     notifyListeners();
+    final ref = postRef.doc('/$uid').collection('${this.postId}').doc('likes');
+    await ref.get().then((value) async {
+      if (value.exists ?? false)
+        await ref.update({'likesList': this._likesList});
+      else
+        await ref.set({'likesList': this._likesList});
+    }).catchError((error) {
+      //throw error
+    });
   }
 
-  void removelike() {
-    likesList.removeWhere((element) => element == 'uid');
-    notifyListeners();
+  Future<void> loadMetaData(uid) async {
+    print('---------------------');
+    final ref = postRef.doc('/$uid').collection('${this.postId}').doc('likes');
+    await ref.get().then((value) async {
+      print(value);
+    });
   }
 
-  bool isLiked() {
-    return likesList.contains('uid');
+  bool isLiked(String uid) {
+    return this.likesList?.contains(uid) ?? false;
   }
 }
