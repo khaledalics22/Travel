@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/models/user.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
-import 'package:travel/providers/user.dart';
-
 import 'package:travel/widgets/home/addpostactions.dart';
 import 'package:video_player/video_player.dart';
 
@@ -19,7 +19,7 @@ class AddPost extends StatefulWidget {
 class HomeTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
+    CustomUser user = Provider.of<Auther>(context, listen: false).user; 
     return Row(
       children: [
         Container(
@@ -35,7 +35,7 @@ class HomeTop extends StatelessWidget {
                     loadingBuilder: (context, child, loadingProgress) =>
                         loadingProgress == null
                             ? child
-                            :const  CircularProgressIndicator(),
+                            : const CircularProgressIndicator(),
                   )
                 : const Icon(Icons.person),
           ),
@@ -45,7 +45,7 @@ class HomeTop extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Owner Name',
+              user.name,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -74,7 +74,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
 
   void uploadPost(BuildContext context) {
     Post post = Post(
-        authorId: 'uid',
+        authorId: user.id,
         caption: inputController.text,
         file: _pickedFile,
         hasVid: (isImg != null) ? !isImg : false,
@@ -82,7 +82,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
         imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
         isTrip: false,
         likesList: [],
-        commetsList: []);
+        commentsList: []);
     widget.uploadPost(post);
 
     setState(() {
@@ -93,15 +93,17 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
     FocusScope.of(context).unfocus();
   }
 
+  CustomUser user;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    user = Provider.of<Auther>(context, listen: false).user;
     return Container(
       width: double.infinity,
       child: Container(
-        padding:const  EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: AnimatedSize(
-          duration:const  Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           vsync: this,
           child: Container(
             height: size.height > 500
@@ -111,7 +113,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HomeTop(),
-               const Divider(),
+                const Divider(),
                 Expanded(
                   flex: 3,
                   child: TextField(

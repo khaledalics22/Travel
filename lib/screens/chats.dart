@@ -10,6 +10,8 @@ class ChatsScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => Chats(),
       child: Scaffold(
+      backgroundColor: Colors.white,
+
         appBar: AppBar(
          
           title: const Text('Chats'),

@@ -40,7 +40,6 @@ class _VieoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // print('videoooooooooooooo rul : ${widget.url}');
     return VisibilityDetector(
       onVisibilityChanged: (info) {
         if (info.visibleFraction == 0)

@@ -12,6 +12,8 @@ class PostDetails extends StatelessWidget {
     return Scaffold(
       // resizeToAvoidBottomInset: true,
       // resizeToAvoidBottomPadding: true,
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
         title: Text('${post.authorId}\'s Post'),
       ),

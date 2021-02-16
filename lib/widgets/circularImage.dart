@@ -13,10 +13,12 @@ class CircularImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(radius),
         child: Image.network(
           url,
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.cover,
           filterQuality: FilterQuality.low,
           loadingBuilder: (context, child, loadingProgress) =>
-              loadingProgress == null ? child : const CircularProgressIndicator(),
+              loadingProgress == null
+                  ? child
+                  : const CircularProgressIndicator(),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/post.dart';
@@ -8,49 +9,12 @@ import 'package:travel/screens/tripdetails.dart';
 import 'package:travel/widgets/home/addpost.dart';
 import 'package:travel/widgets/home/post.dart';
 
-class Body extends StatefulWidget {
-  final Function isExtended;
-  const Body(this.isExtended);
-  @override
-  _BodyState createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  var _loading = true;
-  Future<int> sleeping() async {
-    return 3;
-  }
-
-  void loadData() async {
-    var n = await sleeping();
-    print('woke up $n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    setState(() {
-      this._loading = false;
-      print('set state  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    });
-  }
-
-  void uploadPost(Post post) {
-    posts.addPost(post);
-    print('add poooooooooooooost');
-  }
-
-  Posts posts;
+class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // if (_loading) {
-    //   loadData();
-    //   print('return widget !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    //   return Container(
-    //     width: double.infinity,
-    //     height: double.infinity,
-    //     child: Center(child: CircularProgressIndicator()),
-    //   );
-    // } else {
-
-    posts = Provider.of<Posts>(context);
-    final postsList = posts.postsList;
+    final posts = Provider.of<Posts>(context);
     return SingleChildScrollView(
+      // physics: NeverScrollableScrollPhysics(),
       child: Column(
         children: [
           PhysicalModel(
@@ -58,38 +22,56 @@ class _BodyState extends State<Body> {
             elevation: 5,
             shadowColor: Theme.of(context).primaryColorDark,
             child: GestureDetector(
-              child: AddPost(uploadPost, (value) {
+              child: AddPost((post) async {
+                await posts.addPost(post);
+              }, (value) {
                 print(value);
-                widget.isExtended(value);
               }),
               onTap: () {
                 Navigator.of(context).pushNamed(Profile.route);
               },
             ),
           ),
-          ListView.separated(
-            itemCount: postsList?.length,
-            padding: const EdgeInsets.all(8.0),
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(
-              thickness: 1,
+          FutureProvider<QuerySnapshot>(
+            create: (context) => posts.loadPosts(),
+            child: Consumer<QuerySnapshot>(
+              builder: (context, value, child) {
+                if (value != null) {
+                  return ListView.separated(
+                      itemCount: value.docs.length,
+                      padding: const EdgeInsets.all(8.0),
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(
+                            thickness: 1,
+                          ),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (_, idx) {
+                        Post post = Post()..setPost(value.docs[idx].data());
+                        print(post.caption);
+                        return GestureDetector(
+                            onTap: () {
+                              post.isTrip
+                                  ? Navigator.of(context).pushNamed(
+                                      TripDetials.route,
+                                      arguments: post.postId)
+                                  : Navigator.of(context).pushNamed(
+                                      PostDetails.route,
+                                      arguments: post.postId);
+                            },
+                            child: ChangeNotifierProvider<Post>.value(
+                              child: PostWidget(),
+                              value: post,
+                            ));
+                      });
+                } else {
+                  return Container(
+                    // height: double.infinity,
+                    child: Text('loading...'),
+                  );
+                }
+              },
             ),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, idx) {
-              return GestureDetector(
-                  onTap: () {
-                    postsList[idx].isTrip
-                        ? Navigator.of(context).pushNamed(TripDetials.route,
-                            arguments: postsList[idx].postId)
-                        : Navigator.of(context).pushNamed(PostDetails.route,
-                            arguments: postsList[idx].postId);
-                  },
-                  child: ChangeNotifierProvider<Post>.value(
-                    child: PostWidget(),
-                    value: postsList[idx],
-                  ));
-            },
           ),
         ],
       ),

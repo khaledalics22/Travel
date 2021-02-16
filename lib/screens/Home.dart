@@ -1,11 +1,10 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/auth.dart';
-import 'package:travel/providers/user.dart';
 import 'package:travel/screens/chats.dart';
-
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/searchtrip.dart';
 import '../widgets/home/homebody.dart';
@@ -19,21 +18,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool extended = false;
-  void isExtended(isExtended) {
-    setState(() {
-      extended = isExtended;
-    });
-  }
-
-  void getUser(BuildContext context) async {
-    final auther = Provider.of<Auther>(context);
-    final doc = await auther.getUser();
-    // print(doc.data());
-    Provider.of<UserProvider>(context, listen: false).setUser(doc);
-    setState(() {
-      loading = false;
-    });
-  }
 
   bool loading = true;
 
@@ -79,26 +63,50 @@ class _HomeState extends State<Home> {
         'Travel',
       ),
     );
-    getUser(context);
+    // final auther =;
     return Scaffold(
         // drawer: Drawer(
         //   elevation: 5,
         // ),
+        backgroundColor: Colors.white,
         floatingActionButton: (Platform.isAndroid)
             ? FloatingActionButton.extended(
                 onPressed: () {
-                  if (extended)
-                    Navigator.of(context).pushNamed(CreateTrip.route);
+                  Navigator.of(context).pushNamed(CreateTrip.route);
                 },
-                label: Text(!extended ? 'New Trip' : 'Post'),
+                label: Text('New Trip'),
               )
             : null,
         appBar: appbar,
-        body: loading
-            ? Container(
+        body: FutureBuilder(
+          future: Auther().getUser(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting)
+              return Container(
                 child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : Body(isExtended));
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            else {
+              print(snapshot.data);
+              Provider.of<Auther>(context, listen: false)
+                  .setUser(snapshot.data);
+              return FutureBuilder(
+                  future: FirebaseAuth.instance.currentUser.getIdToken(),
+                  builder: (ctx, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      Provider.of<Auther>(context, listen: false).user.token =
+                          snapshot.data;
+                      return Body();
+                    } else
+                      return Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                  });
+            }
+          },
+        ));
   }
 }

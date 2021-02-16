@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:travel/models/place.dart';
+import 'package:provider/provider.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/screens/friends.dart';
 
 class ProfileBody extends StatefulWidget {
@@ -26,23 +27,19 @@ class _ProfileBodyState extends State<ProfileBody>
     );
   }
 
-  var _visitedPlaces = [
-    Place(title: 'Paris'),
-    Place(title: 'UK'),
-    Place(title: 'US'),
-    Place(title: 'India'),
-    Place(title: 'China'),
-    Place(title: 'Cairo'),
-  ];
   double _placesListHeight = 0.0;
   bool extended = false;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Auther>(context, listen: false).user;
+    print('*****************${user.birthdate}');
     return Column(
       children: [
         item(
           'Age',
-          '18 years',
+          user.birthdate != null
+              ? '${(DateTime.now().difference(DateTime.fromMillisecondsSinceEpoch(user.birthdate)).inDays / 365).floor()} years'
+              : 'Add age',
           Icons.date_range,
           () {},
         ),
@@ -67,7 +64,7 @@ class _ProfileBodyState extends State<ProfileBody>
                 extended
                     ? _placesListHeight = 0
                     : _placesListHeight =
-                        MediaQuery.of(context).size.height / 3;
+                        MediaQuery.of(context).size.height / 4;
                 extended = !extended;
               });
             },
@@ -75,7 +72,7 @@ class _ProfileBodyState extends State<ProfileBody>
           Flexible(
             // height: MediaQuery.of(context).size.height / 2,
             child: AnimatedSize(
-              duration:const  Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               vsync: this,
               child: Container(
@@ -84,14 +81,22 @@ class _ProfileBodyState extends State<ProfileBody>
                 child: ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (_, idx) {
-                    return Text(
-                      _visitedPlaces[idx].title,
+                    return Card(
+                      elevation: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          user.visitedPlaces[idx],
+                        ),
+                      ),
                     );
                   },
                   separatorBuilder: (_, idx) {
                     return const Divider();
                   },
-                  itemCount: _visitedPlaces.length,
+                  itemCount: user.visitedPlaces == null
+                      ? 0
+                      : user.visitedPlaces.length,
                 ),
               ),
             ),

@@ -5,7 +5,6 @@ import './providers/auth.dart';
 import './providers/chats.dart';
 import './providers/messages.dart';
 import './providers/posts.dart';
-import './providers/user.dart';
 import './screens/Home.dart';
 import './screens/auth.dart';
 import './screens/chatroom.dart';
@@ -91,7 +90,6 @@ class _App extends StatelessWidget {
         ChangeNotifierProvider.value(value: Posts()),
         ChangeNotifierProvider.value(value: Messages()),
         ChangeNotifierProvider.value(value: Chats()),
-        ChangeNotifierProvider.value(value: UserProvider()),
         ChangeNotifierProvider.value(value: Auther()),
       ],
       child: MaterialApp(

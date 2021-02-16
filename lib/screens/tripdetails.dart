@@ -17,6 +17,8 @@ class TripDetials extends StatelessWidget {
       ),
     );
     return Scaffold(
+      backgroundColor: Colors.white,
+
       appBar: appbar,
       body: SingleChildScrollView(
           child: Container(

@@ -24,7 +24,7 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
     final auther = Provider.of<Auther>(context, listen: false);
     final snapshot = await auther.login(
       input['email'],
-      input['pass'],
+      input['password'],
     );
     if (snapshot.user == null) {
       Scaffold.of(context).hideCurrentSnackBar();
@@ -69,7 +69,7 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
     });
     if (snapshot.user != null) {
       CustomUser user = CustomUser(
-        id: snapshot.user.uid,
+          id: snapshot.user.uid,
           email: snapshot.user.email,
           phone: input['phone'],
           name: input['name']);
@@ -85,6 +85,7 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return logging
         ? Center(
             child: CircularProgressIndicator(),
@@ -122,26 +123,24 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                       duration: Duration(milliseconds: 400),
                       vsync: this,
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 5 / 6,
-                        height: MediaQuery.of(context).size.height *
-                            (isReg
-                                ? 2 / 3
-                                : MediaQuery.of(context).orientation ==
-                                        Orientation.portrait
-                                    ? 1 / 3
-                                    : 3 / 5),
-
-                        // height: double.infinity,
+                        width: size.width * 5 / 6,
+                        // height: MediaQuery.of(context).size.height *
+                        //     (isReg
+                        //         ? 2 / 3
+                        //         : MediaQuery.of(context).orientation ==
+                        //                 Orientation.portrait
+                        //             ? 1 / 3
+                        //             : 3 / 5),
                         child: Card(
                           elevation: 5,
                           child: SingleChildScrollView(
                             child: Form(
                               key: formKey,
-                              child: Column(
+                              child: Wrap(
                                 children: [
                                   if (isReg)
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(15.0),
                                       child: TextFormField(
                                         maxLines: 1,
                                         onSaved: (newValue) {
@@ -177,7 +176,8 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                     child: TextFormField(
                                       maxLines: 1,
                                       onSaved: (newValue) {
-                                        input['email'] = newValue.toLowerCase().trim();
+                                        input['email'] =
+                                            newValue.toLowerCase().trim();
                                       },
                                       validator: (value) =>
                                           value.isEmpty || !value.contains('@')
@@ -238,7 +238,7 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                       ),
                     ),
                     Container(
-                      width: 200,
+                      width: size.width / 3,
                       height: 60,
                       padding: const EdgeInsets.all(8.0),
                       child: RaisedButton(
@@ -261,7 +261,7 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                     ),
                     Container(
                       padding: const EdgeInsets.all(5.0),
-                      width: 200,
+                      width: size.width / 3,
                       child: RaisedButton(
                         color: Theme.of(context).primaryColorDark,
                         elevation: 5,

@@ -17,17 +17,13 @@ class Utils {
   }
    static Future<File> getImage() async {
     final picker = ImagePicker();
-
     final _pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-  
       if (_pickedFile != null) {
         return File(_pickedFile.path);
       } else {
         print('No image selected.');
        
       }
-    
      return null; 
   }
 }

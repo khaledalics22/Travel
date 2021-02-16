@@ -75,6 +75,8 @@ class _SearchTripState extends State<SearchTrip> {
     historyList = histTest;
     return Scaffold(
       appBar: appbar,
+      backgroundColor: Colors.white,
+
       body: Stack(
         children: [
           SearchBody(trips),

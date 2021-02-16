@@ -13,6 +13,8 @@ class ChatRoomScreen extends StatelessWidget {
     final chat = Provider.of<Chats>(context).findById(chatId);
     final msgsProvider = Provider.of<Messages>(context);
     return Scaffold(
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
         actions: [
           PopupMenuButton(

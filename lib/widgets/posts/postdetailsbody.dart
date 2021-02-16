@@ -23,7 +23,7 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
     // const double paddBottom = MediaQuery.of(context).viewInsets.bottom;
 
     final post = Provider.of<Posts>(context).findById(widget.postId);
-    final comments = post.commetsList;
+    final comments = post.commentsList;
     return Container(
       child: Column(
         mainAxisSize: MainAxisSize.max,

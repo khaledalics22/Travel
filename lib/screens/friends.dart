@@ -4,53 +4,53 @@ import 'package:travel/widgets/search/searchbar.dart';
 
 class Friends extends StatelessWidget {
   static final route = '/friends';
-  final friendstest = [
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-    CustomUser(
-      name: 'Ahmed',
-      bio: 'eng',
-      profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-    ),
-  ];
+  final friendstest = [];
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  //   CustomUser(
+  //     name: 'Ahmed',
+  //     bio: 'eng',
+  //     profileUrl: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
+  //   ),
+  // ];
   @override
   Widget build(BuildContext context) {
     var appbar = AppBar(
@@ -65,6 +65,7 @@ class Friends extends StatelessWidget {
     appbar.actions.add(searchView);
     return Scaffold(
       appBar: appbar,
+      backgroundColor: Colors.white,
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +90,7 @@ class Friends extends StatelessWidget {
                 ],
               ),
             ),
-           const  Divider(
+            const Divider(
               thickness: 1,
             ),
             Flexible(

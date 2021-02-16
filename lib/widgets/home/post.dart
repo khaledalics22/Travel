@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/providers/Requests.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/circularImage.dart';
 import 'package:travel/widgets/posts/postbody.dart';
@@ -33,116 +35,99 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
-    final post = Provider.of<Post>(context);
+    final post = Provider.of<Post>(context,listen: false);
+    print('***************** ${post.videoUrl}');
     return Container(
-      // width: size.width > 500 ? 500 : size.width,
-      // height: size.width > 500 ? 500 : size.width,
-      // constraints: BoxConstraints(
-      //     maxWidth: size.width > 500 ? 500 : size.width,
-      //     maxHeight: size.width > 500 ? 500 : size.width),
-      child: Wrap(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: PostTop(post),
-            ),
-            // flex: 1,
-
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text(post.caption),
-            ),
-            if (post.hasImg || post.hasVid)
-              post.isTrip
-                  ? Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        PostBody(post.imgUrl),
-                        Container(
+      child: Wrap(children: [
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: PostTop(post),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(post.caption),
+        ),
+        if (post.hasImg || post.hasVid)
+          post.isTrip
+              ? Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    PostBody(post.imgUrl),
+                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: tripActions(context, post),
+                      color: Colors.pink[50],
+                    ),
+                    Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
                           padding: EdgeInsets.all(8.0),
-                          child: tripActions(context, post),
                           color: Colors.pink[50],
-                        ),
-                        Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              padding: EdgeInsets.all(8.0),
-                              color: Colors.pink[50],
-                              child: Text(
-                                'G. Size ${post.groupSize}',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 18),
-                              ),
-                            ))
-                      ],
-                    )
-                  : post.hasVid
-                      ? VideoWidget(post.videoUrl)
-                      : PostBody(post.imgUrl),
-            if (post.likesList.isNotEmpty || post.commetsList.isNotEmpty)
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.only(left: 8.0, top: 8.0),
-                child: Row(children: [
-                  if (post.likesList.isNotEmpty)
-                    Icon(
-                      Icons.thumb_up,
-                      size: 15,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                  if (post.likesList.isNotEmpty)
-                    Text(
-                      ' ${post.likesList.length}',
-                      style:const  TextStyle(fontSize: 12),
-                    ),
-                  Expanded(
-                    child:const  SizedBox(),
-                  ),
-                  if (post.commetsList.isNotEmpty)
-                    Text(
-                      '${post.commetsList.length} comments',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                ]),
-              ),
-            PostActions(post.postId),
-          ]),
+                          child: Text(
+                            'G. Size ${post.groupSize}',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ))
+                  ],
+                )
+              : post.hasVid
+                  ? VideoWidget(post.videoUrl)
+                  : PostBody(post.imgUrl),
+        
+        PostActions(),
+      ]),
     );
   }
 }
 
-class PostTop extends StatelessWidget {
+class PostTop extends StatefulWidget {
   final Post post;
   PostTop(this.post);
+
+  @override
+  _PostTopState createState() => _PostTopState();
+}
+
+class _PostTopState extends State<PostTop> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircularImage(
-          40.0,
-          post.imgUrl,
-        ),
-        Expanded(
-          flex: 7,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              post.authorId,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
-        ),
-      ],
-    );
+    return FutureBuilder(
+        future: Requests.getProfileUrlOfUserById(widget.post.authorId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Row(children: [
+              CircularImage(
+                40.0,
+                snapshot.data['photoUrl'] ??
+                    Requests.appImgUrl +
+                        Provider.of<Auther>(context).user.token,
+              ),
+              Expanded(
+                flex: 7,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    snapshot.data['name'],
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  icon: Icon(Icons.more_vert),
+                  onPressed: () {},
+                ),
+              ),
+            ]);
+          } else
+            return Container(
+              width: 40,
+              height: 40,
+              child: CircularProgressIndicator(),
+            );
+        });
   }
 }

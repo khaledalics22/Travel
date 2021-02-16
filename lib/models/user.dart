@@ -1,50 +1,63 @@
-class CustomUser {
+import 'package:flutter/cupertino.dart';
+
+class CustomUser with ChangeNotifier {
   String id;
   String name;
   String bio;
-  String work;
+  String position;
   String education;
-  List<String> visitedPlaces;
-  String profileUrl;
+  List<Object> visitedPlaces;
+  String _profileUrl;
   String coverUrl;
   String email;
   String pass;
   String phone;
+  int birthdate;
+  String token; 
+  String get profileUrl => this._profileUrl;
+  set profileUrl(String url) {
+    _profileUrl = url;
+    notifyListeners();
+  }
+
   CustomUser({
     this.id,
     this.name,
     this.bio,
+    this.token, 
+    this.birthdate,
     this.email,
     this.pass,
     this.phone,
     this.coverUrl,
     this.education,
-    this.profileUrl,
     this.visitedPlaces,
-    this.work,
+    this.position,
   });
   Map<String, Object> get toJson => {
         'id': this.id,
         'name': this.name,
         'bio': this.bio,
         'email': this.email,
-        'photoUrl': this.profileUrl,
+        'photoUrl': this._profileUrl,
         'phone': this.phone,
         'education': this.education,
         'coverUrl': this.coverUrl,
-        'work': this.work,
+        'work': this.position,
+        'birthdate': this.birthdate,
         'visited-places': this.visitedPlaces,
       };
-  void setUser(var data){
-    this.id=  data['id'];
-    this.name=  data['name'];
-    this.bio=  data['bio'];
-    this.email=  data['email'];
-    this.profileUrl=  data['photoUrl'];
-    this.phone=  data['phone'];
-    this.education=  data['education'];
-    this.coverUrl=  data['coverUrl'];
-    this.work=  data['work'];
-     this.visitedPlaces= data['visited-places'];
+  void setUser(var data) {
+    this.id = data['id'];
+    this.name = data['name'];
+    this.bio = data['bio'];
+    this.email = data['email'];
+    this.profileUrl = data['photoUrl'];
+    this.phone = data['phone'];
+    this.education = data['education'];
+    this.coverUrl = data['coverUrl'];
+    this.position = data['work'];
+    this.birthdate = data['birthdate'];
+    this.visitedPlaces = data['visited-places'];
   }
 }
