@@ -40,6 +40,8 @@ class _VieoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('build video.dart');
+
     return VisibilityDetector(
       onVisibilityChanged: (info) {
         if (info.visibleFraction == 0)

@@ -85,6 +85,8 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    print('build authhomeBody.dart');
+
     final size = MediaQuery.of(context).size;
     return logging
         ? Center(
@@ -298,6 +300,8 @@ class _PasswordFieldsState extends State<PasswordFields> {
   var visible = false;
   @override
   Widget build(BuildContext context) {
+    print('build authhomebody.dart');
+
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
         child: TextField(

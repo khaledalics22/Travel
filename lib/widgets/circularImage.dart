@@ -6,6 +6,8 @@ class CircularImage extends StatelessWidget {
   const CircularImage(this.radius, this.url);
   @override
   Widget build(BuildContext context) {
+    print('build circularImaage.dart');
+
     return Container(
       width: radius,
       height: radius,
@@ -18,7 +20,10 @@ class CircularImage extends StatelessWidget {
           loadingBuilder: (context, child, loadingProgress) =>
               loadingProgress == null
                   ? child
-                  : const CircularProgressIndicator(),
+                  : SizedBox(
+                      width: radius,
+                      height: radius,
+                    ),
         ),
       ),
     );

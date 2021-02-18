@@ -5,6 +5,8 @@ class Auth extends StatelessWidget {
   static final String route = '/auth';
   @override
   Widget build(BuildContext context) {
+    print('build auth.dart');
+
     return Scaffold(
       
       body: AuthBody(),

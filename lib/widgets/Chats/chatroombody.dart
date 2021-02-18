@@ -27,6 +27,8 @@ class ChatRoomBody extends StatelessWidget {
   // var chats;
   @override
   Widget build(BuildContext context) {
+    print('build chatroombody.dart');
+
     final msgsProvider = Provider.of<Messages>(context);
 
     List<Message> msgs = msgsProvider.msgsOfChatId(chatId)?.reversed?.toList();
@@ -199,6 +201,8 @@ class _MessageInputState extends State<MessageInput> {
 
   @override
   Widget build(BuildContext context) {
+    print('build chatroombody.dart');
+
     var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),

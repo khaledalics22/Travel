@@ -10,6 +10,8 @@ import 'package:travel/widgets/circularImage.dart';
 class ProfileTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build profiletop.dart');
+
     final user = Provider.of<Auther>(context).user;
     return Container(
       width: double.infinity,
@@ -17,17 +19,25 @@ class ProfileTop extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Image.network(
-            user.coverUrl != null
-                ? user.coverUrl
-                : Requests.appImgUrl+Provider.of<Auther>(context).user.token,
-            fit: BoxFit.cover,
-            height: 170.0,
-            filterQuality: FilterQuality.low,
-            width: double.infinity,
-            loadingBuilder: (context, child, loadingProgress) =>
-                loadingProgress == null ? child : CircularProgressIndicator(),
-          ),
+          user.coverUrl == null
+              ? Image.asset(
+                  'assets/icon/traveller.jpg',
+                  fit: BoxFit.cover,
+                  height: 170.0,
+                  filterQuality: FilterQuality.low,
+                  width: double.infinity,
+                )
+              : Image.network(
+                  user.coverUrl,
+                  fit: BoxFit.cover,
+                  height: 170.0,
+                  filterQuality: FilterQuality.low,
+                  width: double.infinity,
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      loadingProgress == null
+                          ? child
+                          : CircularProgressIndicator(),
+                ),
           Positioned(
             child: Container(
               height: 2,
@@ -48,7 +58,8 @@ class ProfileTop extends StatelessWidget {
                   150.0,
                   user.profileUrl != null
                       ? user.profileUrl
-                      : Requests.appImgUrl+Provider.of<Auther>(context).user.token,
+                      : Requests.appImgUrl +
+                          Provider.of<Auther>(context).user.token,
                 ),
               ),
               Positioned(

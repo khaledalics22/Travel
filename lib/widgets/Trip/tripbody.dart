@@ -97,6 +97,8 @@ class _TripBodyState extends State<TripBody> {
 
   @override
   Widget build(BuildContext context) {
+    print('build tripbody.dart');
+
     final f = DateFormat('E, yyyy-MM').add_jm();
     return SingleChildScrollView(
       child: Padding(

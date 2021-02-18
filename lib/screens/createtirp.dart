@@ -6,6 +6,8 @@ class CreateTrip extends StatelessWidget {
   // TripBody tripBody;
   @override
   Widget build(BuildContext context) {
+    print('build createTrip.dart');
+
     final tripBody = TripBody();
     return Scaffold(
       backgroundColor: Colors.white,
@@ -23,6 +25,8 @@ class CreateTrip extends StatelessWidget {
 class PostAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build createTrip.dart postActions');
+
     return FlatButton(
       onPressed: () {
         Scaffold.of(context).hideCurrentSnackBar();

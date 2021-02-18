@@ -49,10 +49,10 @@ class __MyAppState extends State<_MyApp> {
     try {
       // Wait for Firebase to initialize and set `_initialized` state to true
       var result = await Firebase.initializeApp();
-      print('************${result.options.projectId}');
+      // print('************${result.options.projectId}');
       setState(() {
         _initialized = true;
-        print('initialized *************************');
+        // print('initialized *************************');
       });
     } catch (e) {
       // Set `_error` state to true if Firebase initialization fails
@@ -73,7 +73,6 @@ class __MyAppState extends State<_MyApp> {
     if (_error) {
       return error;
     }
-
     // Show a loader until FlutterFire is initialized
     if (_initialized) {
       return _App();
@@ -85,6 +84,7 @@ class __MyAppState extends State<_MyApp> {
 class _App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build main.dart');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: Posts()),

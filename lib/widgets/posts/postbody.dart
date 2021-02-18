@@ -5,6 +5,8 @@ class PostBody extends StatelessWidget {
   PostBody(this.imgUrl);
   @override
   Widget build(BuildContext context) {
+    print('build postbody.dart');
+
     return Image.network(
       imgUrl,
       fit: BoxFit.fitWidth,
@@ -12,7 +14,12 @@ class PostBody extends StatelessWidget {
       width: double.infinity,
       height: MediaQuery.of(context).size.height / 3,
       loadingBuilder: (context, child, loadingProgress) =>
-          loadingProgress == null ? child : CircularProgressIndicator(),
+          loadingProgress == null
+              ? child
+              : SizedBox(
+                  width: MediaQuery.of(context).size.height / 3,
+                  height: MediaQuery.of(context).size.height / 3,
+                ),
     );
   }
 }

@@ -10,7 +10,8 @@ class PostsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final posts = Provider.of<Posts>(context).postsList;
-    print('*************** ${posts.length}');
+        print('build postsListView.dart');
+
     return ListView.separated(
         itemCount: posts.length,
         padding: const EdgeInsets.all(8.0),
@@ -30,7 +31,7 @@ class PostsListView extends StatelessWidget {
                         arguments: posts[idx].postId);
               },
               child: ChangeNotifierProvider<Post>.value(
-                child: PostWidget(),
+                child: PostWidget(UniqueKey()),
                 value: posts[idx],
               ));
         });

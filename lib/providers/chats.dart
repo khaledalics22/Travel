@@ -119,7 +119,7 @@ class Chats with ChangeNotifier {
 
   void updateLastImg(Message msg, String chatId) {
     findById(chatId).updateLastMsg(msg);
-    print('message updagted');
+    // print('message updagted');
     notifyListeners();
   }
 

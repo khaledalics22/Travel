@@ -16,6 +16,8 @@ class Profile extends StatelessWidget {
   static const route = 'profile';
   @override
   Widget build(BuildContext context) {
+    print('build profile.dart');
+
     final auther = Provider.of<Auther>(context, listen: false);
     final user = auther.user; 
     return Scaffold(

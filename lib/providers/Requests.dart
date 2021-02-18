@@ -6,8 +6,7 @@ abstract class Requests {
       'https://firebasestorage.googleapis.com/v0/b/travel-68ebb.appspot.com/o/traveller.jpg?alt=media&token=';
   static final _usersDoc = FirebaseFirestore.instance.collection('users');
   
-  static Future<DocumentSnapshot> getProfileUrlOfUserById(String uid) async {
+  static Future<DocumentSnapshot> getUserById(String uid) async {
     return _usersDoc.doc('$uid').get();
-    ;
   }
 }

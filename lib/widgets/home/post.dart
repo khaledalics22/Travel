@@ -10,6 +10,8 @@ import '../applybutton.dart';
 import '../home/postactions.dart';
 
 class PostWidget extends StatelessWidget {
+  final key;
+  PostWidget(this.key); 
   Widget tripActions(BuildContext context, Post post) {
     return Row(
       children: [
@@ -35,9 +37,10 @@ class PostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
-    final post = Provider.of<Post>(context,listen: false);
-    print('***************** ${post.videoUrl}');
+    final post = Provider.of<Post>(context, listen: false);
+    print('build post.dart');
     return Container(
+        key: key,
       child: Wrap(children: [
         Padding(
           padding: const EdgeInsets.all(5.0),
@@ -75,7 +78,6 @@ class PostWidget extends StatelessWidget {
               : post.hasVid
                   ? VideoWidget(post.videoUrl)
                   : PostBody(post.imgUrl),
-        
         PostActions(),
       ]),
     );
@@ -93,8 +95,10 @@ class PostTop extends StatefulWidget {
 class _PostTopState extends State<PostTop> {
   @override
   Widget build(BuildContext context) {
+    print('build post.dart');
+
     return FutureBuilder(
-        future: Requests.getProfileUrlOfUserById(widget.post.authorId),
+        future: Requests.getUserById(widget.post.authorId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Row(children: [

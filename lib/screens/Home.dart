@@ -23,6 +23,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print('build home.dart');
+
     var appbar = AppBar(
       actions: [
         IconButton(
@@ -60,7 +62,7 @@ class _HomeState extends State<Home> {
             }),
       ],
       title: const Text(
-        'Travel',
+        'Traveller',
       ),
     );
     // final auther =;

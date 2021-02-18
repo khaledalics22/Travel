@@ -4,158 +4,60 @@ import 'package:provider/provider.dart';
 import 'package:travel/providers/Comment.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/posts.dart';
-import 'package:travel/utils.dart';
-import 'package:travel/widgets/posts/commentwidget.dart';
+import 'package:travel/widgets/posts/postdetailactions.dart';
+import 'package:travel/widgets/posts/postdetailscomments.dart';
 
 class PostDetailsBody extends StatefulWidget {
   final String postId;
+  // final _listKey;
   PostDetailsBody(this.postId);
   @override
   _PostDetailsBodyState createState() => _PostDetailsBodyState();
 }
 
 class _PostDetailsBodyState extends State<PostDetailsBody> {
-  var commentCtr = TextEditingController();
-
-  File _image;
+  void insertItem() {
+    final idx = Provider.of<Posts>(context, listen: false)
+            .findById(widget.postId)
+            .commentsList
+            .length -
+        1;
+    CommentsListView.listKey?.currentState?.insertItem(idx > 0 ? idx : 0);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // const double paddBottom = MediaQuery.of(context).viewInsets.bottom;
+    print('build postdetailsbody.dart');
 
-    final post = Provider.of<Posts>(context).findById(widget.postId);
-    final comments = post.commentsList;
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          comments.length == 0
-              ? Expanded(
-                  flex: 1,
-                  child: Center(child: Text('No Comments')),
-                )
-              : Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (_, idx) {
-                      return ChangeNotifierProvider.value(
-                        child: CommentWidget(),
-                        value: comments[idx],
-                      );
-                    },
-                    separatorBuilder: (_, idx) {
-                      return Divider();
-                    },
-                    itemCount: comments.length,
-                  ),
+    // const double paddBottom = MediaQuery.of(context).viewInsets.bottom;
+    final post =
+        Provider.of<Posts>(context, listen: false).findById(widget.postId);
+    return FutureBuilder(
+        future: post?.loadMetaData(
+            Provider.of<Auther>(context, listen: false)?.user?.id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return Column(children: [
+              Expanded(
+                child: Center(
+                  child: CircularProgressIndicator(),
                 ),
-          Container(
-            color: Colors.grey,
-            height: 1,
-          ),
-          if (_image != null && MediaQuery.of(context).size.height > 500)
-            Container(
-              padding: EdgeInsets.all(8.0),
-              alignment: Alignment.centerLeft,
-              height: 100,
-              child: Stack(children: [
-                Image.file(
-                  _image,
-                  height: 100,
-                  fit: BoxFit.fitHeight,
-                ),
-                Positioned(
-                    top: 0,
-                    right: 0,
-                    child: IconButton(
-                        icon: Icon(
-                          Icons.close,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _image = null;
-                          });
-                        }))
-              ]),
-            ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+            ]);
+          else
+            return Column(
+              // mainAxisSize: MainAxisSize.max,
               children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.photo,
-                      color: Colors.black54,
-                    ),
-                    onPressed: () {
-                      Utils.getImage().then(
-                        (value) => setState(
-                          () {
-                            _image = value;
-                          },
-                        ),
-                      );
-                    }),
                 Expanded(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      color: Colors.pink[50],
-                      child: TextField(
-                        minLines: 1,
-                        onChanged: (value) {
-                          setState(() {});
-                        },
-                        maxLines:
-                            MediaQuery.of(context).size.height > 500 ? 4 : 1,
-                        controller: commentCtr,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Comment',
-                        ),
-                      ),
-                    ),
+                  flex: 1,
+                  child: ChangeNotifierProvider.value(
+                    child: CommentsListView(),
+                    value: post,
                   ),
                 ),
-                IconButton(
-                    icon: Icon(
-                      Icons.send,
-                      color: commentCtr.text.isNotEmpty || _image != null
-                          ? Theme.of(context).primaryColorDark
-                          : Colors.black54,
-                    ),
-                    onPressed: commentCtr.text.isNotEmpty || _image != null
-                        ? () {
-                            final comment = Comment(
-                              authorName: 'khalid',
-                              authorImgUrl:
-                                  'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-                              date: DateTime.now().millisecondsSinceEpoch,
-                              likesList: [],
-                            );
-                            if (commentCtr.text.isNotEmpty) {
-                              comment.body = commentCtr.text;
-                            }
-                            if (_image != null)
-                              comment.imageUrl =
-                                  'https://homepages.cae.wisc.edu/~ece533/images/cat.png'; // _image.toString(); // upload image and chang to url
-                            final uid = Provider.of<Auther>(context,listen: false).user.id; 
-                            post.addComment(
-                              comment,uid
-                            );
-                            setState(() {
-                              commentCtr.text = '';
-                              _image = null;
-                            });
-                          }
-                        : null),
+                PostDetailsActions(widget.postId, UniqueKey(), insertItem),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
+            );
+        });
   }
 }

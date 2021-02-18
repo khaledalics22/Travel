@@ -8,7 +8,8 @@ import 'package:travel/widgets/posts/postsListView.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('********************** body');
+    print('build homebody.dart');
+    
     return SingleChildScrollView(
       // physics: NeverScrollableScrollPhysics(),
       child: Column(
@@ -31,10 +32,13 @@ class Body extends StatelessWidget {
             future: Provider.of<Posts>(context, listen: false).loadPosts(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                print('******************* posts loaded');
-                return PostsListView();
+                // print('******************* posts loaded');
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 60),
+                  child: PostsListView());
               } else {
                 return Container(
+                  
                   // height: double.infinity,
                   child: Text('loading...'),
                 );

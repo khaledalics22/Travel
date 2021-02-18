@@ -8,6 +8,8 @@ class SearchBody extends StatelessWidget {
   const SearchBody(this.list);
   @override
   Widget build(BuildContext context) {
+    print('build searchbody.dart');
+
     return ListView.builder(
       itemCount: list != null ? list.length : 0,
       itemBuilder: (_, idx) {
@@ -31,7 +33,7 @@ class SearchBody extends StatelessWidget {
                   loadingBuilder: (context, child, loadingProgress) =>
                       loadingProgress == null
                           ? child
-                          : CircularProgressIndicator(),
+                          : SizedBox(height: 60,width: 60,),
                   filterQuality: FilterQuality.low,
                 ),
                 title: Text(trip.title),

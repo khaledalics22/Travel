@@ -7,6 +7,8 @@ class SearchWidget extends StatelessWidget {
  const  SearchWidget(this.onTapRoute, this.onVlaueChanged, this.hint);
   @override
   Widget build(BuildContext context) {
+    print('build searchbar.dart');
+
     return Padding(
       padding: const EdgeInsets.only(top: 7.0),
       child: TextField(

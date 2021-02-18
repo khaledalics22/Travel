@@ -8,6 +8,8 @@ class TripDetials extends StatelessWidget {
   static final String route = 'trip-details';
   @override
   Widget build(BuildContext context) {
+    print('build tripDetails.dart');
+
     final postId = ModalRoute.of(context).settings.arguments as String;
     final post = Provider.of<Posts>(context).findById(postId); 
     final appbar = AppBar(

@@ -53,6 +53,8 @@ class Friends extends StatelessWidget {
   // ];
   @override
   Widget build(BuildContext context) {
+    print('build friends.dart');
+
     var appbar = AppBar(
       actions: [],
     );
@@ -111,7 +113,7 @@ class Friends extends StatelessWidget {
                           loadingBuilder: (context, child, loadingProgress) =>
                               loadingProgress == null
                                   ? child
-                                  : const CircularProgressIndicator(),
+                                  : SizedBox(width: 50,height: 50,),
                         ),
                       ),
                     );

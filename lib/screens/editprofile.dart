@@ -23,6 +23,7 @@ class _EditProfileState extends State<EditProfile> {
   GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    print('build editProfile.dart');
     if (user == null) user = Provider.of<Auther>(context, listen: false).user;
     birthDateCtr.text = DateFormat('yyyy-MM-dd')
         .format(DateTime.fromMillisecondsSinceEpoch(user.birthdate));

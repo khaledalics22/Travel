@@ -12,6 +12,8 @@ class ChatRoomScreen extends StatelessWidget {
     final chatId = ModalRoute.of(context).settings.arguments as String;
     final chat = Provider.of<Chats>(context).findById(chatId);
     final msgsProvider = Provider.of<Messages>(context);
+    print('build chatroom.dart');
+
     return Scaffold(
       backgroundColor: Colors.white,
 

@@ -32,7 +32,8 @@ class _ProfileBodyState extends State<ProfileBody>
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Auther>(context, listen: false).user;
-    print('*****************${user.birthdate}');
+        print('build profilebody.dart');
+
     return Column(
       children: [
         item(

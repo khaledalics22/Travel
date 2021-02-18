@@ -5,6 +5,8 @@ class HistoryList extends StatelessWidget {
   const HistoryList(this.list);
   @override
   Widget build(BuildContext context) {
+    print('build history.dart');
+
     return Container(
       child: ListView.separated(
         separatorBuilder: (context, index) {

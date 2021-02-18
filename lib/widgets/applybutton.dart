@@ -11,6 +11,8 @@ class _ApplyButtonState extends State<ApplyButton> {
   bool applied = false;
   @override
   Widget build(BuildContext context) {
+    print('build applybutton.dart');
+
     return RaisedButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       onPressed: () {

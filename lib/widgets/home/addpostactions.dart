@@ -116,6 +116,8 @@ class _AddPostActionsState extends State<AddPostActions> {
 
   @override
   Widget build(BuildContext context) {
+    print('build addpostactions.dart');
+
     return Row(
       children: [
         Expanded(

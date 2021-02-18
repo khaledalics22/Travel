@@ -59,6 +59,8 @@ class _SearchTripState extends State<SearchTrip> {
 
   @override
   Widget build(BuildContext context) {
+    print('build searchTrip.dart');
+
     List<Post> trips =
         Provider.of<Posts>(context, listen: false).findByTitle(title);
     var appbar = AppBar(

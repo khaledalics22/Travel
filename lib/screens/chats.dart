@@ -7,13 +7,13 @@ class ChatsScreen extends StatelessWidget {
   static final String route = '/chats-screen';
   @override
   Widget build(BuildContext context) {
+    print('build chats.dart');
+
     return ChangeNotifierProvider(
       create: (context) => Chats(),
       child: Scaffold(
-      backgroundColor: Colors.white,
-
+        backgroundColor: Colors.white,
         appBar: AppBar(
-         
           title: const Text('Chats'),
         ),
         body: Container(child: ChatsScreenBody()),

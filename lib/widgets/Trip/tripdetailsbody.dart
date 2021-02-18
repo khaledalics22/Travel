@@ -11,6 +11,8 @@ class TripDetailsBody extends StatelessWidget {
   TripDetailsBody(this._post);
   @override
   Widget build(BuildContext context) {
+    print('build tripdetailsbody.dart');
+
     final f = DateFormat('Md MMM yyyy, ').add_jm();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

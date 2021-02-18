@@ -13,7 +13,7 @@ class Posts with ChangeNotifier {
   Future<void> addPost(Post post, uid) async {
     final postDoc = postsRef.doc();
     post.postId = postDoc.id;
-    print('--------------------- ${postDoc.id}');
+    // print('--------------------- ${postDoc.id}');
     if (post.hasImg || post.hasVid) {
       final ref = postsFiles
           .child('/$uid')
@@ -54,7 +54,8 @@ class Posts with ChangeNotifier {
   }
 
   Post findById(String id) {
-    return _postsList.firstWhere((element) => element.postId == id);
+    return _postsList.firstWhere((element) => element.postId == id,
+        orElse: () => null);
   }
 
   List<Post> get postsList {

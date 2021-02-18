@@ -11,6 +11,8 @@ import 'package:travel/widgets/circularImage.dart';
 class ChatsScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build chatsbody.dart');
+
     final chats = Provider.of<Chats>(context);
     return ListView.separated(
       padding: const EdgeInsets.all(5.0),
@@ -38,6 +40,8 @@ class ChatsScreenBody extends StatelessWidget {
 class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build chatsbody.dart');
+
     final chat = Provider.of<Chat>(context);
     List<Message> msgs = Provider.of<Messages>(context)
         ?.msgsOfChatId(chat.chatId)

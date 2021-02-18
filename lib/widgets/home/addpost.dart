@@ -19,6 +19,8 @@ class AddPost extends StatefulWidget {
 class HomeTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build addpost.dart');
+
     CustomUser user = Provider.of<Auther>(context, listen: false).user;
     return Row(
       children: [
@@ -35,7 +37,7 @@ class HomeTop extends StatelessWidget {
                     loadingBuilder: (context, child, loadingProgress) =>
                         loadingProgress == null
                             ? child
-                            : const CircularProgressIndicator(),
+                            :  SizedBox(width: 40,height: 40,),
                   )
                 : const Icon(Icons.person),
           ),
@@ -94,6 +96,8 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
   CustomUser user;
   @override
   Widget build(BuildContext context) {
+    print('build addpost.dart');
+
     var size = MediaQuery.of(context).size;
     user = Provider.of<Auther>(context, listen: false).user;
     return Container(
