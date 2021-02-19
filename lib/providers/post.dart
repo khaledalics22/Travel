@@ -23,51 +23,48 @@ class Post with ChangeNotifier {
   List<Comment> _commentsList;
   Trip trip;
   File file;
-
-  List<String> get likesList => _likesList;
-  List<Comment> get commentsList => _commentsList?.reversed?.toList()??[];
-  Post({
-    this.authorId,
-    this.minCost,
-    this.postId,
-    this.hasImg,
-    this.authImgUrl,
-    this.hasVid,
-    this.file,
-    this.videoUrl,
-    this.caption,
-    this.trip,
-    this.imgUrl,
-    this.groupSize,
-    this.isTrip,
-  });
+  int date;
+  List<String> get likesList => [..._likesList ?? []];
+  List<Comment> get commentsList =>
+      [..._commentsList?.reversed?.toList()] ?? [];
+  Post(
+      {this.authorId,
+      this.postId,
+      this.hasImg,
+      this.authImgUrl,
+      this.hasVid,
+      this.file,
+      this.videoUrl,
+      this.caption,
+      this.trip,
+      this.imgUrl,
+      this.isTrip,
+      this.date});
   Map<String, Object> get toJson {
     return {
       'autherId': this.authorId,
-      'minCost': this.minCost,
       'postId': this.postId,
       'hasImg': this.hasImg,
       'hasVid': this.hasVid,
       'videoUrl': this.videoUrl,
       'caption': this.caption,
-      'trip': this.trip,
+      'trip': this.trip?.toJson,
+      'date': this.date,
       'imgUrl': this.imgUrl,
-      'groupSize': this.groupSize,
       'isTrip': this.isTrip,
     };
   }
 
-  void setPost(data) {
+  Post.fromJson(data) {
     this.authorId = data['autherId'];
-    this.minCost = data['minCost'];
     this.postId = data['postId'];
     this.hasImg = data['hasImg'];
     this.hasVid = data['hasVid'];
     this.videoUrl = data['videoUrl'];
     this.caption = data['caption'];
-    this.trip = data['trip'];
+    if (data['trip'] != null) this.trip = Trip.fromJson(data['trip']);
     this.imgUrl = data['imgUrl'];
-    this.groupSize = data['groupSize'];
+    this.date = data['date'];
     this.commentsId = data['commentsId'];
     this.isTrip = data['isTrip'];
   }
@@ -75,7 +72,7 @@ class Post with ChangeNotifier {
   static final postRef = FirebaseFirestore.instance.collection('postsMetaData');
   static final commentsFiles = FirebaseStorage.instance.ref('comments');
 
-  Future<void> addComment(Comment comment, String uid,bool listen) async {
+  Future<void> addComment(Comment comment, String uid, bool listen) async {
     if (_commentsList == null) _commentsList = [];
     if (comment.mediaFile != null) {
       final task = commentsFiles.child(this.postId).putFile(
@@ -83,9 +80,9 @@ class Post with ChangeNotifier {
       final url = await (await Future.value(task)).ref.getDownloadURL();
       comment.imageUrl = url;
     }
-    // final idx = commentsList.length; 
+    // final idx = commentsList.length;
     this._commentsList.add(comment);
-    if(listen)notifyListeners();
+    if (listen) notifyListeners();
     final ref = postRef.doc('/${this.postId}').collection('/comments');
     final id = ref.doc().id;
     comment.id = id;
@@ -114,8 +111,11 @@ class Post with ChangeNotifier {
 
   Future<void> loadMetaData(uid) async {
     if (this._commentsList == null) this._commentsList = [];
-    final comments =
-        await postRef.doc('/${this.postId}').collection('/comments').orderBy('date').get();
+    final comments = await postRef
+        .doc('/${this.postId}')
+        .collection('/comments')
+        .orderBy('date')
+        .get();
     final result =
         comments.docs.map((e) => Comment.fromJson(e.data())).toList();
     print('load metadata ${comments.docs.length}');

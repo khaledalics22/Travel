@@ -10,7 +10,7 @@ class PostsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final posts = Provider.of<Posts>(context).postsList;
-        print('build postsListView.dart');
+    print('build postsListView.dart ${posts.length}');
 
     return ListView.separated(
         itemCount: posts.length,

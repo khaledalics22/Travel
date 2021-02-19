@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
+import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
 import 'package:travel/widgets/posts/postbody.dart';
 import 'package:travel/widgets/posts/video.dart';
@@ -11,7 +12,7 @@ import '../home/postactions.dart';
 
 class PostWidget extends StatelessWidget {
   final key;
-  PostWidget(this.key); 
+  PostWidget(this.key);
   Widget tripActions(BuildContext context, Post post) {
     return Row(
       children: [
@@ -21,14 +22,13 @@ class PostWidget extends StatelessWidget {
             child: Container(
                 width: double.infinity,
                 child: Text(
-                  'Cost ${post.minCost}\$',
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColorLight, fontSize: 18),
+                  'Cost ${post.trip.minCost}\$',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 )),
           ),
         ),
         Expanded(
-          child: ApplyButton(post.authorId),
+          child: ApplyButton(post.postId),
         )
       ],
     );
@@ -40,16 +40,17 @@ class PostWidget extends StatelessWidget {
     final post = Provider.of<Post>(context, listen: false);
     print('build post.dart');
     return Container(
-        key: key,
+      key: key,
       child: Wrap(children: [
         Padding(
           padding: const EdgeInsets.all(5.0),
           child: PostTop(post),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Text(post.caption),
-        ),
+        if ((post.caption ?? '').length > 0)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+            child: Text(post.caption),
+          ),
         if (post.hasImg || post.hasVid)
           post.isTrip
               ? Stack(
@@ -59,18 +60,20 @@ class PostWidget extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(8.0),
                       child: tripActions(context, post),
-                      color: Colors.pink[50],
+                      color: Colors.black26,
                     ),
                     Positioned(
                         top: 0,
                         right: 0,
                         child: Container(
                           padding: EdgeInsets.all(8.0),
-                          color: Colors.pink[50],
+                          color: Colors.black26,
                           child: Text(
-                            'G. Size ${post.groupSize}',
+                            'G. Size ${post.trip.groupSize}',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           ),
                         ))
                   ],
@@ -87,7 +90,6 @@ class PostWidget extends StatelessWidget {
 class PostTop extends StatefulWidget {
   final Post post;
   PostTop(this.post);
-
   @override
   _PostTopState createState() => _PostTopState();
 }
@@ -96,7 +98,6 @@ class _PostTopState extends State<PostTop> {
   @override
   Widget build(BuildContext context) {
     print('build post.dart');
-
     return FutureBuilder(
         future: Requests.getUserById(widget.post.authorId),
         builder: (context, snapshot) {
@@ -112,10 +113,18 @@ class _PostTopState extends State<PostTop> {
                 flex: 7,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    snapshot.data['name'],
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          snapshot.data['name'],
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                        Text(
+                          Utils.dateDifference(widget.post.date),
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ]),
                 ),
               ),
               Expanded(

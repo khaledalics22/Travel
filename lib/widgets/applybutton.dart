@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ApplyButton extends StatefulWidget {
-  final String orgName;
-  ApplyButton(this.orgName);
+  final String postId;
+  ApplyButton(this.postId);
   @override
   _ApplyButtonState createState() => _ApplyButtonState();
 }
@@ -18,8 +18,7 @@ class _ApplyButtonState extends State<ApplyButton> {
       onPressed: () {
         Scaffold.of(context).hideCurrentSnackBar();
         Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(
-                '${!applied ? 'Applied to' : 'Cancel'} ${widget.orgName}\'s trip')));
+            content: Text('${!applied ? 'Applied' : 'Cancel'} to trip')));
         setState(() {
           applied = !applied;
         });

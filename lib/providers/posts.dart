@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:travel/providers/Comment.dart';
@@ -32,11 +31,11 @@ class Posts with ChangeNotifier {
 
   Future<void> loadPosts() async {
     if (_postsList.isNotEmpty) return;
-    final response = await postsRef.get();
+    final response = await postsRef.orderBy('date').get();
     _postsList.addAll(response.docs.map((e) {
-      return Post()..setPost(e.data());
+      // print('*******loaded post provider******');
+      return Post.fromJson(e.data());
     }).toList());
-    // print('*******loaded post provider******${}');
     notifyListeners();
   }
 
@@ -59,6 +58,6 @@ class Posts with ChangeNotifier {
   }
 
   List<Post> get postsList {
-    return [..._postsList]; // retur copy of list with no reference
+    return [..._postsList.reversed]; // retur copy of list with no reference
   }
 }

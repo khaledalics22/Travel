@@ -82,6 +82,7 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
       hasVid: (isImg != null) ? !isImg : false,
       hasImg: (isImg != null) ? isImg : false,
       isTrip: false,
+      date: DateTime.now().millisecondsSinceEpoch
     );
     final uid = Provider.of<Auther>(context, listen: false).user.id;
     await Provider.of<Posts>(context, listen: false).addPost(post, uid);
@@ -97,7 +98,6 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     print('build addpost.dart');
-
     var size = MediaQuery.of(context).size;
     user = Provider.of<Auther>(context, listen: false).user;
     return Container(
