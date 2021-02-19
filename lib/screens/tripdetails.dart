@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/providers/Requests.dart';
 
 import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/Trip/tripdetailsbody.dart';
@@ -9,18 +10,27 @@ class TripDetials extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build tripDetails.dart');
-
     final postId = ModalRoute.of(context).settings.arguments as String;
-    final post = Provider.of<Posts>(context).findById(postId); 
+    final post = Provider.of<Posts>(context).findById(postId);
+
     final appbar = AppBar(
-      title: Text(
-        '${post.trip.organizer}\'s trip',
-        overflow: TextOverflow.ellipsis,
-      ),
+      title: FutureBuilder(
+          future: Requests.getUserById(post.authorId),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              final name = snapshot.data['name'];
+              return Text(
+                '$name\'s trip',
+                overflow: TextOverflow.ellipsis,
+              );
+            }
+            return Text(
+              'loading...',
+            );
+          }),
     );
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: appbar,
       body: SingleChildScrollView(
           child: Container(

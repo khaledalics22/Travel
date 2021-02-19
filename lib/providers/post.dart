@@ -24,7 +24,7 @@ class Post with ChangeNotifier {
   Trip trip;
   File file;
   int date;
-  List<String> get likesList => [..._likesList ?? []];
+  List<String> get likesList => _likesList ?? [];
   List<Comment> get commentsList =>
       [..._commentsList?.reversed?.toList()] ?? [];
   Post(
@@ -69,8 +69,10 @@ class Post with ChangeNotifier {
     this.isTrip = data['isTrip'];
   }
 
-  static final postRef = FirebaseFirestore.instance.collection('postsMetaData');
+  static final metaDataRef =
+      FirebaseFirestore.instance.collection('postsMetaData');
   static final commentsFiles = FirebaseStorage.instance.ref('comments');
+  final postRef = FirebaseFirestore.instance.collection('posts');
 
   Future<void> addComment(Comment comment, String uid, bool listen) async {
     if (_commentsList == null) _commentsList = [];
@@ -83,10 +85,22 @@ class Post with ChangeNotifier {
     // final idx = commentsList.length;
     this._commentsList.add(comment);
     if (listen) notifyListeners();
-    final ref = postRef.doc('/${this.postId}').collection('/comments');
+    final ref = metaDataRef.doc('/${this.postId}').collection('/comments');
     final id = ref.doc().id;
     comment.id = id;
     await ref.doc(id).set(comment.toJson);
+  }
+
+  Future<void> toggleTripMember(String uid) async {
+    // Post post = Post.fromJson(await postRef.doc(this.postId).get());
+    if (trip.group.contains(uid)) {
+      trip.group.remove(uid);
+    } else {
+      trip.group.add(uid);
+      print('update trip ${trip.group}');
+    }
+    await postRef.doc(this.postId).update({'trip': trip.toJson});
+    notifyListeners();
   }
 
   Future<void> toggleLike(String uid) async {
@@ -96,7 +110,7 @@ class Post with ChangeNotifier {
         : this._likesList.add(uid);
     notifyListeners();
     final ref =
-        postRef.doc('/${this.postId}').collection('/meta').doc('/likes');
+        metaDataRef.doc('/${this.postId}').collection('/meta').doc('/likes');
     await ref.get().then((value) async {
       // final v = value.data()['commentsList'];
       if (value.data() != null) {
@@ -111,7 +125,7 @@ class Post with ChangeNotifier {
 
   Future<void> loadMetaData(uid) async {
     if (this._commentsList == null) this._commentsList = [];
-    final comments = await postRef
+    final comments = await metaDataRef
         .doc('/${this.postId}')
         .collection('/comments')
         .orderBy('date')
@@ -121,7 +135,7 @@ class Post with ChangeNotifier {
     print('load metadata ${comments.docs.length}');
     this._commentsList = result;
     final doc =
-        postRef.doc('/${this.postId}').collection('/meta').doc('/likes');
+        metaDataRef.doc('/${this.postId}').collection('/meta').doc('/likes');
     final likes = await doc.get();
     this._likesList =
         (likes.data()['likesList'] as List).map((e) => e as String).toList();

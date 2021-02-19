@@ -28,7 +28,7 @@ class PostWidget extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: ApplyButton(post.postId),
+          child: ApplyButton(),
         )
       ],
     );
