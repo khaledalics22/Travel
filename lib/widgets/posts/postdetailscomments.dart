@@ -5,7 +5,6 @@ import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/posts/commentwidget.dart';
 
 class CommentsListView extends StatelessWidget {
-  CommentsListView();
   static final listKey = GlobalKey<AnimatedListState>(); 
   @override
   Widget build(BuildContext context) {

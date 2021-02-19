@@ -12,11 +12,15 @@ class ChatsScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => Chats(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).primaryColorDark,
         appBar: AppBar(
+          elevation: 0.0,
           title: const Text('Chats'),
         ),
-        body: Container(child: ChatsScreenBody()),
+        body: ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            child: Container(color: Colors.white, child: ChatsScreenBody())),
       ),
     );
   }

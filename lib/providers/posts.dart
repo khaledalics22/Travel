@@ -25,7 +25,7 @@ class Posts with ChangeNotifier {
       post.hasImg ? post.imgUrl = url : post.videoUrl = url;
     }
     await postDoc.set(post.toJson);
-    _postsList.insert(0, post);
+    _postsList.insert(postsList.length-1, post);
     notifyListeners();
   }
 

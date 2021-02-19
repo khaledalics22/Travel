@@ -19,10 +19,11 @@ class Profile extends StatelessWidget {
     print('build profile.dart');
 
     final auther = Provider.of<Auther>(context, listen: false);
-    final user = auther.user; 
+    final user = auther.user;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).primaryColorDark,
       appBar: AppBar(
+        elevation: 0,
         title: const Text('Profile'),
         actions: [
           PopupMenuButton(
@@ -65,34 +66,41 @@ class Profile extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(children: [
-          ProfileTop(),
-          Padding(
-            padding: const EdgeInsets.all(3.0),
-            child: Text(
-              user.name != null ? user.name : 'name',
-              style: Theme.of(context).textTheme.headline5,
-            ),
+          child:  ClipRRect(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        child:Container(
+            color: Colors.white,
+            child: Column(children: [
+              ProfileTop(),
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Text(
+                  user.name != null ? user.name : 'name',
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 1.0,
+                  horizontal: 20.0,
+                ),
+                child: Text(
+                  user.bio != null ? user.bio : 'Add bio here',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ),
+              const Divider(
+                thickness: 1,
+                indent: 7,
+              ),
+              ProfileBody(),
+            ]),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 1.0,
-              horizontal: 20.0,
-            ),
-            child: Text(
-              user.bio != null ? user.bio : 'Add bio here',
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ),
-          const Divider(
-            thickness: 1,
-            indent: 7,
-          ),
-          ProfileBody(),
-        ]),
+        ),
       ),
     );
   }

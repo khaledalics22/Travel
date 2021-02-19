@@ -8,7 +8,7 @@ import 'package:travel/widgets/circularImage.dart';
 
 class CommentWidget extends StatelessWidget {
   // final key;
-  CommentWidget( this.postId);
+  CommentWidget(this.postId);
   final postId;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class CommentWidget extends StatelessWidget {
     final comment = Provider.of<Comment>(context, listen: false);
     return Padding(
       // key: key,
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,25 +30,29 @@ class CommentWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CircleAvatar(
-                            radius: 15,
+                            radius: 18,
                             child: CircularImage(
-                              30.0,
+                              36.0,
                               snapshot.data['photoUrl'] ?? Requests.appImgUrl,
                             )),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(snapshot.data['name']),
-                      ),
-                      SizedBox(
-                        width: 30,
-                        height: 10,
-                      ),
-                      Container(
-                        child: Text(
-                          Utils.dateDifference(comment.date),
+                      Column(children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Text(
+                            snapshot.data['name'],
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      )
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Text(
+                            Utils.dateDifference(comment.date),
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                        ),
+                      ]),
                     ],
                   );
                 else
@@ -124,6 +128,7 @@ class _CommentActionsState extends State<CommentActions> {
             color: Theme.of(context).primaryColorDark,
           ),
         FlatButton(
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           child: Text(
             'like',
             style: TextStyle(

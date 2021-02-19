@@ -25,8 +25,11 @@ class Post with ChangeNotifier {
   File file;
   int date;
   List<String> get likesList => _likesList ?? [];
-  List<Comment> get commentsList =>
-      [..._commentsList?.reversed?.toList()] ?? [];
+  List<Comment> get commentsList {
+    if (_commentsList == null) _commentsList = []; 
+    return [..._commentsList?.reversed?.toList()];
+  }
+
   Post(
       {this.authorId,
       this.postId,
@@ -84,7 +87,7 @@ class Post with ChangeNotifier {
     }
     // final idx = commentsList.length;
     this._commentsList.add(comment);
-    if (listen) notifyListeners();
+    notifyListeners();
     final ref = metaDataRef.doc('/${this.postId}').collection('/comments');
     final id = ref.doc().id;
     comment.id = id;
