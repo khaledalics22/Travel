@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Trip.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/search/history.dart';
@@ -14,31 +15,6 @@ class SearchTrip extends StatefulWidget {
 }
 
 class _SearchTripState extends State<SearchTrip> {
-  var test = [
-    Trip(
-      title: 'saqara',
-      details: 'we are grouping 15 people for a journey to saqara',
-      date: DateTime.now().millisecondsSinceEpoch,
-      minCost: 124.0,
-    ),
-    Trip(
-      title: 'saqara',
-      details: 'we are grouping 15 people for a journey to saqara',
-      date: DateTime.now().millisecondsSinceEpoch,
-      minCost: 124.0,
-    ),
-    Trip(
-      title: 'saqara',
-      details: 'we are grouping 15 people for a journey to saqara',
-      date: DateTime.now().millisecondsSinceEpoch,
-      minCost: 124.0,
-    )
-  ];
-  var histTest = [
-    'cairo',
-    'england',
-    'paris',
-  ];
   List<String> historyList;
   // List<Post> loadTrips(String title, BuildContext context) {
   //   return
@@ -46,23 +22,34 @@ class _SearchTripState extends State<SearchTrip> {
 
   // List<Post> trips;
   bool textChanged = false;
+  var trips;
   String title;
-  void onSearchTextChanged(String text, BuildContext context) {
-    // print(text);
-    // final result = loadTrips(text, context);
+  void onSearchTextChanged(String text, BuildContext context) async {
+    if (text.length < 2) return; 
     setState(() {
+      trips = null;
+    });
+    final response = await Provider.of<Posts>(context, listen: false)
+        .searchForTripByTitle(text);
+
+    setState(() {
+      trips = response.docs.map((e) => Post.fromJson(e)).toList();
       textChanged = true;
       title = text;
       // trips = result;
     });
+    if (trips != null && trips.length > 0) {
+      Provider.of<Posts>(context, listen: false).addHistoryForUser(
+          Provider.of<Auther>(context, listen: false).user.id,
+          text,
+          DateTime.now().millisecondsSinceEpoch);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     print('build searchTrip.dart');
 
-    List<Post> trips =
-        Provider.of<Posts>(context, listen: false).findByTitle(title);
     var appbar = AppBar(
       actions: [],
     );
@@ -74,15 +61,15 @@ class _SearchTripState extends State<SearchTrip> {
           'search for a trip'),
     );
     appbar.actions.add(searchView);
-    historyList = histTest;
+
     return Scaffold(
       appBar: appbar,
       backgroundColor: Colors.white,
-
       body: Stack(
         children: [
-          SearchBody(trips),
-          if (!textChanged) HistoryList(historyList),
+          (trips == null || trips.length == 0)
+              ? HistoryList()
+              : SearchBody(trips),
         ],
       ),
     );

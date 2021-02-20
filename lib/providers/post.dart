@@ -68,7 +68,6 @@ class Post with ChangeNotifier {
     if (data['trip'] != null) this.trip = Trip.fromJson(data['trip']);
     this.imgUrl = data['imgUrl'];
     this.date = data['date'];
-    this.commentsId = data['commentsId'];
     this.isTrip = data['isTrip'];
   }
 

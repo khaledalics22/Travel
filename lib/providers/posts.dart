@@ -9,8 +9,23 @@ class Posts with ChangeNotifier {
   final postsRef = FirebaseFirestore.instance.collection('posts');
   final postsFiles = FirebaseStorage.instance.ref('posts');
 
-  Future<QuerySnapshot> getPostsOfUser(String uid) async{
-    return postsRef.where('autherId',isEqualTo: uid).get();
+  Future<QuerySnapshot> getPostsOfUser(String uid) async {
+    return postsRef.where('autherId', isEqualTo: uid).get();
+  }
+
+  final _searchHistRef = FirebaseFirestore.instance.collection('searchHist');
+
+  Future<QuerySnapshot> searchHistoryofUser(String uid) async {
+    return _searchHistRef.doc(uid).collection('history').orderBy('date').get();
+  }
+
+  Future<void> addHistoryForUser(String uid, String text, int date) async {
+    final refDoc = _searchHistRef.doc(uid).collection('history').doc();
+    await refDoc.set({'id': refDoc.id, 'text': text, 'date': date});
+  }
+
+  Future<void> removeHistOfUser(String uid, String histId) {
+    return _searchHistRef.doc(uid).collection('history').doc(histId).delete(); 
   }
 
   Future<void> addPost(Post post, uid) async {
@@ -29,7 +44,7 @@ class Posts with ChangeNotifier {
       post.hasImg ? post.imgUrl = url : post.videoUrl = url;
     }
     await postDoc.set(post.toJson);
-    _postsList.insert(postsList.length-1, post);
+    _postsList.insert(postsList.length - 1, post);
     notifyListeners();
   }
 
@@ -41,6 +56,10 @@ class Posts with ChangeNotifier {
       return Post.fromJson(e.data());
     }).toList());
     notifyListeners();
+  }
+
+  Future<QuerySnapshot> searchForTripByTitle(String body) async {
+    return postsRef.where('trip.title', isEqualTo: body).get();
   }
 
   List<Post> findByTitle(String title) {

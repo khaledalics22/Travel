@@ -9,4 +9,6 @@ abstract class Requests {
   static Future<DocumentSnapshot> getUserById(String uid) async {
     return _usersDoc.doc('$uid').get();
   }
+
+
 }

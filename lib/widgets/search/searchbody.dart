@@ -9,7 +9,6 @@ class SearchBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build searchbody.dart');
-
     return ListView.builder(
       itemCount: list != null ? list.length : 0,
       itemBuilder: (_, idx) {

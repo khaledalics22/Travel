@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class SearchWidget extends StatelessWidget {
   final onTapRoute;
   final onVlaueChanged;
-  final hint; 
- const  SearchWidget(this.onTapRoute, this.onVlaueChanged, this.hint);
+  final hint;
+  const SearchWidget(this.onTapRoute, this.onVlaueChanged, this.hint);
   @override
   Widget build(BuildContext context) {
     print('build searchbar.dart');
@@ -19,7 +19,7 @@ class SearchWidget extends StatelessWidget {
         onChanged: (value) {
           onVlaueChanged(value);
         },
-        style:const  TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hint,
