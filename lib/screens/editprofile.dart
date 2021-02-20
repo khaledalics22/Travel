@@ -19,14 +19,21 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    user = Provider.of<Auther>(context, listen: false).user;
+    super.initState();
+  }
+
   var auther;
   GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     print('build editProfile.dart');
-    if (user == null) user = Provider.of<Auther>(context, listen: false).user;
-    birthDateCtr.text = DateFormat('yyyy-MM-dd')
-        .format(DateTime.fromMillisecondsSinceEpoch(user.birthdate));
+    if (user.birthdate != null)
+      birthDateCtr.text = DateFormat('yyyy-MM-dd')
+          .format(DateTime.fromMillisecondsSinceEpoch(user.birthdate));
     // user.visitedPlaces = List<String>();
     auther = Provider.of<Auther>(context, listen: false);
     return Scaffold(
@@ -76,7 +83,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ),
                 TextFormField(
-                  initialValue: user.phone != null ? user.phone : '',
+                  initialValue: user.bio != null ? user.bio : '',
                   // controller: phoneCtr,
                   onSaved: (newValue) => user.bio = newValue.trim(),
                   decoration: InputDecoration(

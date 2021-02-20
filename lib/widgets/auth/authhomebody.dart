@@ -153,7 +153,9 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                             : null,
                                         decoration: const InputDecoration(
                                           labelText: 'Name',
+                                          prefixIcon: Icon(Icons.person,color: Colors.pink,)
                                         ),
+
                                       ),
                                     ),
                                   if (isReg)
@@ -170,6 +172,8 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                                 : null,
                                         decoration: const InputDecoration(
                                           labelText: 'Phone',
+                                          prefixIcon: Icon(Icons.phone_android,color: Colors.pink,)
+
                                         ),
                                       ),
                                     ),
@@ -187,6 +191,8 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                               : null,
                                       decoration: const InputDecoration(
                                           labelText: 'Email',
+                                          prefixIcon: Icon(Icons.email,color: Colors.pink,),
+                                      
                                           hintText: 'example@example.com'),
                                     ),
                                   ),
@@ -203,6 +209,7 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                           : null,
                                       decoration: InputDecoration(
                                           labelText: 'Password',
+                                          prefixIcon: Icon(Icons.lock,color: Colors.pink,),
                                           suffixIcon: IconButton(
                                               onPressed: () {
                                                 setState(() {
@@ -229,6 +236,8 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                         },
                                         decoration: const InputDecoration(
                                           labelText: 'confirm password',
+                                          prefixIcon: Icon(Icons.lock,color: Colors.pink,)
+
                                         ),
                                       ),
                                     ),

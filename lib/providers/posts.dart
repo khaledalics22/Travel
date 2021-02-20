@@ -9,6 +9,10 @@ class Posts with ChangeNotifier {
   final postsRef = FirebaseFirestore.instance.collection('posts');
   final postsFiles = FirebaseStorage.instance.ref('posts');
 
+  Future<QuerySnapshot> getPostsOfUser(String uid) async{
+    return postsRef.where('autherId',isEqualTo: uid).get();
+  }
+
   Future<void> addPost(Post post, uid) async {
     final postDoc = postsRef.doc();
     post.postId = postDoc.id;

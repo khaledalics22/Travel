@@ -65,10 +65,12 @@ class Auther with ChangeNotifier {
     return _authInstance.signOut();
   }
 
-  Future<void> updateUser(CustomUser user) {
-    return _usersCollectionRef
+  Future<void> updateUser(CustomUser user) async {
+    await _usersCollectionRef
         .doc(_authInstance.currentUser.uid)
         .update(user.toJson);
+    this._user = user;
+    notifyListeners();
     // .then((value) => onComplete)
     // .catchError(onComplete(null));
   }

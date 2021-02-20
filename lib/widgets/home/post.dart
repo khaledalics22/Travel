@@ -101,14 +101,24 @@ class _PostTopState extends State<PostTop> {
     return FutureBuilder(
         future: Requests.getUserById(widget.post.authorId),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data != null) {
             return Row(children: [
-              CircularImage(
-                40.0,
-                snapshot.data['photoUrl'] ??
-                    Requests.appImgUrl +
-                        Provider.of<Auther>(context).user.token,
-              ),
+              (snapshot.data['photoUrl'] == null)
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(150),
+                      child: Image.asset(
+                        'assets/icon/traveller.jpg',
+                        width: 150,
+                        height: 150,
+                        filterQuality: FilterQuality.low,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : CircularImage(
+                      40.0,
+                      snapshot?.data['photoUrl'],
+                    ),
               Expanded(
                 flex: 7,
                 child: Padding(

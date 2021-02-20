@@ -12,7 +12,7 @@ class ProfileTop extends StatelessWidget {
   Widget build(BuildContext context) {
     print('build profiletop.dart');
 
-    final user = Provider.of<Auther>(context).user;
+    final user = Provider.of<Auther>(context,listen: false).user;
     return Container(
       width: double.infinity,
       height: (170.0 + 50.0),
@@ -54,13 +54,18 @@ class ProfileTop extends StatelessWidget {
               CircleAvatar(
                 radius: 79,
                 backgroundColor: Colors.grey,
-                child: CircularImage(
-                  150.0,
-                  user.profileUrl != null
-                      ? user.profileUrl
-                      : Requests.appImgUrl +
-                          Provider.of<Auther>(context).user.token,
-                ),
+                child: user.profileUrl == null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(150),
+                        child: Image.asset(
+                          'assets/icon/traveller.jpg',
+                          width: 150,
+                          height: 150,
+                          filterQuality: FilterQuality.low,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : CircularImage(150.0, user.profileUrl),
               ),
               Positioned(
                 bottom: 0,
