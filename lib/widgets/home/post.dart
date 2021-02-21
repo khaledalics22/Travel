@@ -22,8 +22,11 @@ class PostWidget extends StatelessWidget {
             child: Container(
                 width: double.infinity,
                 child: Text(
-                  'Cost ${post.trip.minCost}\$',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  '${post.trip.minCost}\$',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 )),
           ),
         ),
@@ -72,7 +75,7 @@ class PostWidget extends StatelessWidget {
                             'G. Size ${post.trip.groupSize}',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontWeight: FontWeight.bold,
+                                // fontWeight: FontWeight.bold,
                                 fontSize: 18),
                           ),
                         ))

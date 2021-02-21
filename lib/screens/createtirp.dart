@@ -23,7 +23,7 @@ class CreateTrip extends StatelessWidget {
     _key.currentState.showSnackBar(
       SnackBar(
         content: Text(
-          post != null ? 'trip posted':'please enter valid data',
+          post != null ? 'trip posted' : 'please enter valid data',
           style: TextStyle(
               fontSize: 18, color: Theme.of(context).primaryColorLight),
         ),
@@ -97,7 +97,7 @@ class _CreateTripBodyState extends State<CreateTripBody> {
       post.caption = post.trip.details;
       post.authorId = Provider.of<Auther>(context, listen: false).user.id;
       post.trip.organizer = post.authorId;
-      post.date = DateTime.now().millisecondsSinceEpoch; 
+      post.date = DateTime.now().millisecondsSinceEpoch;
       callback(post);
     }
     callback(null);
@@ -164,8 +164,12 @@ class _CreateTripBodyState extends State<CreateTripBody> {
                   },
                   decoration: InputDecoration(
                     labelText: 'Image path',
+                    prefixIcon: Icon(Icons.image),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.add_photo_alternate),
+                      icon: Icon(
+                        Icons.add_photo_alternate,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
                       onPressed: getImage,
                     ),
                   ),
@@ -184,8 +188,8 @@ class _CreateTripBodyState extends State<CreateTripBody> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Trip title',
-                  ),
+                      labelText: 'Trip title',
+                      prefixIcon: Icon(Icons.title_rounded)),
                 ),
               ),
               Padding(
@@ -201,8 +205,8 @@ class _CreateTripBodyState extends State<CreateTripBody> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Trip details',
-                  ),
+                      labelText: 'Trip details',
+                      prefixIcon: Icon(Icons.chrome_reader_mode_outlined)),
                 ),
               ),
               Padding(
@@ -215,9 +219,9 @@ class _CreateTripBodyState extends State<CreateTripBody> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'launch location',
-                    hintText: 'From',
-                  ),
+                      labelText: 'launch location',
+                      hintText: 'From',
+                      prefixIcon: Icon(Icons.location_city_outlined)),
                 ),
               ),
               Padding(
@@ -230,9 +234,9 @@ class _CreateTripBodyState extends State<CreateTripBody> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'landing location',
-                    hintText: 'to location',
-                  ),
+                      labelText: 'landing location',
+                      hintText: 'to location',
+                      prefixIcon: Icon(Icons.location_on_outlined)),
                 ),
               ),
               Padding(
@@ -250,9 +254,9 @@ class _CreateTripBodyState extends State<CreateTripBody> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Group Size',
-                    hintText: 'Example (1, 2, 10, ...)',
-                  ),
+                      labelText: 'Group Size',
+                      hintText: 'Example (1, 2, 10, ...)',
+                      prefixIcon: Icon(Icons.people_rounded)),
                 ),
               ),
               Padding(
@@ -270,8 +274,8 @@ class _CreateTripBodyState extends State<CreateTripBody> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Cost',
-                  ),
+                      labelText: 'Cost',
+                      prefixIcon: Icon(Icons.attach_money_rounded)),
                 ),
               ),
             ],
