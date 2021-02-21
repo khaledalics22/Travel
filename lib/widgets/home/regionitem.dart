@@ -7,12 +7,15 @@ import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/regiondetails.dart';
 
 class RegionItem extends StatelessWidget {
+  final key;
+  RegionItem(this.key);
   @override
   Widget build(BuildContext context) {
     final region = Provider.of<Region>(context, listen: false);
     // print(region.type);
     // region.countris.addAll([...region.countris]); // TODO remove line
     return Container(
+      key: key,
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),

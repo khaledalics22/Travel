@@ -5,12 +5,15 @@ import 'package:travel/screens/profile.dart';
 import 'package:travel/widgets/home/addpost.dart';
 import 'package:travel/widgets/posts/postsListView.dart';
 
-class Body extends StatelessWidget {
+class HomePage extends StatelessWidget {
+  final key;
+  HomePage(this.key); 
   @override
   Widget build(BuildContext context) {
     print('build homebody.dart');
-    
+
     return SingleChildScrollView(
+      key: key,
       // physics: NeverScrollableScrollPhysics(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -34,8 +37,8 @@ class Body extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.done) {
                 // print('******************* posts loaded');
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 60),
-                  child: PostsListView());
+                    padding: const EdgeInsets.only(bottom: 60),
+                    child: PostsListView(key));
               } else {
                 return Center(
                   // height: double.infinity,

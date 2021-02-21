@@ -9,9 +9,9 @@ import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/chats.dart';
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/searchtrip.dart';
-import 'package:travel/widgets/home/chooseregion.dart';
-import 'package:travel/widgets/home/tripsbody.dart';
-import '../widgets/home/homebody.dart';
+import 'package:travel/widgets/pages/regionpage.dart';
+import 'package:travel/widgets/pages/tripspage.dart';
+import '../widgets/pages/homepage.dart';
 
 class Home extends StatefulWidget {
   static const route = '/home';
@@ -24,6 +24,20 @@ class _HomeState extends State<Home> {
   bool extended = false;
 
   bool loading = true;
+  final regionKey = PageStorageKey('region_key');
+  final _tripsKey = PageStorageKey('trips_key');
+  final homePageKey = PageStorageKey('home_key');
+
+  var _pages;
+  @override
+  void initState() {
+    _pages = [
+      HomePage(homePageKey),
+      TripPage(_tripsKey),
+      RegionsPage(regionKey),
+    ];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +45,7 @@ class _HomeState extends State<Home> {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Theme.of(context).accentColor));
     return DefaultTabController(
-      length: 3,
+      length: _pages.length,
       child: Scaffold(
         backgroundColor: Colors.white,
         floatingActionButton: (Platform.isAndroid)
@@ -121,42 +135,7 @@ class _HomeState extends State<Home> {
             ];
           },
           body: TabBarView(
-            children: [
-              FutureBuilder(
-                future: Auther().getUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
-                    return Container(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  else {
-                    print(snapshot.data);
-                    Provider.of<Auther>(context, listen: false)
-                        .setUser(snapshot.data);
-                    return FutureBuilder(
-                        future: FirebaseAuth.instance.currentUser.getIdToken(),
-                        builder: (ctx, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            Provider.of<Auther>(context, listen: false)
-                                .user
-                                .token = snapshot.data;
-                            return Body();
-                          } else
-                            return Container(
-                              child: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                        });
-                  }
-                },
-              ),
-              TripsBody(),
-              ChooseRegion(),
-            ],
+            children: _pages,
           ),
         ),
       ),

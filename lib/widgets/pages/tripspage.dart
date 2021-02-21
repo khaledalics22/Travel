@@ -4,10 +4,14 @@ import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/home/post.dart';
 
-class TripsBody extends StatelessWidget {
+class TripPage extends StatelessWidget {
+  final key;
+  TripPage(this.key); 
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      key: key,
         future: Provider.of<Posts>(context, listen: false).loadTrips(),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {

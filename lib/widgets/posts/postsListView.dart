@@ -7,12 +7,15 @@ import 'package:travel/screens/tripdetails.dart';
 import 'package:travel/widgets/home/post.dart';
 
 class PostsListView extends StatelessWidget {
+  final key;
+  PostsListView(this.key);
   @override
   Widget build(BuildContext context) {
     final posts = Provider.of<Posts>(context).postsList;
     print('build postsListView.dart ${posts.length}');
 
     return ListView.separated(
+        key: key,
         itemCount: posts.length,
         padding: const EdgeInsets.all(8.0),
         separatorBuilder: (BuildContext context, int index) => const Divider(
@@ -31,7 +34,7 @@ class PostsListView extends StatelessWidget {
                         arguments: posts[idx].postId);
               },
               child: ChangeNotifierProvider<Post>.value(
-                child: PostWidget(UniqueKey()),
+                child: PostWidget(key),
                 value: posts[idx],
               ));
         });
