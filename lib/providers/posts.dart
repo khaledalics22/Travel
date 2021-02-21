@@ -24,8 +24,17 @@ class Posts with ChangeNotifier {
     await refDoc.set({'id': refDoc.id, 'text': text, 'date': date});
   }
 
+  Future<List<Post>> loadTrips() async {
+    final response = await postsRef.where('isTrip', isEqualTo: true).get();
+    return response.docs.map((e) {
+      // print('*******loaded post provider******');
+      return Post.fromJson(e.data());
+    }).toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+  }
+
   Future<void> removeHistOfUser(String uid, String histId) {
-    return _searchHistRef.doc(uid).collection('history').doc(histId).delete(); 
+    return _searchHistRef.doc(uid).collection('history').doc(histId).delete();
   }
 
   Future<void> addPost(Post post, uid) async {

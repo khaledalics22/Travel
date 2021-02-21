@@ -10,6 +10,7 @@ import 'package:travel/screens/chats.dart';
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/searchtrip.dart';
 import 'package:travel/widgets/home/chooseregion.dart';
+import 'package:travel/widgets/home/tripsbody.dart';
 import '../widgets/home/homebody.dart';
 
 class Home extends StatefulWidget {
@@ -153,7 +154,7 @@ class _HomeState extends State<Home> {
                   }
                 },
               ),
-              Text('trips'),
+              TripsBody(),
               ChooseRegion(),
             ],
           ),

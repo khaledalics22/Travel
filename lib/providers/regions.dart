@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:travel/models/landmark.dart';
-import 'package:travel/providers/Comment.dart';
-import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/region.dart';
 
 class Regions with ChangeNotifier {
@@ -11,23 +8,11 @@ class Regions with ChangeNotifier {
 
   List<Region> get regions {
     if (_regions == null) _regions = [];
-    // final list = [..._regions];
-    // //TODO remove list
+
     return [..._regions];
   }
 
   Region getRegionById(String id) {
-    // return Region(
-    //     id: 'r1',
-    //     imageUrl: Requests.appImgUrl,
-    //     countris: [
-    //       'c1',
-    //       'c2',
-    //     ],
-    //     details:
-    //         'the black rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrcontinenet',
-    //     rate: Rate.MEDIUM,
-    //     title: 'Africa');
     return regions.firstWhere((element) => element.id == id);
   }
 
@@ -38,7 +23,6 @@ class Regions with ChangeNotifier {
   Future<void> get loadRegions async {
     final response = await regionsRef.get();
     _regions = response.docs.map((e) => Region.fromJson(e.data())).toList();
-    // print('*****************${_regions.length}');
     notifyListeners();
   }
 
