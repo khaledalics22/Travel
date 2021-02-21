@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/providers/regions.dart';
+import 'package:travel/screens/regiondetails.dart';
 import './providers/auth.dart';
 import './providers/chats.dart';
 import './providers/messages.dart';
@@ -91,6 +93,7 @@ class _App extends StatelessWidget {
         ChangeNotifierProvider.value(value: Messages()),
         ChangeNotifierProvider.value(value: Chats()),
         ChangeNotifierProvider.value(value: Auther()),
+        ChangeNotifierProvider.value(value: Regions()),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -103,7 +106,7 @@ class _App extends StatelessWidget {
                   color: Colors.pink[600],
                 )),
             primaryColorDark: Colors.pink[600]),
-        initialRoute: Splash.route,
+        initialRoute:Splash.route,
         routes: {
           Splash.route: (_) => Splash(),
           Auth.route: (_) => Auth(),
@@ -117,6 +120,7 @@ class _App extends StatelessWidget {
           TripDetials.route: (_) => TripDetials(),
           ChatsScreen.route: (_) => ChatsScreen(),
           ChatRoomScreen.route: (_) => ChatRoomScreen(),
+          RegionDetails.route: (_) => RegionDetails(),
         },
       ),
     );

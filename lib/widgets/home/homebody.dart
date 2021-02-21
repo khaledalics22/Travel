@@ -37,10 +37,9 @@ class Body extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 60),
                   child: PostsListView());
               } else {
-                return Container(
-                  
+                return Center(
                   // height: double.infinity,
-                  child: Text('loading...'),
+                  child: CircularProgressIndicator(),
                 );
               }
             },

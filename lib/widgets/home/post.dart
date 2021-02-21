@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
-import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
@@ -152,7 +151,7 @@ class _PostTopState extends State<PostTop> {
             return Container(
               width: 40,
               height: 40,
-              child: CircularProgressIndicator(),
+              // child: CircularProgressIndicator(),
             );
         });
   }

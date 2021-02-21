@@ -134,7 +134,7 @@ class Post with ChangeNotifier {
         .get();
     final result =
         comments.docs.map((e) => Comment.fromJson(e.data())).toList();
-    print('load metadata ${comments.docs.length}');
+    // print('load metadata ${comments.docs.length}');
     this._commentsList = result;
     final doc =
         metaDataRef.doc('/${this.postId}').collection('/meta').doc('/likes');

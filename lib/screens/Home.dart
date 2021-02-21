@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/auth.dart';
+import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/chats.dart';
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/searchtrip.dart';
+import 'package:travel/widgets/home/chooseregion.dart';
 import '../widgets/home/homebody.dart';
 
 class Home extends StatefulWidget {
@@ -26,7 +28,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     print('build home.dart');
     SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.pink[800]));
+        SystemUiOverlayStyle(statusBarColor: Theme.of(context).accentColor));
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -152,7 +154,7 @@ class _HomeState extends State<Home> {
                 },
               ),
               Text('trips'),
-              Text('landscapes')
+              ChooseRegion(),
             ],
           ),
         ),
