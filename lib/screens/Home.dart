@@ -55,14 +55,20 @@ class _HomeState extends State<Home> {
                       bottom: TabBar(
                         tabs: [
                           Tab(
-                            text: 'Home',
+                            iconMargin: EdgeInsets.only(
+                                top: MediaQuery.of(context).padding.top),
+                            child: Semantics(child: Text('Home')),
                             icon: Icon(Icons.home),
                           ),
                           Tab(
+                            iconMargin: EdgeInsets.only(
+                                top: MediaQuery.of(context).padding.top),
                             text: 'Trips',
                             icon: Icon(Icons.directions_bus_sharp),
                           ),
                           Tab(
+                            iconMargin: EdgeInsets.only(
+                                top: MediaQuery.of(context).padding.top),
                             text: 'LandMarks',
                             icon: Icon(Icons.landscape),
                           ),
