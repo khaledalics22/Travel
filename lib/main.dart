@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/regiondetails.dart';
-import 'package:travel/widgets/profile/userprofile.dart';
+import 'package:travel/screens/userprofile.dart';
 import './providers/auth.dart';
 import './providers/chats.dart';
 import './providers/messages.dart';
@@ -98,15 +98,15 @@ class _App extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-            primaryColor: Colors.pink,
-            splashColor: Colors.pink[400],
-            primaryColorLight: Colors.pink[300],
-            accentColor: Colors.pink[800], //text
+            primaryColor: Colors.blue[800],
+            splashColor: Colors.blue[500],
+            primaryColorLight: Colors.blue[400],
+            accentColor: Colors.blue[900], //text
             textTheme: Theme.of(context).textTheme.copyWith(
                     headline6: TextStyle(
-                  color: Colors.pink[600],
+                  color: Colors.blue[800],
                 )),
-            primaryColorDark: Colors.pink[600]),
+            primaryColorDark: Colors.blue[700]),
         initialRoute: Splash.route,
         routes: {
           Splash.route: (_) => Splash(),

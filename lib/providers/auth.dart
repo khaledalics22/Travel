@@ -20,8 +20,29 @@ class Auther with ChangeNotifier {
   static final _authInstance = FirebaseAuth.instance;
   static final _usersCollectionRef =
       FirebaseFirestore.instance.collection('users');
+  static final _friendRequests =
+      FirebaseFirestore.instance.collection('/friends-requests');
 
   static final _usersStorageRef = FirebaseStorage.instance.ref();
+  Future<void> sendFriendRequest({String toId}) async {
+    _friendRequests.doc().set({
+      'from': user.id,
+      'to': toId,
+    });
+    notifyListeners();
+  }
+
+  Future<void> cancelFriendRequest({String requestId}) async {
+    _friendRequests.doc(requestId).delete(); 
+    notifyListeners();
+  }
+
+  Future<QuerySnapshot> checkFriendRequestSent({String toId}) async {
+    return _friendRequests
+        .where('to', isEqualTo: toId)
+        .where('from', isEqualTo: user.id)
+        .get();
+  }
 
   Stream<dynamic> checkLogin() => _authInstance.authStateChanges();
 

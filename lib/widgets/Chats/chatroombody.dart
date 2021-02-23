@@ -28,13 +28,10 @@ class ChatRoomBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build chatroombody.dart');
-
     final msgsProvider = Provider.of<Messages>(context);
-
     List<Message> msgs = msgsProvider.msgsOfChatId(chatId)?.reversed?.toList();
     final chat = Provider.of<Chats>(context).findById(chatId);
     var size = MediaQuery.of(context).size;
-    // print('idddddddddddddddd   ${msgs[0].body}');
     final chats = Provider.of<Chats>(context);
     return Column(
         mainAxisSize: MainAxisSize.max,

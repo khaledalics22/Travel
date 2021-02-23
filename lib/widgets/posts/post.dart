@@ -8,7 +8,7 @@ import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
 import 'package:travel/widgets/posts/postbody.dart';
 import 'package:travel/widgets/posts/video.dart';
-import 'package:travel/widgets/profile/userprofile.dart';
+import 'package:travel/screens/userprofile.dart';
 import '../applybutton.dart';
 import 'postactions.dart';
 
