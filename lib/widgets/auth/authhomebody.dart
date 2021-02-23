@@ -34,6 +34,8 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
         logging = false;
       });
     } else {
+
+      auther.setUser((await auther.getUser()).data());
       Navigator.of(context).pushReplacementNamed(Home.route);
     }
   }
@@ -152,10 +154,11 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                             ? 'Invalid name'
                                             : null,
                                         decoration: const InputDecoration(
-                                          labelText: 'Name',
-                                          prefixIcon: Icon(Icons.person,color: Colors.pink,)
-                                        ),
-
+                                            labelText: 'Name',
+                                            prefixIcon: Icon(
+                                              Icons.person,
+                                              color: Colors.pink,
+                                            )),
                                       ),
                                     ),
                                   if (isReg)
@@ -171,10 +174,11 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                                 ? 'Invalid phone'
                                                 : null,
                                         decoration: const InputDecoration(
-                                          labelText: 'Phone',
-                                          prefixIcon: Icon(Icons.phone_android,color: Colors.pink,)
-
-                                        ),
+                                            labelText: 'Phone',
+                                            prefixIcon: Icon(
+                                              Icons.phone_android,
+                                              color: Colors.pink,
+                                            )),
                                       ),
                                     ),
                                   Padding(
@@ -191,8 +195,10 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                               : null,
                                       decoration: const InputDecoration(
                                           labelText: 'Email',
-                                          prefixIcon: Icon(Icons.email,color: Colors.pink,),
-                                      
+                                          prefixIcon: Icon(
+                                            Icons.email,
+                                            color: Colors.pink,
+                                          ),
                                           hintText: 'example@example.com'),
                                     ),
                                   ),
@@ -209,7 +215,10 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                           : null,
                                       decoration: InputDecoration(
                                           labelText: 'Password',
-                                          prefixIcon: Icon(Icons.lock,color: Colors.pink,),
+                                          prefixIcon: Icon(
+                                            Icons.lock,
+                                            color: Colors.pink,
+                                          ),
                                           suffixIcon: IconButton(
                                               onPressed: () {
                                                 setState(() {
@@ -235,10 +244,11 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                                           return null;
                                         },
                                         decoration: const InputDecoration(
-                                          labelText: 'confirm password',
-                                          prefixIcon: Icon(Icons.lock,color: Colors.pink,)
-
-                                        ),
+                                            labelText: 'confirm password',
+                                            prefixIcon: Icon(
+                                              Icons.lock,
+                                              color: Colors.pink,
+                                            )),
                                       ),
                                     ),
                                 ],

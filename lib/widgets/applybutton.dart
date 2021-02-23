@@ -13,7 +13,7 @@ class _ApplyButtonState extends State<ApplyButton> {
   @override
   Widget build(BuildContext context) {
     print('build applybutton.dart');
-    final uid = Provider.of<Auther>(context).user.id;
+    final uid = Provider.of<Auther>(context,listen: false).user.id;
     final post = Provider.of<Post>(context);
     applied = post.trip.isApplied(uid);
     return RaisedButton(

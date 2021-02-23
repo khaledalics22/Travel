@@ -31,7 +31,6 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build splash.dart');
-
     final user = FirebaseAuth.instance.currentUser;
     return user == null
         ? Auth()

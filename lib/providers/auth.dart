@@ -32,8 +32,12 @@ class Auther with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<QuerySnapshot> getRequests() async {
+    return _friendRequests.where('to', isEqualTo: user.id).get();
+  }
+
   Future<void> cancelFriendRequest({String requestId}) async {
-    _friendRequests.doc(requestId).delete(); 
+    _friendRequests.doc(requestId).delete();
     notifyListeners();
   }
 
@@ -51,6 +55,7 @@ class Auther with ChangeNotifier {
       email: email,
       password: pass,
     );
+   
     //     .then(onComplete, onError: (value) {
     //   onComplete(null);
     // });

@@ -18,7 +18,7 @@ class PostDetails extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: FutureBuilder(
-          future: Requests.getUserById(Provider.of<Auther>(context)?.user?.id),
+          future: Requests.getUserById(Provider.of<Auther>(context,listen: false)?.user?.id),
           builder: (context, snapshot) {
             if (snapshot?.connectionState == ConnectionState.done) {
               final name = snapshot?.data['name'];

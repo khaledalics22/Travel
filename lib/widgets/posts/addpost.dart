@@ -20,7 +20,6 @@ class HomeTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build addpost.dart');
-
     CustomUser user = Provider.of<Auther>(context, listen: false).user;
     return Row(
       children: [

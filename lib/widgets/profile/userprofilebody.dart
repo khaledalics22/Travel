@@ -32,7 +32,7 @@ class ContactFriend extends StatelessWidget {
   ContactFriend(this.uid);
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<Auther>(context);
+    final provider = Provider.of<Auther>(context,listen: false);
     return FutureBuilder(
         future: provider.checkFriendRequestSent(toId: uid),
         builder: (context, snapshot) {

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/chats.dart';
@@ -129,6 +130,7 @@ class _HomeState extends State<Home> {
                               Navigator.of(context).pushNamed(ChatsScreen.route,
                                   arguments: 'uid');
                             }),
+                        RequestIconWidget(),
                       ]),
                 ),
               )
@@ -140,5 +142,88 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+}
+
+class RequestIconWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: Provider.of<Auther>(context).getRequests(),
+        builder: (context, snapshot) {
+          final done = snapshot.connectionState == ConnectionState.done;
+          final l = snapshot?.data?.docs?.length;
+          return IconButton(
+              icon: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                  ),
+                  if (done && l != null && l > 0)
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 8,
+                          child: Text(
+                            l.toString(),
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.white),
+                          )),
+                    )
+                ],
+              ),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(ChatsScreen.route, arguments: 'uid');
+              });
+        });
+  }
+}
+class MessagesIconWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: Provider.of<Auther>(context).getRequests(),
+        builder: (context, snapshot) {
+          final done = snapshot.connectionState == ConnectionState.done;
+          final l = snapshot?.data?.docs?.length;
+          return IconButton(
+              icon: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.white,
+                    ),
+                  ),
+                  if (done && l != null && l > 0)
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 8,
+                          child: Text(
+                            l.toString(),
+                            maxLines: 1,
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.white),
+                          )),
+                    )
+                ],
+              ),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(ChatsScreen.route, arguments: 'uid');
+              });
+        });
   }
 }
