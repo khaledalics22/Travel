@@ -1,115 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/models/message.dart';
 import 'package:travel/providers/chat.dart';
 
 class Chats with ChangeNotifier {
-  List<Chat> _chatsList = [
-    Chat(
-        chatId: '1',
-        lastMsg: Message(
-            authId: 'uid',
-            body: 'hey bro!',
-            date: DateTime.now().millisecondsSinceEpoch - 1000,
-            imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            isImg: false,
-            isVid: false,
-            status: MsgStauts.SEEN,
-            msgId: '1',
-            videoUrl:
-                'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'),
-        users: [
-          {
-            'userId': 'uid1',
-            'imgUrl':
-                'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-            'userName': 'mustafa Mohammed'
-          },
-          {
-            'userId': 'uid',
-            'imgUrl': 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            'userName': 'khalid Ali'
-          },
-        ]),
-    Chat(
-        chatId: '2',
-        lastMsg: Message(
-            authId: 'uid12',
-            body: 'hey bro!',
-            date: DateTime.now().millisecondsSinceEpoch - 100000,
-            imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            isImg: false,
-            isVid: false,
-            status: MsgStauts.SENT,
-            msgId: '1',
-            videoUrl:
-                'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'),
-        users: [
-          {
-            'userId': 'uid1',
-            'imgUrl': 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            'userName': 'ali Mohammed'
-          },
-          {
-            'userId': 'uid',
-            'imgUrl': 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            'userName': 'khalid Ali'
-          },
-        ]),
-    Chat(
-        chatId: '3',
-        lastMsg: Message(
-            authId: 'uid',
-            body: 'hey bro!',
-            date: DateTime.now().millisecondsSinceEpoch - 1000,
-            imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            isImg: false,
-            isVid: false,
-            status: MsgStauts.SEEN,
-            msgId: '1',
-            videoUrl:
-                'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'),
-        users: [
-          {
-            'userId': 'uid1',
-            'imgUrl':
-                'https://homepages.cae.wisc.edu/~ece533/images/airplane.png',
-            'userName': 'amr Mohammed'
-          },
-          {
-            'userId': 'uid',
-            'imgUrl': 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            'userName': 'Khalid Ali',
-          },
-        ]),
-    Chat(
-        chatId: '4',
-        lastMsg: Message(
-            authId: 'uid',
-            body: 'hey bro!',
-            date: DateTime.now().millisecondsSinceEpoch - 1000,
-            imgUrl: 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            isImg: false,
-            isVid: false,
-            msgId: '1',
-            videoUrl:
-                'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'),
-        users: [
-          {
-            'userId': 'uid1',
-            'imgUrl': 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            'userName': 'Ahmed Mohammed'
-          },
-          {
-            'userId': 'uid',
-            'imgUrl': 'https://homepages.cae.wisc.edu/~ece533/images/cat.png',
-            'userName': 'khalid Ali',
-          },
-        ]),
-  ];
+  List<Chat> _chatsList;
 
-  List<Chat> get chatsList => [..._chatsList];
-  void addChat(Chat chat) {
+  final chatsRef = FirebaseFirestore.instance.collection('/Connections').doc('/chats');
+  List<Chat> get chatsList {
+    if (_chatsList == null) _chatsList = [];
+    return [..._chatsList];
+  }
+
+  Future<void> loadChats(String uid) async {
+    final response = await chatsRef.collection(uid).get();
+    _chatsList = response.docs.map((e) => Chat.fromJson(e.data())).toList();
+    notifyListeners();
+  }
+
+  void addChat(Chat chat, String uid) async {
     _chatsList.add(chat);
+    final doc = chatsRef.collection('/$uid').doc();
+    chat.chatId = doc.id;
+    await doc.set(chat.toJson);
     notifyListeners();
   }
 

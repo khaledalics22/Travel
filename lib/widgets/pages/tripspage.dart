@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
-import 'package:travel/widgets/home/post.dart';
+import 'package:travel/widgets/posts/post.dart';
 
 class TripPage extends StatelessWidget {
   final key;

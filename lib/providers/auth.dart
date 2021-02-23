@@ -5,15 +5,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-import '../models/user.dart';
+import 'user.dart';
 
 class Auther with ChangeNotifier {
-  CustomUser _user = CustomUser();
+  CustomUser _user;
 
   CustomUser get user => _user;
 
   void setUser(var user) {
-    _user.setUser(user);
+    _user = CustomUser.fromJson(user);
     // notifyListeners();
   }
 
@@ -56,13 +56,17 @@ class Auther with ChangeNotifier {
   Future<void> addUser(CustomUser user) async {
     // String uid = _usersCollectionRef.doc().id;
     // user.id = uid;
+    _user = user;
+    notifyListeners();
     return _usersCollectionRef.doc(user.id).set(user.toJson);
     // .then(onComplete)
     // .catchError((_) => onComplete(null));
   }
 
   Future<void> logOut() async {
-    return _authInstance.signOut();
+    await _authInstance.signOut();
+    _user = null;
+    notifyListeners();
   }
 
   Future<void> updateUser(CustomUser user) async {

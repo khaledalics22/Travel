@@ -68,7 +68,7 @@ class ChatRoomBody extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: CircularImage(
-                                        25.0, chat.chatGroupImgUrl('uid')),
+                                        25.0, chat.receiverUrl),
                                   ),
                                 Bubble(
                                   margin: const BubbleEdges.all(8.0),
@@ -165,8 +165,7 @@ class ChatRoomBody extends StatelessWidget {
                                                                         .white,
                                                                 child: CircularImage(
                                                                     15.0,
-                                                                    chat.chatGroupImgUrl(
-                                                                        'uid')),
+                                                                    chat.receiverUrl),
                                                               ),
                                                             )
                                                           :const  SizedBox(
@@ -202,7 +201,6 @@ class _MessageInputState extends State<MessageInput> {
   @override
   Widget build(BuildContext context) {
     print('build chatroombody.dart');
-
     var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -287,8 +285,6 @@ class _MessageInputState extends State<MessageInput> {
                           msg.isImg = false;
                         msg.body = msgCtr.text;
                         msg.authId = 'uid';
-                        msg.authImg =
-                            'https://homepages.cae.wisc.edu/~ece533/images/airplane.png';
                         msg.date = DateTime.now().millisecondsSinceEpoch;
                         msg.status = MsgStauts.SENT;
                         widget.aploadMessage(msg);

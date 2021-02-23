@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
+import 'package:travel/screens/profile.dart';
 import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
 import 'package:travel/widgets/posts/postbody.dart';
 import 'package:travel/widgets/posts/video.dart';
+import 'package:travel/widgets/profile/userprofile.dart';
 import '../applybutton.dart';
-import '../home/postactions.dart';
+import 'postactions.dart';
 
 class PostWidget extends StatelessWidget {
   final key;
@@ -46,7 +49,15 @@ class PostWidget extends StatelessWidget {
       child: Wrap(children: [
         Padding(
           padding: const EdgeInsets.all(5.0),
-          child: PostTop(post),
+          child: GestureDetector(
+              onTap: () {
+                final uid = Provider.of<Auther>(context, listen: false).user.id;
+                post.authorId == uid
+                    ? Navigator.of(context).pushNamed(Profile.route)
+                    : Navigator.of(context)
+                        .pushNamed(UserProfile.route, arguments: post.authorId);
+              },
+              child: PostTop(post)),
         ),
         if ((post.caption ?? '').length > 0)
           Padding(

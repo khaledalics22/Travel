@@ -47,7 +47,7 @@ class CustomUser with ChangeNotifier {
         'birthdate': this.birthdate,
         'visited-places': this.visitedPlaces,
       };
-  void setUser(var data) {
+ CustomUser.fromJson(var data) {
     this.id = data['id'];
     this.name = data['name'];
     this.bio = data['bio'];

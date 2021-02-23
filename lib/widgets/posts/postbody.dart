@@ -6,7 +6,6 @@ class PostBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build postbody.dart');
-
     return Image.network(
       imgUrl,
       fit: BoxFit.fitWidth,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/regiondetails.dart';
+import 'package:travel/widgets/profile/userprofile.dart';
 import './providers/auth.dart';
 import './providers/chats.dart';
 import './providers/messages.dart';
@@ -106,7 +107,7 @@ class _App extends StatelessWidget {
                   color: Colors.pink[600],
                 )),
             primaryColorDark: Colors.pink[600]),
-        initialRoute:Splash.route,
+        initialRoute: Splash.route,
         routes: {
           Splash.route: (_) => Splash(),
           Auth.route: (_) => Auth(),
@@ -121,6 +122,7 @@ class _App extends StatelessWidget {
           ChatsScreen.route: (_) => ChatsScreen(),
           ChatRoomScreen.route: (_) => ChatRoomScreen(),
           RegionDetails.route: (_) => RegionDetails(),
+          UserProfile.route: (_) => UserProfile(),
         },
       ),
     );

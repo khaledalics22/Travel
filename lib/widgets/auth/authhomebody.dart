@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/models/user.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/screens/Home.dart';
 

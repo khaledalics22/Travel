@@ -6,6 +6,7 @@ import 'package:travel/screens/auth.dart';
 import 'package:travel/screens/editprofile.dart';
 import 'package:travel/widgets/profile/profiledata.dart';
 import 'package:travel/widgets/profile/profileposts.dart';
+import 'package:travel/widgets/profile/profiletop.dart';
 
 enum MenuItems {
   edit,
@@ -17,7 +18,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build profile.dart');
-
     final auther = Provider.of<Auther>(context, listen: false);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColorDark,
@@ -64,19 +64,30 @@ class Profile extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: ClipRRect(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-          child: Container(
-            color: Colors.white,
-            child: Column(children: [
-              ProfileData(),
-              Divider(
-                thickness: 8,
-              ),
-              ProfilePosts(),
-            ]),
+      body: ChangeNotifierProvider.value(
+        value: auther.user,
+        child: SingleChildScrollView(
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            child: Container(
+              color: Colors.white,
+              child: Column(children: [
+                ProfileTop(),
+                Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Text(
+                    auther.user?.name != null ? auther.user.name : 'name',
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ),
+                ProfileData(),
+                Divider(
+                  thickness: 8,
+                ),
+                ProfilePosts(auther.user.id),
+              ]),
+            ),
           ),
         ),
       ),

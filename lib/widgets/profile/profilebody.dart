@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/screens/friends.dart';
 
@@ -31,9 +32,8 @@ class _ProfileBodyState extends State<ProfileBody>
   bool extended = false;
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Auther>(context, listen: false).user;
+    final user = Provider.of<CustomUser>(context, listen: false);
         print('build profilebody.dart');
-
     return Column(
       children: [
         item(

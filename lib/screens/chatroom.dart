@@ -13,28 +13,25 @@ class ChatRoomScreen extends StatelessWidget {
     final chat = Provider.of<Chats>(context).findById(chatId);
     final msgsProvider = Provider.of<Messages>(context);
     print('build chatroom.dart');
-
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         actions: [
           PopupMenuButton(
-            onSelected: (value) =>msgsProvider.deleteChatMessages(chatId) ,
+            onSelected: (value) => msgsProvider.deleteChatMessages(chatId),
             itemBuilder: (_) => [
               const PopupMenuItem(
                 value: 0,
-                child:const  Text('delete chat'),
-
+                child: const Text('delete chat'),
               ),
             ],
           )
         ],
         leading: Padding(
           padding: const EdgeInsets.all(7.0),
-          child: CircularImage(40.0, chat.chatGroupImgUrl('uid')),
+          child: CircularImage(40.0, chat.receiverUrl),
         ),
-        title: Text(chat.chatGroupName('uid')),
+        title: Text(chat.receiverName),
       ),
       body: ChatRoomBody(chatId),
     );

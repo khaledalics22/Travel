@@ -6,12 +6,13 @@ import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/tripdetails.dart';
-import 'package:travel/widgets/home/post.dart';
+import 'package:travel/widgets/posts/post.dart';
 
 class ProfilePosts extends StatelessWidget {
+  final uid;
+  ProfilePosts(this.uid); 
   @override
   Widget build(BuildContext context) {
-    final uid = Provider.of<Auther>(context).user.id;
     return FutureBuilder(
         future: Provider.of<Posts>(context).getPostsOfUser(uid),
         builder: (context, snapshot) {

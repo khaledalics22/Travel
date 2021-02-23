@@ -4,7 +4,7 @@ import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/tripdetails.dart';
-import 'package:travel/widgets/home/post.dart';
+import 'package:travel/widgets/posts/post.dart';
 
 class PostsListView extends StatelessWidget {
   final key;

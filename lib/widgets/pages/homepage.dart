@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/screens/profile.dart';
-import 'package:travel/widgets/home/addpost.dart';
+import 'package:travel/widgets/posts/addpost.dart';
 import 'package:travel/widgets/posts/postsListView.dart';
 
 class HomePage extends StatelessWidget {

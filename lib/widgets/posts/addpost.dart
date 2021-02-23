@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/models/user.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
-import 'package:travel/widgets/home/addpostactions.dart';
+import 'package:travel/widgets/posts/addpostactions.dart';
 import 'package:video_player/video_player.dart';
 
 class AddPost extends StatefulWidget {

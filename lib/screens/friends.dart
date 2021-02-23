@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel/models/user.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/widgets/search/searchbar.dart';
 
 class Friends extends StatelessWidget {
