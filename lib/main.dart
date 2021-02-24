@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/regions.dart';
+import 'package:travel/screens/friendsrequests.dart';
 import 'package:travel/screens/regiondetails.dart';
 import 'package:travel/screens/userprofile.dart';
 import './providers/auth.dart';
@@ -123,6 +124,7 @@ class _App extends StatelessWidget {
           ChatRoomScreen.route: (_) => ChatRoomScreen(),
           RegionDetails.route: (_) => RegionDetails(),
           UserProfile.route: (_) => UserProfile(),
+          FriendsRequests.route:(_)=>FriendsRequests(),
         },
       ),
     );

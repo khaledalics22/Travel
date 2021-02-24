@@ -1,184 +1,63 @@
 import 'dart:io';
 
-import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/models/message.dart';
-import 'package:travel/providers/chats.dart';
+import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/messages.dart';
-import 'package:travel/widgets/circularImage.dart';
+import 'package:travel/widgets/Chats/messageslistview.dart';
 
 import '../../utils.dart';
 
-
 class ChatRoomBody extends StatelessWidget {
   final String chatId;
-  const ChatRoomBody(this.chatId);
+  final String chatUrl;
+  const ChatRoomBody(this.chatId, this.chatUrl);
   // var msgsProvider;
-  void uploadMessage(Message msg, Messages msgsProvider, Chats chats) {
+  void uploadMessage(BuildContext context, Message msg, chatId) {
+    final msgsProvider = Provider.of<Messages>(context, listen: false);
     msgsProvider.addMessage(
       msg,
       chatId,
     );
-    chats.updateLastImg(msg, chatId); //TOTO: this need to be done , not working
+    //TOTO: this need to be done , not working
   }
 
+// FutureBuilder(
+//         future: Provider.of<Chats>(context, listen: false).loadChatById(chatId),
+//         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+//           final done = snapshot.connectionState == ConnectionState.done;
+//           final exists = snapshot.data.exists;
+//           return
   // var chats;
   @override
   Widget build(BuildContext context) {
     print('build chatroombody.dart');
-    final msgsProvider = Provider.of<Messages>(context);
-    List<Message> msgs = msgsProvider.msgsOfChatId(chatId)?.reversed?.toList();
-    final chat = Provider.of<Chats>(context).findById(chatId);
-    var size = MediaQuery.of(context).size;
-    final chats = Provider.of<Chats>(context);
+    // final msgsProvider = Provider.of<Messages>(context);
+    // List<Message> msgs = msgsProvider.msgsOfChatId(chatId)?.reversed?.toList();
+    // final chat = Provider.of<Chats>(context).findById(chatId);
+    // var size = MediaQuery.of(context).size;
+    // final chats = Provider.of<Chats>(context);
+    final provider = Provider.of<Messages>(context, listen: false);
     return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          msgs.length == 0
-              ? Center(
-                  child: Text(
-                    'No Messages\n send a message here!',
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              : Expanded(
-                  child: ListView.builder(
-                      reverse: true,
-                      itemCount: msgs.length,
-                      itemBuilder: (_, idx) {
-                        // print('$idx :${msgs[idx].isImg}');
-                        var date = DateFormat(DateFormat.HOUR_MINUTE).format(
-                            DateTime.fromMillisecondsSinceEpoch(
-                                msgs[idx].date));
-
-                        return Container(
-                          child: Row(
-                              mainAxisAlignment:
-                                  msgs[idx].authId.compareTo('uid') == 0
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
-                              children: [
-                                if (msgs[idx].authId.compareTo('uid') != 0)
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: CircularImage(
-                                        25.0, chat.receiverUrl),
-                                  ),
-                                Bubble(
-                                  margin: const BubbleEdges.all(8.0),
-                                  elevation: 5,
-                                  color: msgs[idx].authId.compareTo('uid') == 0
-                                      ? Colors.pink[50]
-                                      : Theme.of(context).primaryColorDark,
-                                  alignment:
-                                      msgs[idx].authId.compareTo('uid') == 0
-                                          ? Alignment.topRight
-                                          : Alignment.topLeft,
-                                  padding: const BubbleEdges.all(15.0),
-                                  nip: msgs[idx].authId.compareTo('uid') == 0
-                                      ? BubbleNip.rightTop
-                                      : BubbleNip.leftTop,
-                                  child: Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: size.width * 2 / 3,
-                                    ),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            (msgs[idx].authId == 'uid')
-                                                ? CrossAxisAlignment.end
-                                                : CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(4.0),
-                                            child: Text(
-                                              '$date',
-                                              style: TextStyle(
-                                                  color: Colors.black54),
-                                            ),
-                                          ),
-                                          if (msgs[idx].isImg)
-                                            Image.network(
-                                              msgs[idx].imgUrl,
-                                              width: size.height / 6,
-                                              height: size.height / 4,
-                                              fit: BoxFit.fitHeight,
-                                            ),
-                                          Wrap(
-                                              // mainAxisAlignment: MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  WrapCrossAlignment.end,
-                                              // crossAxisAlignment: Cr.start,
-                                              alignment: WrapAlignment.end,
-                                              children: [
-                                                Text(
-                                                  msgs[idx].body,
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: msgs[idx]
-                                                                  .authId
-                                                                  .compareTo(
-                                                                      'uid') ==
-                                                              0
-                                                          ? Colors.black
-                                                          : Colors.white),
-                                                ),
-                                                if (msgs[idx]
-                                                        .authId
-                                                        .compareTo('uid') ==
-                                                    0)
-                                                  msgs[idx].status ==
-                                                          MsgStauts.SENT
-                                                      ? Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 8.0),
-                                                          child: Icon(
-                                                            Icons.check,
-                                                            size: 15,
-                                                            color: Colors.grey,
-                                                          ),
-                                                        )
-                                                      : (!(idx > 0 &&
-                                                              msgs[idx - 1]
-                                                                      .status ==
-                                                                  MsgStauts
-                                                                      .SEEN))
-                                                          ? Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left:
-                                                                          8.0),
-                                                              child:
-                                                                  CircleAvatar(
-                                                                radius: 10,
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .white,
-                                                                child: CircularImage(
-                                                                    15.0,
-                                                                    chat.receiverUrl),
-                                                              ),
-                                                            )
-                                                          :const  SizedBox(
-                                                              width: 8,
-                                                              height: 8,
-                                                            )
-                                              ]),
-                                        ]),
-                                  ),
-                                ),
-                              ]),
-                        );
-                      }),
-                ),
+          Expanded(
+            child: FutureBuilder(
+              future: provider.msgsOfChatId(chatId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // provider.listentToMessages(chatId); 
+                  return MessagesListView(chatId, chatUrl);
+                }
+                return Container(
+                    child: Center(child: CircularProgressIndicator()));
+              },
+            ),
+          ),
           MessageInput((msg) {
-            uploadMessage(msg, msgsProvider, chats);
+            uploadMessage(context, msg, chatId);
           }),
         ]);
   }
@@ -256,7 +135,7 @@ class _MessageInputState extends State<MessageInput> {
                     },
                     maxLines: size.height > 500 ? 4 : 1,
                     controller: msgCtr,
-                    decoration:const  InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'send message',
                     ),
@@ -276,12 +155,13 @@ class _MessageInputState extends State<MessageInput> {
                         final msg = Message();
                         if (_image != null) {
                           msg.isImg = true;
-                          msg.imgUrl =
-                              'https://homepages.cae.wisc.edu/~ece533/images/airplane.png';
+                          msg.file = _image;
                         } else
                           msg.isImg = false;
+                        msg.isVid = false;
                         msg.body = msgCtr.text;
-                        msg.authId = 'uid';
+                        msg.authId =
+                            Provider.of<Auther>(context, listen: false).user.id;
                         msg.date = DateTime.now().millisecondsSinceEpoch;
                         msg.status = MsgStauts.SENT;
                         widget.aploadMessage(msg);

@@ -8,7 +8,6 @@ class ChatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build chats.dart');
-
     return ChangeNotifierProvider(
       create: (context) => Chats(),
       child: Scaffold(

@@ -31,4 +31,11 @@ class Utils {
     }
     return null;
   }
+
+  static String buildId({String id1, String id2}) {
+    List<String> ids = [id1, id2];
+    ids.sort((a, b) =>
+        a.toString().toLowerCase().compareTo(b.toString().toLowerCase()));
+    return ids[0] + ids[1];
+  }
 }

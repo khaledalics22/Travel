@@ -6,24 +6,28 @@ import 'package:travel/providers/chat.dart';
 class Chats with ChangeNotifier {
   List<Chat> _chatsList;
 
-  final chatsRef = FirebaseFirestore.instance.collection('/Connections').doc('/chats');
+  final chatsRef = FirebaseFirestore.instance.collection('/chats');
   List<Chat> get chatsList {
     if (_chatsList == null) _chatsList = [];
     return [..._chatsList];
   }
 
   Future<void> loadChats(String uid) async {
-    final response = await chatsRef.collection(uid).get();
-    _chatsList = response.docs.map((e) => Chat.fromJson(e.data())).toList();
-    notifyListeners();
+    // final response = await chatsRef.collection(uid).get();
+    // _chatsList = response.docs.map((e) => Chat.fromJson(e.data())).toList();
+    // notifyListeners();
+  }
+
+  Future<DocumentSnapshot> loadChatById(String chatId) {
+    return chatsRef.doc(chatId).get(); 
   }
 
   void addChat(Chat chat, String uid) async {
-    _chatsList.add(chat);
-    final doc = chatsRef.collection('/$uid').doc();
-    chat.chatId = doc.id;
-    await doc.set(chat.toJson);
-    notifyListeners();
+    // _chatsList.add(chat);
+    // final doc = chatsRef.collection('/$uid').doc();
+    // chat.chatId = doc.id;
+    // await doc.set(chat.toJson);
+    // notifyListeners();
   }
 
   Chat findById(String chatId) {

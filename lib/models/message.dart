@@ -1,3 +1,5 @@
+import 'dart:io';
+
 enum MsgStauts {
   SEEN,
   SENT,
@@ -13,6 +15,7 @@ class Message {
   int date;
   String authId;
   String msgId;
+  File file;
   MsgStauts status;
   Message(
       {this.authId,
@@ -25,16 +28,17 @@ class Message {
       this.status,
       this.videoUrl});
 
-  Message.fromJson(data){
-     this.authId=data['authorId'];
-     this.body=data[ 'body'];
-     this.msgId=data[ 'msgId'];
-     this.imgUrl=data[ 'imageUrl'];
-     this.date=data[ 'date'];
-     this.isImg=data[ 'isImage'];
-     this.isVid=data[ 'isVideo'];
-     this.status=data[ 'status'];
-     this.videoUrl=data[ 'videoUrl'];
+  Message.fromJson(data) {
+    this.authId = data['authorId'];
+    this.body = data['body'];
+    this.msgId = data['msgId'];
+    this.imgUrl = data['imageUrl'];
+    this.date = data['date'];
+    this.isImg = data['isImage'];
+    this.isVid = data['isVideo'];
+    this.status = MsgStauts.values
+        .firstWhere((element) => element.index == (data['status'] as int));
+    this.videoUrl = data['videoUrl'];
   }
 
   Map<String, Object> get toJson {
@@ -46,9 +50,8 @@ class Message {
       'date': this.date,
       'isImage': this.isImg,
       'isVideo': this.isVid,
-      'status': this.status,
+      'status': this.status.index,
       'videoUrl': this.videoUrl,
     };
   }
-
 }

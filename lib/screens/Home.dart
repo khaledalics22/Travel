@@ -9,6 +9,7 @@ import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/chats.dart';
 import 'package:travel/screens/createtirp.dart';
+import 'package:travel/screens/friendsrequests.dart';
 import 'package:travel/screens/searchtrip.dart';
 import 'package:travel/widgets/pages/regionpage.dart';
 import 'package:travel/widgets/pages/tripspage.dart';
@@ -180,12 +181,12 @@ class RequestIconWidget extends StatelessWidget {
                 ],
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(ChatsScreen.route, arguments: 'uid');
+                Navigator.of(context).pushNamed(FriendsRequests.route);
               });
         });
   }
 }
+
 class MessagesIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -221,8 +222,7 @@ class MessagesIconWidget extends StatelessWidget {
                 ],
               ),
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(ChatsScreen.route, arguments: 'uid');
+                Navigator.of(context).pushNamed(ChatsScreen.route);
               });
         });
   }
