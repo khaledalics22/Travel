@@ -1,12 +1,9 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/auth.dart';
-import 'package:travel/providers/regions.dart';
 import 'package:travel/screens/chats.dart';
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/friendsrequests.dart';

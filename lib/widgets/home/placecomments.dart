@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/providers/user.dart';
 import 'package:travel/providers/Requests.dart';
-import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/placescomments.dart';
 import 'package:travel/widgets/circularImage.dart';
 

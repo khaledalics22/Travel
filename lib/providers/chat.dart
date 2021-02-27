@@ -5,39 +5,35 @@ import 'package:travel/providers/Requests.dart';
 class Chat with ChangeNotifier {
   String chatId;
   List<String> users;
-  Message lastMsg;
-  // set later after first time when open chats
-  String receiverName;
   String receiverUrl;
-  String receiverId(String uid) {
+  String receiverName;
+  Message lastMsg;
+    bool isFirstMsg = false; 
+  String getReceiverId(String uid) {
     return users.firstWhere((element) => element.compareTo(uid) != 0);
   }
 
   Map<String, Object> get toJson {
+    final usersMap = Map<String, String>();
+    users.forEach((e) => usersMap.putIfAbsent(e, () => 'member'));
     return {
       'chatId': chatId,
-      'users': users,
-      'lastMsg': lastMsg.toJson,
+      'users': usersMap,
     };
   }
 
-  Future<void> loadReceiverData(String uid) async {
-    final snap = await Requests.getUserById(uid);
-    receiverName = snap.data()['name'];
-    receiverUrl = snap.data()['photoUrl'];
-    // notifyListeners(); 
+  Future<void> loadReceiverData(String receiverId) async {
+    final response = await Requests.getUserById(receiverId);
+    receiverName = response.data()['name'];
+    receiverUrl = response.data()['photoUrl'];
   }
 
   Chat.fromJson(data) {
     this.chatId = data['chatId'];
-    this.users = data['users'];
-    this.lastMsg = Message.fromJson(data['lastMsg']);
+    // print(data['users']);
+    this.users = [];
+    (data['users']).forEach((key, value) => this.users.add(key));
+    print(users[0]);
   }
-
-  void updateLastMsg(Message msg) {
-    lastMsg = msg;
-    notifyListeners();
-  }
-
-  Chat({this.users, this.lastMsg, this.chatId});
+  Chat({this.users, this.chatId,this.receiverName,this.lastMsg,this.receiverUrl});
 }

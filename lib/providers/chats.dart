@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:travel/models/message.dart';
 import 'package:travel/providers/chat.dart';
 
 class Chats with ChangeNotifier {
@@ -12,14 +11,20 @@ class Chats with ChangeNotifier {
     return [..._chatsList];
   }
 
+  final msgsRef = FirebaseFirestore.instance.collection('/rooms');
+
   Future<void> loadChats(String uid) async {
-    // final response = await chatsRef.collection(uid).get();
-    // _chatsList = response.docs.map((e) => Chat.fromJson(e.data())).toList();
-    // notifyListeners();
+    final response =
+        await msgsRef.where('users.$uid', isEqualTo: 'member').get();
+    _chatsList = response.docs.map((e) {
+      // print('----------------${e.data()}');
+      return Chat.fromJson(e.data());
+    }).toList();
+    notifyListeners();
   }
 
   Future<DocumentSnapshot> loadChatById(String chatId) {
-    return chatsRef.doc(chatId).get(); 
+    return chatsRef.doc(chatId).get();
   }
 
   void addChat(Chat chat, String uid) async {
@@ -32,12 +37,6 @@ class Chats with ChangeNotifier {
 
   Chat findById(String chatId) {
     return _chatsList.firstWhere((element) => element.chatId == chatId);
-  }
-
-  void updateLastImg(Message msg, String chatId) {
-    findById(chatId).updateLastMsg(msg);
-    // print('message updagted');
-    notifyListeners();
   }
 
   void removeChat(chatId) {

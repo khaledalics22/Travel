@@ -4,18 +4,27 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/models/message.dart';
 import 'package:travel/providers/auth.dart';
+import 'package:travel/providers/chat.dart';
 import 'package:travel/providers/messages.dart';
 import 'package:travel/widgets/circularImage.dart';
 
 class MessagesListView extends StatelessWidget {
-  final chatId;
+
   final chatUrl;
-  MessagesListView(this.chatId, this.chatUrl);
+  MessagesListView( this.chatUrl);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final provider = Provider.of<Messages>(context);
+    final Chat chat = Provider.of<Chat>(context, listen: false); 
+
     final msgs = provider.messages;
+    print('************** ${msgs.length}');
+    if (msgs.length == 1) {
+      provider.createRoomWithIdOrRandomIfNotExist(chat);
+    }else if (msgs.length == 0){
+      chat.isFirstMsg = true; 
+    }
     final uid = Provider.of<Auther>(context, listen: false).user.id;
     return msgs.length == 0
         ? Center(

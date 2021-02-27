@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/screens/postdetails.dart';

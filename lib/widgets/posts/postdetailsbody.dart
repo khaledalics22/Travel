@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/providers/Comment.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/posts/postdetailactions.dart';

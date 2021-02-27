@@ -31,7 +31,7 @@ class CreateTrip extends StatelessWidget {
     );
   }
 
-  GlobalKey<_CreateTripBodyState> childKey = GlobalKey<_CreateTripBodyState>();
+  final childKey = GlobalKey<_CreateTripBodyState>();
   @override
   Widget build(BuildContext context) {
     print('build createTrip.dart');

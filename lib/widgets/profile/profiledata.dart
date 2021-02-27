@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:travel/providers/user.dart';
 
 import 'package:travel/widgets/profile/profilebody.dart';
-import 'package:travel/widgets/profile/profiletop.dart';
 
 class ProfileData extends StatelessWidget {
   @override

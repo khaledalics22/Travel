@@ -2,12 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:travel/models/message.dart';
+import 'package:travel/providers/chat.dart';
 
 class Messages with ChangeNotifier {
-  List<Message> _messagesList;
-
-  final msgsRef =
-      FirebaseFirestore.instance.collection('/rooms').doc('/messages');
+  List<Message> _messagesList; 
+  final msgsRef = FirebaseFirestore.instance.collection('/rooms');
   // void listentToMessages(String chatId) {
   //   msgsRef
   //       .collection(chatId)
@@ -21,22 +20,38 @@ class Messages with ChangeNotifier {
 
   // Future<void> fetchLastAdded(String chatId) async {}
 
-  Future<void> msgsOfChatId(String chatId) async {
-    if (_messagesList == null) _messagesList = [];
+  Future<Message> getLastMsgOfChatWithId(String chatId) async {
+    final response = await msgsRef
+        .doc(chatId)
+        .collection('/messages')
+        .orderBy('date')
+        .limitToLast(1)
+        .get();
+    return response.docs.length > 0
+        ? Message.fromJson(response.docs[0].data())
+        : null;
+  }
+
+  Future<void> msgsOfChatId(String chatId,) async {
+    // print('------- call msgsOfChatId');
+    _messagesList = [];
     msgsRef
-        .collection(chatId)
+        .doc(chatId)
+        .collection('/messages')
         .orderBy('date')
         .limitToLast(20)
         .snapshots()
         .listen((event) {
-      _messagesList.insertAll(
-          0,
-          event.docChanges
-              .map((e) => Message.fromJson(e.doc.data()))
-              .toList()
-              .reversed
-              .toList());
-      print('--------${event.docChanges.length}');
+      _messagesList = event.docs
+          .map((e) {
+            // print('map messages${e.data()}');
+            return Message.fromJson(e.data());
+          })
+          .toList()
+          .reversed
+          .toList();
+      // print(_messagesList.length);
+      // print('--------${event.docChanges.length}');
       notifyListeners();
     });
     // _messagesList = print('******************* msgs of chat');
@@ -54,8 +69,23 @@ class Messages with ChangeNotifier {
   }
   final msgsFiles = FirebaseStorage.instance.ref('/messages');
 
+  /**
+   * takes chat object if doesn't have id it will create new one
+   */
+  Future<void> createRoomWithIdOrRandomIfNotExist(Chat chat) async {
+    if (chat.chatId == null) chat.chatId = msgsRef.doc().id;
+    await msgsRef.doc(chat.chatId).get().then((value) async {
+      if (value.exists) {
+        if (value.data()['${chat.chatId}'] == null)
+          await msgsRef.doc(chat.chatId).set(chat.toJson);
+      } else {
+        await msgsRef.doc(chat.chatId).set(chat.toJson);
+      }
+    });
+  }
+
   Future<void> addMessage(Message msg, String chatId) async {
-    final doc = msgsRef.collection(chatId).doc();
+    final doc = msgsRef.doc(chatId).collection('/messages').doc();
     msg.msgId = doc.id;
     if (msg.isImg || msg.isVid) {
       final ref = msgsFiles.child('/${doc.id}.' + (msg.isImg ? 'jpg' : 'mp4'));

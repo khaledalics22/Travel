@@ -36,6 +36,6 @@ class Utils {
     List<String> ids = [id1, id2];
     ids.sort((a, b) =>
         a.toString().toLowerCase().compareTo(b.toString().toLowerCase()));
-    return ids[0] + ids[1];
+    return '${ids[0]}_${ids[1]}';
   }
 }

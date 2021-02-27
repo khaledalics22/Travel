@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/providers/Trip.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';

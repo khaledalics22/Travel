@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/auth.dart';
+import 'package:travel/providers/chat.dart';
 import 'package:travel/providers/user.dart';
 import 'package:travel/screens/chatroom.dart';
 import 'package:travel/utils.dart';
@@ -85,8 +85,14 @@ class ContactFriend extends StatelessWidget {
                         final id =
                             Provider.of<Auther>(context, listen: false).user.id;
                         final chatId = Utils.buildId(id1: id, id2: user.id);
-                        Navigator.of(context).pushNamed(ChatRoomScreen.route,
-                            arguments: [chatId, user.name, user.profileUrl]);
+                        Navigator.of(context).pushNamed(
+                          ChatRoomScreen.route,
+                          arguments: Chat(
+                              chatId: chatId,
+                              users: [id, user.id],
+                              receiverName: user.name,
+                              receiverUrl: user.profileUrl),
+                        );
                       }),
                 )
               ],

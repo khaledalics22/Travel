@@ -52,7 +52,7 @@ class __MyAppState extends State<_MyApp> {
   void initializeFlutterFire() async {
     try {
       // Wait for Firebase to initialize and set `_initialized` state to true
-      var result = await Firebase.initializeApp();
+      await Firebase.initializeApp();
       // print('************${result.options.projectId}');
       setState(() {
         _initialized = true;
