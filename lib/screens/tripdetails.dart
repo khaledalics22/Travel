@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
 
 import 'package:travel/providers/posts.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/widgets/Trip/tripdetailsbody.dart';
 
 class TripDetials extends StatelessWidget {
@@ -16,9 +17,9 @@ class TripDetials extends StatelessWidget {
     final appbar = AppBar(
       title: FutureBuilder(
           future: Requests.getUserById(post.authorId),
-          builder: (context, snapshot) {
+          builder: (context,AsyncSnapshot<CustomUser> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              final name = snapshot.data['name'];
+              final name = snapshot.data.name;
               return Text(
                 '$name\'s trip',
                 overflow: TextOverflow.ellipsis,

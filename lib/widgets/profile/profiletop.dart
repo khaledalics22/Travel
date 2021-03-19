@@ -10,7 +10,9 @@ class ProfileTop extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('build profiletop.dart');
-    final user = Provider.of<Auther>(context,listen: false).user;
+    final user = Provider.of<Auther>(
+      context,
+    ).user;
     return Container(
       width: double.infinity,
       height: (170.0 + 50.0),

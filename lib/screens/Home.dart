@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/auth.dart';
+import 'package:travel/providers/friendsrequests.dart';
 import 'package:travel/screens/chats.dart';
 import 'package:travel/screens/createtirp.dart';
 import 'package:travel/screens/friendsrequests.dart';
@@ -147,10 +148,11 @@ class RequestIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Provider.of<Auther>(context).getRequests(),
+        future: Provider.of<FriendsRequestsProvider>(context).getRequestsCount(
+            Provider.of<Auther>(context, listen: false).user.id),
         builder: (context, snapshot) {
           final done = snapshot.connectionState == ConnectionState.done;
-          final l = snapshot?.data?.docs?.length;
+          final l = snapshot?.data;
           return IconButton(
               icon: Stack(
                 children: [
@@ -188,10 +190,11 @@ class MessagesIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Provider.of<Auther>(context).getRequests(),
+        future: Provider.of<FriendsRequestsProvider>(context)
+            .getRequestsCount(Provider.of<Auther>(context, listen: false).user.id),
         builder: (context, snapshot) {
           final done = snapshot.connectionState == ConnectionState.done;
-          final l = snapshot?.data?.docs?.length;
+          final l = snapshot?.data;
           return IconButton(
               icon: Stack(
                 children: [

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travel/providers/Comment.dart';
 import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/auth.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
 
@@ -22,7 +23,7 @@ class CommentWidget extends StatelessWidget {
         children: [
           FutureBuilder(
               future: Requests.getUserById(comment.authorId),
-              builder: (context, snapshot) {
+              builder: (context, AsyncSnapshot<CustomUser> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done)
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,14 +34,14 @@ class CommentWidget extends StatelessWidget {
                             radius: 18,
                             child: CircularImage(
                               36.0,
-                              snapshot.data['photoUrl'] ?? Requests.appImgUrl,
+                              snapshot.data.profileUrl ?? Requests.appImgUrl,
                             )),
                       ),
                       Column(children: [
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
                           child: Text(
-                            snapshot.data['name'],
+                            snapshot.data.name,
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.bold),
                           ),

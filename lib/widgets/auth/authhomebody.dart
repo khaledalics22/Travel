@@ -61,9 +61,6 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
   };
   void createAcount() async {
     final auther = Provider.of<Auther>(context, listen: false);
-    print(input['email']);
-    print(input['password']);
-
     final snapshot = await auther
         .createUserWithEmailAndPass(input['email'], input['password'])
         .catchError((value) {
@@ -128,13 +125,7 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                       vsync: this,
                       child: Container(
                         width: size.width * 5 / 6,
-                        // height: MediaQuery.of(context).size.height *
-                        //     (isReg
-                        //         ? 2 / 3
-                        //         : MediaQuery.of(context).orientation ==
-                        //                 Orientation.portrait
-                        //             ? 1 / 3
-                        //             : 3 / 5),
+                      
                         child: Card(
                           elevation: 5,
                           child: SingleChildScrollView(

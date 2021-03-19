@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:travel/providers/friendsrequests.dart';
 import 'package:travel/providers/regions.dart';
+import 'package:travel/screens/addpost.dart';
 import 'package:travel/screens/friendsrequests.dart';
 import 'package:travel/screens/regiondetails.dart';
 import 'package:travel/screens/userprofile.dart';
+import 'package:travel/widgets/posts/addpost.dart';
 import './providers/auth.dart';
 import './providers/chats.dart';
 import './providers/messages.dart';
@@ -96,6 +99,7 @@ class _App extends StatelessWidget {
         ChangeNotifierProvider.value(value: Chats()),
         ChangeNotifierProvider.value(value: Auther()),
         ChangeNotifierProvider.value(value: Regions()),
+        ChangeNotifierProvider.value(value: FriendsRequestsProvider())
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -113,6 +117,7 @@ class _App extends StatelessWidget {
           Splash.route: (_) => Splash(),
           Auth.route: (_) => Auth(),
           Home.route: (_) => Home(),
+          AddPostScreen.route: (_)=> AddPostScreen(),
           Profile.route: (_) => Profile(),
           SearchTrip.route: (_) => SearchTrip(),
           CreateTrip.route: (_) => CreateTrip(),

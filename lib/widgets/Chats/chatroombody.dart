@@ -64,7 +64,7 @@ class _MessageInputState extends State<MessageInput> {
   File _image;
   final msgCtr = TextEditingController();
 
-  void aploadMessage(Message msg) async {
+  void uploadMessage(Message msg) async {
     final msgsProvider = Provider.of<Messages>(context, listen: false);
     if (chat.isFirstMsg) {
       await msgsProvider.createRoomWithIdOrRandomIfNotExist(chat);
@@ -166,7 +166,7 @@ class _MessageInputState extends State<MessageInput> {
                             Provider.of<Auther>(context, listen: false).user.id;
                         msg.date = DateTime.now().millisecondsSinceEpoch;
                         msg.status = MsgStauts.SENT;
-                        aploadMessage(msg);
+                        uploadMessage(msg);
                         setState(() {
                           msgCtr.clear();
                           _image = null;

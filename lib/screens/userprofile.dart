@@ -13,9 +13,9 @@ class UserProfile extends StatelessWidget {
     return Scaffold(
         body: FutureBuilder(
             future: Requests.getUserById(uid),
-            builder: (context, snapshot) {
+            builder: (context,AsyncSnapshot<CustomUser> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                final user = CustomUser.fromJson(snapshot.data);
+                final user = snapshot.data;
                 return SafeArea(
                   child: NestedScrollView(
                     body: ChangeNotifierProvider.value(

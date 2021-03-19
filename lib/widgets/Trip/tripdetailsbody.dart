@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/post.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/widgets/Trip/tripdetailstop.dart';
 import 'package:travel/widgets/circularImage.dart';
 
@@ -57,7 +58,7 @@ class TripDetailsBody extends StatelessWidget {
                 final idx = _post.trip.group.indexOf(uid);
                 return FutureBuilder(
                     future: Requests.getUserById(uid),
-                    builder: (context, snapshot) {
+                    builder: (context, AsyncSnapshot<CustomUser> snapshot) {
                       if (snapshot.connectionState == ConnectionState.done)
                         return Positioned(
                           right: idx * 20.0,
@@ -66,7 +67,7 @@ class TripDetailsBody extends StatelessWidget {
                             backgroundColor: Colors.white,
                             child: CircularImage(
                               30.0,
-                              snapshot.data['photoUrl'],
+                              snapshot.data.profileUrl,
                             ),
                           ),
                         );

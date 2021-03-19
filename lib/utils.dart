@@ -9,7 +9,7 @@ class Utils {
     final diff = DateTime.now().difference(date);
     final format = DateFormat(DateFormat.YEAR_MONTH_DAY);
     return diff.inDays > 6
-        ? '${format.format(date)}d ago'
+        ? '${format.format(date)}'
         : diff.inDays > 0
             ? '${diff?.inDays}d ago'
             : diff?.inHours != 0

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/screens/profile.dart';
 import 'package:travel/utils.dart';
 import 'package:travel/widgets/circularImage.dart';
@@ -113,11 +114,11 @@ class _PostTopState extends State<PostTop> {
     print('build post.dart');
     return FutureBuilder(
         future: Requests.getUserById(widget.post.authorId),
-        builder: (context, snapshot) {
+        builder: (context, AsyncSnapshot<CustomUser>snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.data != null) {
             return Row(children: [
-              (snapshot.data['photoUrl'] == null)
+              (snapshot.data.profileUrl == null)
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(150),
                       child: Image.asset(
@@ -130,7 +131,7 @@ class _PostTopState extends State<PostTop> {
                     )
                   : CircularImage(
                       40.0,
-                      snapshot?.data['photoUrl'],
+                      snapshot?.data?.profileUrl,
                     ),
               Expanded(
                 flex: 7,
@@ -140,7 +141,7 @@ class _PostTopState extends State<PostTop> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          snapshot.data['name'],
+                          snapshot.data.name,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Text(

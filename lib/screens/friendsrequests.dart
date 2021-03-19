@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:travel/widgets/requests/requestbody.dart';
 
 class FriendsRequests extends StatelessWidget {
   static final route = '/friends-requests';
@@ -8,7 +9,7 @@ class FriendsRequests extends StatelessWidget {
       appBar: AppBar(
         title: Text('Requests'),
       ),
-      body: Container(),
+      body: RequestsBody(),
     );
   }
 }

@@ -24,8 +24,8 @@ class Chat with ChangeNotifier {
 
   Future<void> loadReceiverData(String receiverId) async {
     final response = await Requests.getUserById(receiverId);
-    receiverName = response.data()['name'];
-    receiverUrl = response.data()['photoUrl'];
+    receiverName = response.name;
+    receiverUrl = response.profileUrl;
   }
 
   Chat.fromJson(data) {

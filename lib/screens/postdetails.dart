@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/auth.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/widgets/posts/postdetailsbody.dart';
 
 class PostDetails extends StatelessWidget {
@@ -19,9 +20,9 @@ class PostDetails extends StatelessWidget {
       appBar: AppBar(
         title: FutureBuilder(
           future: Requests.getUserById(Provider.of<Auther>(context,listen: false)?.user?.id),
-          builder: (context, snapshot) {
+          builder: (context, AsyncSnapshot<CustomUser> snapshot) {
             if (snapshot?.connectionState == ConnectionState.done) {
-              final name = snapshot?.data['name'];
+              final name = snapshot?.data?.name;
               return Text('$name\'s Post');
             }
             return Container();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/Requests.dart';
 import 'package:travel/providers/placescomments.dart';
+import 'package:travel/providers/user.dart';
 import 'package:travel/widgets/circularImage.dart';
 
 class PlaceCommentsList extends StatelessWidget {
@@ -40,9 +41,9 @@ class CommentsListView extends StatelessWidget {
                   children: [
                     FutureBuilder(
                       future: Requests.getUserById(comments[index]['authorId']),
-                      builder: (context, snapshot) {
+                      builder: (context, AsyncSnapshot<CustomUser> snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          return CircularImage(30.0, snapshot.data['photoUrl']);
+                          return CircularImage(30.0, snapshot.data.profileUrl);
                         }
                         return Container();
                       },
