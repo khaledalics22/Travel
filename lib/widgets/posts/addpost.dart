@@ -29,7 +29,7 @@ class HomeTop extends StatelessWidget {
             child: user?.profileUrl != null
                 ? Image.network(
                     user.profileUrl,
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.cover,
                     filterQuality: FilterQuality.low,
                     loadingBuilder: (context, child, loadingProgress) =>
                         loadingProgress == null
@@ -77,84 +77,91 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
     user = Provider.of<Auther>(context, listen: false).user;
     return Container(
       width: double.infinity,
+      height: MediaQuery.of(context).size.height / 4,
       child: Container(
         padding: const EdgeInsets.all(8.0),
         child: AnimatedSize(
           duration: const Duration(milliseconds: 300),
           vsync: this,
-          child: Wrap(
+          child: Column(
             children: [
-              HomeTop(),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(
-                    AddPostScreen.route,
-                    arguments: 0 /**no action =0  */),
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      'Share your experience here',
-                      style: TextStyle(color: Colors.grey, fontSize: 18),
+              Expanded(flex: 1, child: HomeTop()),
+              Expanded(
+                flex: 3,
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pushNamed(
+                      AddPostScreen.route,
+                      arguments: ['0'] /**no action =0  */),
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                        'Share your experience here',
+                        style: TextStyle(color: Colors.grey, fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
               ),
-              Container(
-                  height: 40,
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: FlatButton.icon(
-                        icon: Icon(
-                          Icons.video_collection_outlined,
+              Expanded(
+                flex: 1,
+
+                child: Container(
+                    child: Row(
+                  children: [
+                    Expanded(
+                        child: FlatButton.icon(
+                      icon: Icon(
+                        Icons.video_collection_outlined,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                      label: Text(
+                        'video',
+                        style: TextStyle(
                           color: Theme.of(context).primaryColorDark,
                         ),
-                        label: Text(
-                          'video',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColorDark,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(AddPostScreen.route,
-                              arguments: 2 /**upload video = 2 */);
-                        },
-                      )),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AddPostScreen.route,
+                            arguments: ['2'] /**upload video = 2 */);
+                      },
+                    )),
+                    VerticalDivider(
+                      thickness: 1,
+                      indent: 5,
+                      color: Theme.of(context).primaryColorDark,
+                    ),
+                    if (Platform.isIOS)
+                      Expanded(
+                          child: button('Create Trip', () {
+                        Navigator.of(context).pushNamed(CreateTrip.route);
+                      }, null)),
+                    if (Platform.isIOS)
                       VerticalDivider(
                         thickness: 1,
                         indent: 5,
                         color: Theme.of(context).primaryColorDark,
                       ),
-                      if (Platform.isIOS)
-                        Expanded(
-                            child: button('Create Trip', () {
-                          Navigator.of(context).pushNamed(CreateTrip.route);
-                        }, null)),
-                      if (Platform.isIOS)
-                        VerticalDivider(
-                          thickness: 1,
-                          indent: 5,
+                    Expanded(
+                        child: FlatButton.icon(
+                      icon: Icon(
+                        Icons.photo,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                      label: Text(
+                        'photo',
+                        style: TextStyle(
                           color: Theme.of(context).primaryColorDark,
                         ),
-                      Expanded(
-                          child: FlatButton.icon(
-                        icon: Icon(
-                          Icons.photo,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
-                        label: Text(
-                          'photo',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColorDark,
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(AddPostScreen.route,
-                              arguments: 1 /**upload photo = 1 */);
-                        },
-                      ))
-                    ],
-                  )),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(AddPostScreen.route,
+                            arguments: ['1'] /**upload photo = 1 */);
+                      },
+                    ))
+                  ],
+                )),
+              ),
             ],
           ),
         ),

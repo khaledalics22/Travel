@@ -6,7 +6,7 @@ class AddPostScreen extends StatelessWidget {
   final stateKey = GlobalKey<AddPostState>();
   @override
   Widget build(BuildContext context) {
-    final action = ModalRoute.of(context).settings.arguments as int;
+    final action = ModalRoute.of(context).settings.arguments as List;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(

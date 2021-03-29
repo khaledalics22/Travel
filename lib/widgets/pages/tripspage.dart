@@ -20,7 +20,7 @@ class TripPage extends StatelessWidget {
               itemCount: 1,
               itemBuilder: (context, index) {
                 return ChangeNotifierProvider.value(
-                    value: list[index], child: PostWidget(UniqueKey()));
+                    value: list[index], child: PostWidget(false));
               },
             );
           }

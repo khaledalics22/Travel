@@ -4,13 +4,19 @@ import 'package:travel/providers/Comment.dart';
 import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/posts/commentwidget.dart';
 
-class CommentsListView extends StatelessWidget {
-  static final listKey = GlobalKey<AnimatedListState>(); 
+class CommentsListView extends StatefulWidget {
+  static final listKey = GlobalKey<AnimatedListState>();
+
+  @override
+  _CommentsListViewState createState() => _CommentsListViewState();
+}
+
+class _CommentsListViewState extends State<CommentsListView> {
   @override
   Widget build(BuildContext context) {
     print('build postdetailscomments.dart');
 
-    final post = Provider.of<Post>(context);
+    final post = Provider.of<Post>(context, listen: false);
     // print(post?.commentsList);
     // final comments = [];
     return post?.commentsList?.length == 0
@@ -21,7 +27,7 @@ class CommentsListView extends StatelessWidget {
             style: TextStyle(color: Colors.grey),
           ))
         : AnimatedList(
-            key: listKey,
+            key: CommentsListView.listKey,
             reverse: true,
             itemBuilder: (_, idx, animation) {
               return SizeTransition(

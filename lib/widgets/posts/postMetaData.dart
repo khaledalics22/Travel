@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/auth.dart';
 import 'package:travel/providers/post.dart';
+import 'package:travel/screens/addpost.dart';
 import 'package:travel/screens/postdetails.dart';
 import 'package:travel/screens/tripdetails.dart';
 
@@ -92,7 +93,9 @@ class PostMetaData extends StatelessWidget {
                 color: Colors.grey,
               )),
           label: const Text('Share'),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(AddPostScreen.route,arguments: [post.postId,post.authorId] /**no Action */); 
+          },
         ),
       ]),
     ]);

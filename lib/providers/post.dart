@@ -24,9 +24,11 @@ class Post with ChangeNotifier {
   Trip trip;
   File file;
   int date;
+  bool shared;
+  String sharedPostId;
   List<String> get likesList => _likesList ?? [];
   List<Comment> get commentsList {
-    if (_commentsList == null) _commentsList = []; 
+    if (_commentsList == null) _commentsList = [];
     return [..._commentsList?.reversed?.toList()];
   }
 
@@ -37,12 +39,15 @@ class Post with ChangeNotifier {
       this.authImgUrl,
       this.hasVid,
       this.file,
+      this.shared,
+      this.sharedPostId,
       this.videoUrl,
       this.caption,
       this.trip,
       this.imgUrl,
       this.isTrip,
       this.date});
+
   Map<String, Object> get toJson {
     return {
       'autherId': this.authorId,
@@ -53,6 +58,8 @@ class Post with ChangeNotifier {
       'caption': this.caption,
       'trip': this.trip?.toJson,
       'date': this.date,
+      'isShared': this.shared,
+      'shared_post_id': this.sharedPostId,
       'imgUrl': this.imgUrl,
       'isTrip': this.isTrip,
     };
@@ -63,6 +70,8 @@ class Post with ChangeNotifier {
     this.postId = data['postId'];
     this.hasImg = data['hasImg'];
     this.hasVid = data['hasVid'];
+    this.shared = data['isShared'];
+    this.sharedPostId = data['shared_post_id'];
     this.videoUrl = data['videoUrl'];
     this.caption = data['caption'];
     if (data['trip'] != null) this.trip = Trip.fromJson(data['trip']);

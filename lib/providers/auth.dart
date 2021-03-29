@@ -25,7 +25,7 @@ class Auther with ChangeNotifier {
   static final _usersStorageRef = FirebaseStorage.instance.ref();
   
 
- 
+
 
   Stream<dynamic> checkLogin() => _authInstance.authStateChanges();
 

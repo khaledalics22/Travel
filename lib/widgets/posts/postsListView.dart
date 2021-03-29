@@ -34,7 +34,7 @@ class PostsListView extends StatelessWidget {
                         arguments: posts[idx].postId);
               },
               child: ChangeNotifierProvider<Post>.value(
-                child: PostWidget(key),
+                child: PostWidget(false),
                 value: posts[idx],
               ));
         });

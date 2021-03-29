@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/post.dart';
@@ -8,7 +9,7 @@ import 'package:travel/widgets/posts/post.dart';
 
 class ProfilePosts extends StatelessWidget {
   final uid;
-  ProfilePosts(this.uid); 
+  ProfilePosts(this.uid);
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -20,6 +21,7 @@ class ProfilePosts extends StatelessWidget {
               // print('*******loaded post provider******');
               return Post.fromJson(e.data());
             }).toList();
+            posts.sort((a, b) => (b as Post).date.compareTo((a as Post).date));
             return ListView.separated(
                 itemCount: posts.length,
                 padding: const EdgeInsets.all(8.0),
@@ -40,7 +42,7 @@ class ProfilePosts extends StatelessWidget {
                                 arguments: posts[idx].postId);
                       },
                       child: ChangeNotifierProvider<Post>.value(
-                        child: PostWidget(UniqueKey()),
+                        child: PostWidget(false),
                         value: posts[idx],
                       ));
                 });

@@ -21,7 +21,7 @@ class _RequestsListState extends State<RequestsList> {
       child: SizedBox(
         child: ChangeNotifierProvider.value(
             value: request,
-            child: RequestItem(() async{
+            child: RequestItem(() async {
               listKey.currentState.removeItem(
                   index,
                   (context, animation) =>
@@ -40,12 +40,18 @@ class _RequestsListState extends State<RequestsList> {
   Widget build(BuildContext context) {
     final requests =
         Provider.of<FriendsRequestsProvider>(context, listen: false).requests;
-    return AnimatedList(
-      key: listKey,
-      initialItemCount: requests.length,
-      itemBuilder: (context, index, animation) {
-        return _buildItem(context, requests[index], animation, index);
-      },
-    );
+    return requests.length == 0
+        ? Center(
+            child: Text(
+            'No Requests',
+            style: TextStyle(color: Colors.grey),
+          ))
+        : AnimatedList(
+            key: listKey,
+            initialItemCount: requests.length,
+            itemBuilder: (context, index, animation) {
+              return _buildItem(context, requests[index], animation, index);
+            },
+          );
   }
 }

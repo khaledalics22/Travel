@@ -19,6 +19,11 @@ class Posts with ChangeNotifier {
     return _searchHistRef.doc(uid).collection('history').orderBy('date').get();
   }
 
+  Future<Post> loadPostById(String postId) async {
+    final response = await postsRef.doc(postId).get();
+    return Post.fromJson(response.data());
+  }
+
   Future<void> addHistoryForUser(String uid, String text, int date) async {
     final refDoc = _searchHistRef.doc(uid).collection('history').doc();
     await refDoc.set({'id': refDoc.id, 'text': text, 'date': date});
@@ -41,7 +46,7 @@ class Posts with ChangeNotifier {
     final postDoc = postsRef.doc();
     post.postId = postDoc.id;
     // print('--------------------- ${postDoc.id}');
-    if (post.hasImg || post.hasVid) {
+    if ((post.hasImg || post.hasVid) && post.file != null) {
       final ref = postsFiles
           .child('/$uid')
           .child('/${postDoc.id}.' + (post.hasImg ? 'jpg' : 'mp4'));
@@ -53,7 +58,7 @@ class Posts with ChangeNotifier {
       post.hasImg ? post.imgUrl = url : post.videoUrl = url;
     }
     await postDoc.set(post.toJson);
-    _postsList.insert(postsList.length - 1, post);
+    _postsList.insert(postsList.length, post);
     notifyListeners();
   }
 
