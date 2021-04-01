@@ -20,21 +20,22 @@ class Auther with ChangeNotifier {
   static final _authInstance = FirebaseAuth.instance;
   static final _usersCollectionRef =
       FirebaseFirestore.instance.collection('users');
-  
 
   static final _usersStorageRef = FirebaseStorage.instance.ref();
-  
-
-
 
   Stream<dynamic> checkLogin() => _authInstance.authStateChanges();
 
   Future<UserCredential> login(String email, String pass) async {
-    return _authInstance.signInWithEmailAndPassword(
-      email: email,
-      password: pass,
-    );
-   
+    UserCredential user;
+    try {
+      user = await _authInstance.signInWithEmailAndPassword(
+        email: email,
+        password: pass,
+      );
+    } catch (e) {
+      throw e;
+    }
+    return user;
     //     .then(onComplete, onError: (value) {
     //   onComplete(null);
     // });

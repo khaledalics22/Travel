@@ -5,31 +5,32 @@ import 'package:travel/providers/post.dart';
 import 'package:travel/widgets/posts/commentwidget.dart';
 
 class CommentsListView extends StatefulWidget {
-  static final listKey = GlobalKey<AnimatedListState>();
+  final listKey;
+  CommentsListView(this.listKey);
 
   @override
   _CommentsListViewState createState() => _CommentsListViewState();
 }
 
 class _CommentsListViewState extends State<CommentsListView> {
+  var post;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print('build postdetailscomments.dart');
-
-    final post = Provider.of<Post>(context, listen: false);
+    post = Provider.of<Post>(context, listen: false);
     // print(post?.commentsList);
     // final comments = [];
-    return post?.commentsList?.length == 0
-        ? Center(
-            child: Text(
-            'No Comments yet\n be the first how leaves a comment',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
-          ))
-        : AnimatedList(
-            key: CommentsListView.listKey,
+    return AnimatedList(
+            key: widget.listKey,
             reverse: true,
             itemBuilder: (_, idx, animation) {
+              print('8888*************** $idx');
               return SizeTransition(
                 axis: Axis.vertical,
                 //  key: UniqueKey(),

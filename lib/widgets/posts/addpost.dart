@@ -75,9 +75,12 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     print('build addpost.dart');
     user = Provider.of<Auther>(context, listen: false).user;
+    final height = MediaQuery.of(context).size.height;
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 4,
+      // constraints:
+      //     BoxConstraints(minHeight: MediaQuery.of(context).size.height / 2),
+      height: height > 400 ? height / 3 : height / 2,
       child: Container(
         padding: const EdgeInsets.all(8.0),
         child: AnimatedSize(
@@ -105,7 +108,6 @@ class _AddPostState extends State<AddPost> with TickerProviderStateMixin {
               ),
               Expanded(
                 flex: 1,
-
                 child: Container(
                     child: Row(
                   children: [

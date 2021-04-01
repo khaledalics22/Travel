@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/user.dart';
@@ -21,22 +22,26 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
   var hidePass = true;
 
   void login() async {
-    final auther = Provider.of<Auther>(context, listen: false);
-    final snapshot = await auther.login(
-      input['email'],
-      input['password'],
-    );
-    if (snapshot.user == null) {
+    try {
+      final auther = Provider.of<Auther>(context, listen: false);
+      final snapshot = await auther.login(
+        input['email'],
+        input['password'],
+      );
+      if (snapshot.user == null) {
+        Scaffold.of(context).hideCurrentSnackBar();
+        Scaffold.of(context).showSnackBar(
+            const SnackBar(content: const Text('Email doesn\'t exist')));
+        setState(() {
+          logging = false;
+        });
+      } else {
+        auther.setUser((await auther.getUser()).data());
+        Navigator.of(context).pushReplacementNamed(Home.route);
+      }
+    } on FirebaseAuthException catch (e) {
       Scaffold.of(context).hideCurrentSnackBar();
-      Scaffold.of(context).showSnackBar(
-          const SnackBar(content: const Text('Email doesn\'t exist')));
-      setState(() {
-        logging = false;
-      });
-    } else {
-
-      auther.setUser((await auther.getUser()).data());
-      Navigator.of(context).pushReplacementNamed(Home.route);
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
 
@@ -125,7 +130,6 @@ class _AuthBodyState extends State<AuthBody> with TickerProviderStateMixin {
                       vsync: this,
                       child: Container(
                         width: size.width * 5 / 6,
-                      
                         child: Card(
                           elevation: 5,
                           child: SingleChildScrollView(

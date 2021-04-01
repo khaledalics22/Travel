@@ -94,8 +94,8 @@ class Post with ChangeNotifier {
       comment.imageUrl = url;
     }
     // final idx = commentsList.length;
-    this._commentsList.add(comment);
     notifyListeners();
+    this._commentsList.add(comment);
     final ref = metaDataRef.doc('/${this.postId}').collection('/comments');
     final id = ref.doc().id;
     comment.id = id;

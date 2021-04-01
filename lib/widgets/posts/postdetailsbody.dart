@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel/providers/auth.dart';
+import 'package:travel/providers/post.dart';
 import 'package:travel/providers/posts.dart';
 import 'package:travel/widgets/posts/postdetailactions.dart';
 import 'package:travel/widgets/posts/postdetailscomments.dart';
@@ -14,13 +15,18 @@ class PostDetailsBody extends StatefulWidget {
 }
 
 class _PostDetailsBodyState extends State<PostDetailsBody> {
+  final listKey = GlobalKey<AnimatedListState>();
   void insertItem() {
     final idx = Provider.of<Posts>(context, listen: false)
             .findById(widget.postId)
             .commentsList
-            .length -
-        1;
-    CommentsListView.listKey?.currentState?.insertItem(idx > 0 ? idx : 0);
+            .length ??
+        0;
+    print('----------------------------$idx');
+
+    if (idx > 1)
+      listKey?.currentState?.insertItem(idx - 1);
+    else if (idx == 1) setState(() {});
   }
 
   @override
@@ -49,7 +55,7 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
                 Expanded(
                   flex: 1,
                   child: ChangeNotifierProvider.value(
-                    child: CommentsListView(),
+                    child: CommentsWidget(listKey, widget.postId),
                     value: post,
                   ),
                 ),
@@ -57,5 +63,25 @@ class _PostDetailsBodyState extends State<PostDetailsBody> {
               ],
             );
         });
+  }
+}
+
+class CommentsWidget extends StatelessWidget {
+  final listKey;
+  final postId;
+  CommentsWidget(this.listKey, this.postId);
+  @override
+  Widget build(BuildContext context) {
+    final post = Provider.of<Post>(context);
+    return Container(
+      child: post.commentsList.length > 0
+          ? CommentsListView(listKey)
+          : Center(
+              child: Text(
+              'No Comments yet\n be the first how leaves a comment',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey),
+            )),
+    );
   }
 }
